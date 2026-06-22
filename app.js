@@ -136,71 +136,7 @@ const itemsPerPage = 9;
 let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
 let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-// --- Sorting Helpers ---
-window.movePaintingUp = function(id) {
-  const index = paintingOrder.indexOf(id);
-  if (index > 0) {
-    paintingOrder[index] = paintingOrder[index - 1];
-    paintingOrder[index - 1] = id;
-    
-    renderPaintings();
-    renderCmsLists();
-    saveGalleryStyles();
-  }
-};
 
-window.movePaintingDown = function(id) {
-  const index = paintingOrder.indexOf(id);
-  if (index >= 0 && index < paintingOrder.length - 1) {
-    paintingOrder[index] = paintingOrder[index + 1];
-    paintingOrder[index + 1] = id;
-    
-    renderPaintings();
-    renderCmsLists();
-    saveGalleryStyles();
-  }
-};
-
-function applyLoadedCardStyles() {
-  if (!currentCardStyles) return;
-
-  document.querySelectorAll('.painting-card').forEach(card => {
-    const cardId = card.getAttribute('data-id');
-    const c = currentCardStyles.find(item => item.id == cardId);
-    if (c) {
-      const variables = [
-        '--painting-padding',
-        '--painting-radius',
-        '--painting-bg-color',
-        '--card-bg-color',
-        '--frame-border-width',
-        '--frame-margin',
-        '--painting-brightness',
-        '--painting-contrast',
-        '--painting-saturate',
-        '--painting-hue-rotate'
-      ];
-      if (c.overrides) {
-        variables.forEach(varName => {
-          const val = c.overrides[varName];
-          if (val) {
-            card.style.setProperty(varName, val);
-          }
-        });
-      }
-      if (c.isLight) {
-        card.classList.add('theme-light');
-      }
-      if (c.frameClass && c.frameClass !== 'none') {
-        const wrapper = card.querySelector('.painting-image-wrapper');
-        if (wrapper) {
-          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
-          wrapper.classList.add(c.frameClass);
-        }
-      }
-    }
-  });
-}
 
 function renderPaginationControls(totalPages) {
   const pagEl = document.querySelector('.gallery-pagination');
@@ -457,16 +393,7 @@ function resizeAndConvertImage(file, maxDimension = 600) {
   });
 }
 
-const DATABASE_URL = 'https://kvdb.io/spb_studios_cfg_2026_dbx1/settings';
-let isApplyingStyles = false;
-const root = document.documentElement;
-const cssResetBtn = document.getElementById('css-reset-btn-el');
 
-// --- Dynamic Content Rendering & Pagination State ---
-let currentPage = 1;
-const itemsPerPage = 9;
-let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
-let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 // --- Helper to Apply Loaded Configuration ---
 function applyLoadedConfig(data) {
