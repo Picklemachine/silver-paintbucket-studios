@@ -457,8 +457,7 @@ function resizeAndConvertImage(file, maxDimension = 600) {
   });
 }
 
-// --- Sync Functions ---
-const DATABASE_URL = 'https://kvdb.io/Cx4MCJJqUdsEfMt4RfPnxT/settings';
+const DATABASE_URL = 'https://kvdb.io/spb_studios_cfg_2026_dbx1/settings';
 let isApplyingStyles = false;
 const root = document.documentElement;
 const cssResetBtn = document.getElementById('css-reset-btn-el');
