@@ -473,13 +473,13 @@ let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 function applyLoadedConfig(data) {
   if (!data) return;
 
-  if (data.paintingDatabase) {
+  if (data.paintingDatabase && Object.keys(data.paintingDatabase).length > 0) {
     paintingDatabase = data.paintingDatabase;
   }
-  if (data.artistDatabase) {
+  if (data.artistDatabase && Object.keys(data.artistDatabase).length > 0) {
     artistDatabase = data.artistDatabase;
   }
-  if (data.paintingOrder) {
+  if (data.paintingOrder && data.paintingOrder.length > 0) {
     paintingOrder = data.paintingOrder;
   } else {
     paintingOrder = Object.keys(paintingDatabase).map(Number);
