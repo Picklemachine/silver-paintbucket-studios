@@ -217,7 +217,7 @@ function renderPaginationControls(totalPages) {
     btn.addEventListener('click', () => {
       currentPage = i;
       renderPaintings();
-      const targetSec = document.getElementById('paintings');
+      const targetSec = document.getElementById('gallery-section');
       if (targetSec) {
         targetSec.scrollIntoView({ behavior: 'smooth' });
       }
@@ -233,7 +233,7 @@ function renderPaginationControls(totalPages) {
     nextBtn.addEventListener('click', () => {
       currentPage++;
       renderPaintings();
-      const targetSec = document.getElementById('paintings');
+      const targetSec = document.getElementById('gallery-section');
       if (targetSec) {
         targetSec.scrollIntoView({ behavior: 'smooth' });
       }
