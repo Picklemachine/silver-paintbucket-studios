@@ -458,23 +458,150 @@ function resizeAndConvertImage(file, maxDimension = 600) {
 }
 
 // --- Sync Functions ---
+const DATABASE_URL = 'https://kvdb.io/Cx4MCJJqUdsEfMt4RfPnxT/settings';
+let isApplyingStyles = false;
+const root = document.documentElement;
+const cssResetBtn = document.getElementById('css-reset-btn-el');
+
+// --- Dynamic Content Rendering & Pagination State ---
+let currentPage = 1;
+const itemsPerPage = 9;
+let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
+let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// --- Helper to Apply Loaded Configuration ---
+function applyLoadedConfig(data) {
+  if (!data) return;
+
+  if (data.paintingDatabase) {
+    paintingDatabase = data.paintingDatabase;
+  }
+  if (data.artistDatabase) {
+    artistDatabase = data.artistDatabase;
+  }
+  if (data.paintingOrder) {
+    paintingOrder = data.paintingOrder;
+  } else {
+    paintingOrder = Object.keys(paintingDatabase).map(Number);
+  }
+
+  currentCardStyles = data.cardStyles || [];
+
+  // Re-render components with newly loaded DB data
+  renderPaintings();
+  renderArtists();
+  populateSelectors();
+  renderCmsLists();
+
+  if (!data.rootStyles) return;
+
+  if (localStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
+    return;
+  }
+
+  isApplyingStyles = true;
+
+  // Apply root variables
+  Object.keys(data.rootStyles).forEach(varName => {
+    root.style.setProperty(varName, data.rootStyles[varName]);
+  });
+
+  // Clear existing card overrides first
+  document.querySelectorAll('.painting-card').forEach(card => {
+    card.style.cssText = '';
+    card.classList.remove('theme-light');
+    const wrapper = card.querySelector('.painting-image-wrapper');
+    if (wrapper) {
+      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+    }
+  });
+
+  // Sync customizer UI inputs
+  if (data.inputValues) {
+    Object.keys(data.inputValues).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = data.inputValues[id];
+        
+        const spanId = 'val-' + id.replace('custom-', '');
+        const valSpan = document.getElementById(spanId);
+        if (valSpan) {
+          let suffix = '';
+          if (id.includes('margin') || id.includes('radius') || id.includes('border') || id.includes('size')) suffix = 'px';
+          else if (id.includes('brightness') || id.includes('contrast') || id.includes('saturation')) suffix = '%';
+          else if (id.includes('hue')) suffix = '°';
+          valSpan.textContent = el.value + suffix;
+        }
+      }
+    });
+  }
+
+  isApplyingStyles = false;
+}
+
+// --- Sorting Helpers ---
+window.movePaintingUp = function(id) {
+  const index = paintingOrder.indexOf(id);
+  if (index > 0) {
+    paintingOrder[index] = paintingOrder[index - 1];
+    paintingOrder[index - 1] = id;
+    
+    renderPaintings();
+    renderCmsLists();
+    saveGalleryStyles();
+  }
+};
+
+window.movePaintingDown = function(id) {
+  const index = paintingOrder.indexOf(id);
+  if (index >= 0 && index < paintingOrder.length - 1) {
+    paintingOrder[index] = paintingOrder[index + 1];
+    paintingOrder[index + 1] = id;
+    
+    renderPaintings();
+    renderCmsLists();
+    saveGalleryStyles();
+  }
+};
+
+function applyLoadedCardStyles() {
+  if (!currentCardStyles) return;
+  currentCardStyles.forEach(c => {
+    const card = document.querySelector(`.painting-card[data-id="${c.id}"]`);
+    if (card) {
+      if (c.overrides) {
+        Object.keys(c.overrides).forEach(varName => {
+          card.style.setProperty(varName, c.overrides[varName]);
+        });
+      }
+      if (c.isLight) {
+        card.classList.add('theme-light');
+      } else {
+        card.classList.remove('theme-light');
+      }
+      const wrapper = card.querySelector('.painting-image-wrapper');
+      if (wrapper) {
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        if (c.frameClass && c.frameClass !== 'none') {
+          wrapper.classList.add(c.frameClass);
+        }
+      }
+    }
+  });
+}
+
 window.saveGalleryStyles = function() {
   if (localStorage.getItem('bucky_admin_unlocked') !== 'true') return;
   if (isApplyingStyles) return;
 
   const variables = [
-    '--painting-padding',
-    '--painting-radius',
-    '--painting-bg-color',
-    '--card-bg-color',
-    '--frame-border-width',
-    '--frame-margin',
-    '--painting-brightness',
-    '--painting-contrast',
-    '--painting-saturate',
-    '--painting-hue-rotate',
-    '--mascot-glow-size',
-    '--mascot-glow-color'
+    '--card-margin', '--card-radius', '--card-border-width', '--card-border-color',
+    '--card-bg', '--card-shadow', '--card-glow-color', '--card-glow-size',
+    '--card-padding', '--card-img-radius', '--card-img-height',
+    '--card-img-object-fit', '--card-font-family', '--card-title-size',
+    '--card-title-color', '--card-artist-size', '--card-artist-color',
+    '--card-price-size', '--card-price-color', '--card-btn-bg',
+    '--card-btn-color', '--card-btn-radius'
   ];
 
   const rootStyles = {};
@@ -506,6 +633,10 @@ window.saveGalleryStyles = function() {
     timestamp: Date.now()
   };
 
+  // Save to Local Storage immediately as a secure backup
+  localStorage.setItem('spb_gallery_data', JSON.stringify(payload));
+
+  // Also POST to online database
   fetch(DATABASE_URL, {
     method: 'POST',
     headers: {
@@ -516,6 +647,19 @@ window.saveGalleryStyles = function() {
 };
 
 window.loadGalleryStyles = function() {
+  // First load from localStorage to prevent loss of newly added data
+  const localDataStr = localStorage.getItem('spb_gallery_data');
+  if (localDataStr) {
+    try {
+      const localData = JSON.parse(localDataStr);
+      applyLoadedConfig(localData);
+      console.log('Loaded configurations from localStorage backup.');
+    } catch (e) {
+      console.warn('Error reading from localStorage:', e);
+    }
+  }
+
+  // Fetch online settings to merge/sync
   fetch(DATABASE_URL)
     .then(res => {
       if (!res.ok) throw new Error('Not found');
@@ -524,72 +668,22 @@ window.loadGalleryStyles = function() {
     .then(data => {
       if (!data) return;
 
-      if (data.paintingDatabase) {
-        paintingDatabase = data.paintingDatabase;
-      }
-      if (data.artistDatabase) {
-        artistDatabase = data.artistDatabase;
-      }
-      if (data.paintingOrder) {
-        paintingOrder = data.paintingOrder;
-      } else {
-        paintingOrder = Object.keys(paintingDatabase).map(Number);
-      }
-
-      currentCardStyles = data.cardStyles || [];
-
-      // Re-render components with newly loaded DB data
-      renderPaintings();
-      renderArtists();
-      populateSelectors();
-      renderCmsLists();
-
-      if (!data.rootStyles) return;
-
-      if (localStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
-        return;
-      }
-
-      isApplyingStyles = true;
-
-      // Apply root variables
-      Object.keys(data.rootStyles).forEach(varName => {
-        root.style.setProperty(varName, data.rootStyles[varName]);
-      });
-
-      // Clear existing card overrides first
-      document.querySelectorAll('.painting-card').forEach(card => {
-        card.style.cssText = '';
-        card.classList.remove('theme-light');
-        const wrapper = card.querySelector('.painting-image-wrapper');
-        if (wrapper) {
-          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
-        }
-      });
-
-      // Sync customizer UI inputs
-      if (data.inputValues) {
-        Object.keys(data.inputValues).forEach(id => {
-          const el = document.getElementById(id);
-          if (el) {
-            el.value = data.inputValues[id];
-            
-            const spanId = 'val-' + id.replace('custom-', '');
-            const valSpan = document.getElementById(spanId);
-            if (valSpan) {
-              let suffix = '';
-              if (id.includes('margin') || id.includes('radius') || id.includes('border') || id.includes('size')) suffix = 'px';
-              else if (id.includes('brightness') || id.includes('contrast') || id.includes('saturation')) suffix = '%';
-              else if (id.includes('hue')) suffix = '°';
-              valSpan.textContent = el.value + suffix;
-            }
+      // Only apply online data if it is newer than local storage data
+      const localDataStr = localStorage.getItem('spb_gallery_data');
+      if (localDataStr) {
+        try {
+          const localData = JSON.parse(localDataStr);
+          if (data.timestamp && localData.timestamp && data.timestamp < localData.timestamp) {
+            console.log('Local storage data is newer than online database. Keeping local data.');
+            return;
           }
-        });
+        } catch (e) {}
       }
 
-      isApplyingStyles = false;
+      applyLoadedConfig(data);
+      console.log('Synced with online database successfully.');
     })
-    .catch(err => console.log('No online styles config loaded yet.'));
+    .catch(err => console.log('No online config loaded, using local defaults/localStorage.'));
 };
 
 // Hook into Customizer changes to auto-save
