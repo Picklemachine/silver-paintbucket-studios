@@ -118,8 +118,211 @@ function addToCart(paintingId, title, price) {
   cartBadge.classList.add('jiggle');
   setTimeout(() => {
     cartBadge.classList.remove('jiggle');
-  }, 500);
+  }, 2500);
+};
+
+// ==========================================================================
+// Global Layout Syncing (kvdb.io integration)
+// ==========================================================================
+
+const DATABASE_URL = 'https://kvdb.io/spb_studios_cfg_2026_dbx1/settings';
+let isApplyingStyles = false;
+
+window.saveGalleryStyles = function() {
+  if (localStorage.getItem('bucky_admin_unlocked') !== 'true') return;
+  if (isApplyingStyles) return; // Prevent loop when loading styles
+
+  const variables = [
+    '--painting-padding',
+    '--painting-radius',
+    '--painting-bg-color',
+    '--card-bg-color',
+    '--frame-border-width',
+    '--frame-margin',
+    '--painting-brightness',
+    '--painting-contrast',
+    '--painting-saturate',
+    '--painting-hue-rotate',
+    '--mascot-glow-size',
+    '--mascot-glow-color'
+  ];
+
+  const rootStyles = {};
+  variables.forEach(varName => {
+    rootStyles[varName] = root.style.getPropertyValue(varName) || getComputedStyle(root).getPropertyValue(varName).trim();
+  });
+
+  const cardStyles = [];
+  document.querySelectorAll('.painting-card').forEach(card => {
+    const cardId = card.getAttribute('data-id');
+    const overrides = {};
+    variables.forEach(varName => {
+      const val = card.style.getPropertyValue(varName);
+      if (val) {
+        overrides[varName] = val;
+      }
+    });
+
+    const wrapper = card.querySelector('.painting-image-wrapper');
+    let frameClass = '';
+    if (wrapper) {
+      if (wrapper.classList.contains('frame-silver')) frameClass = 'frame-silver';
+      else if (wrapper.classList.contains('frame-gold')) frameClass = 'frame-gold';
+      else if (wrapper.classList.contains('frame-wood')) frameClass = 'frame-wood';
+    }
+    const isLight = card.classList.contains('theme-light');
+
+    if (Object.keys(overrides).length > 0 || frameClass || isLight) {
+      cardStyles.push({
+        id: cardId,
+        overrides: overrides,
+        frameClass: frameClass,
+        isLight: isLight
+      });
+    }
+  });
+
+  const inputValues = {};
+  const inputsToSave = [
+    'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
+    'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
+    'custom-filter-target', 'custom-brightness', 'custom-contrast',
+    'custom-saturation', 'custom-hue', 'custom-glow-color', 'custom-glow-size'
+  ];
+  inputsToSave.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      inputValues[id] = el.value;
+    }
+  });
+
+  const payload = {
+    rootStyles,
+    cardStyles,
+    inputValues,
+    timestamp: Date.now()
+  };
+
+  fetch(DATABASE_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  }).catch(err => console.warn('Error saving styles to database:', err));
+};
+
+window.loadGalleryStyles = function() {
+  fetch(DATABASE_URL)
+    .then(res => {
+      if (!res.ok) throw new Error('Not found');
+      return res.json();
+    })
+    .then(data => {
+      if (!data || !data.rootStyles) return;
+      
+      // If we are currently editing as admin, don't overwrite local session in real-time
+      if (localStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
+        return;
+      }
+
+      isApplyingStyles = true;
+
+      // Apply root variables
+      Object.keys(data.rootStyles).forEach(varName => {
+        root.style.setProperty(varName, data.rootStyles[varName]);
+      });
+
+      // Clear existing card overrides first
+      document.querySelectorAll('.painting-card').forEach(card => {
+        card.style.cssText = '';
+        card.classList.remove('theme-light');
+        const wrapper = card.querySelector('.painting-image-wrapper');
+        if (wrapper) {
+          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        }
+      });
+
+      // Apply card overrides
+      if (data.cardStyles) {
+        data.cardStyles.forEach(c => {
+          const card = document.querySelector(`.painting-card[data-id="${c.id}"]`);
+          if (card) {
+            Object.keys(c.overrides).forEach(varName => {
+              card.style.setProperty(varName, c.overrides[varName]);
+            });
+            if (c.isLight) {
+              card.classList.add('theme-light');
+            }
+            if (c.frameClass && c.frameClass !== 'none') {
+              const wrapper = card.querySelector('.painting-image-wrapper');
+              if (wrapper) {
+                wrapper.classList.add(c.frameClass);
+              }
+            }
+          }
+        });
+      }
+
+      // Sync customizer UI inputs
+      if (data.inputValues) {
+        Object.keys(data.inputValues).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.value = data.inputValues[id];
+            
+            // Sync the span text labels
+            const spanId = 'val-' + id.replace('custom-', '');
+            const valSpan = document.getElementById(spanId);
+            if (valSpan) {
+              let suffix = '';
+              if (id.includes('margin') || id.includes('radius') || id.includes('border') || id.includes('size')) suffix = 'px';
+              else if (id.includes('brightness') || id.includes('contrast') || id.includes('saturation')) suffix = '%';
+              else if (id.includes('hue')) suffix = '°';
+              valSpan.textContent = el.value + suffix;
+            }
+          }
+        });
+      }
+
+      isApplyingStyles = false;
+    })
+    .catch(err => console.log('No online styles config loaded yet.'));
+};
+
+// Hook into Customizer changes to auto-save
+const inputControls = [
+  'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
+  'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
+  'custom-brightness', 'custom-contrast', 'custom-saturation',
+  'custom-hue', 'custom-glow-color', 'custom-glow-size'
+];
+inputControls.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+    el.addEventListener(eventType, () => {
+      // Small debounce delay before saving
+      clearTimeout(window.saveStylesDebounce);
+      window.saveStylesDebounce = setTimeout(saveGalleryStyles, 500);
+    });
+  }
+});
+
+// Sync after reset button click
+if (cssResetBtn) {
+  cssResetBtn.addEventListener('click', () => {
+    setTimeout(saveGalleryStyles, 100);
+  });
 }
+
+// Load styles initially on page load
+document.addEventListener('DOMContentLoaded', () => {
+  loadGalleryStyles();
+  
+  // Real-time synchronization: poll the DB every 5 seconds
+  setInterval(loadGalleryStyles, 5000);
+});
 
 function updateCartCount() {
   const countEl = document.getElementById('cart-count');
@@ -642,7 +845,7 @@ if (cardBgSelect) {
 if (cssResetBtn) {
   cssResetBtn.addEventListener('click', () => {
     // Reset ranges in DOM
-    document.getElementById('custom-margin').value = 30;
+    document.getElementById('custom-margin').value = 16;
     document.getElementById('custom-radius').value = 4;
     document.getElementById('custom-brightness').value = 100;
     document.getElementById('custom-contrast').value = 100;
@@ -667,13 +870,13 @@ if (cssResetBtn) {
     }
     
     // Reset select inputs
-    if (frameSelect) frameSelect.value = 'none';
+    if (frameSelect) frameSelect.value = 'wood';
     if (glowColorSelect) glowColorSelect.value = 'rgba(138, 43, 226, 0.65)';
-    if (bgColorSelect) bgColorSelect.value = '#050a18';
-    if (cardBgSelect) cardBgSelect.value = 'rgba(255, 255, 255, 0.03)';
+    if (bgColorSelect) bgColorSelect.value = '#001f54';
+    if (cardBgSelect) cardBgSelect.value = '#eddcd2';
     
     // Reset values in span elements
-    document.getElementById('val-margin').textContent = '30px';
+    document.getElementById('val-margin').textContent = '16px';
     document.getElementById('val-radius').textContent = '4px';
     document.getElementById('val-brightness').textContent = '100%';
     document.getElementById('val-contrast').textContent = '100%';
@@ -684,10 +887,10 @@ if (cssResetBtn) {
     document.getElementById('val-frame-margin').textContent = '12px';
     
     // Reset CSS variables
-    root.style.setProperty('--painting-padding', '30px');
+    root.style.setProperty('--painting-padding', '16px');
     root.style.setProperty('--painting-radius', '4px');
-    root.style.setProperty('--painting-bg-color', '#050a18');
-    root.style.setProperty('--card-bg-color', 'rgba(255, 255, 255, 0.03)');
+    root.style.setProperty('--painting-bg-color', '#001f54');
+    root.style.setProperty('--card-bg-color', '#eddcd2');
     root.style.setProperty('--frame-border-width', '4px');
     root.style.setProperty('--frame-margin', '12px');
     root.style.setProperty('--painting-brightness', '100%');
@@ -701,11 +904,13 @@ if (cssResetBtn) {
     const wrappers = document.querySelectorAll('.painting-image-wrapper');
     wrappers.forEach(wrapper => {
       wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+      wrapper.classList.add('frame-wood');
     });
     
     const cards = document.querySelectorAll('.painting-card');
     cards.forEach(card => {
       card.classList.remove('theme-light');
+      card.classList.add('theme-light');
     });
     
     // Show feedback toast
@@ -759,7 +964,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=34';
+      avatarImg.src = imgSrc + '?v=35';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
