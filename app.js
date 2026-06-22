@@ -1873,3 +1873,9 @@ function showCmsToast(message) {
   }
 }
 
+window.handleResetDatabaseToDefaults = function() {
+  if (!confirm('Are you sure you want to reset the database to defaults? This will restore all default paintings/artists and clear your local backups.')) return;
+  localStorage.removeItem('spb_gallery_data');
+  location.reload();
+};
+
