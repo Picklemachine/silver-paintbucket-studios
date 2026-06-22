@@ -94,223 +94,7 @@
       </div>
 
       <!-- 3x3 Painting Grid -->
-      <div class="paintings-grid">
-        <!-- Painting 1 -->
-        <article class="painting-card theme-light" data-category="landscape" data-id="1">
-          <div class="card-header">
-            <h3 class="painting-title">Sunshine Valley</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_1.png" alt="Sunshine Valley - Vibrant Meadow Landscape" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(1)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Elena Valerius')">Elena Valerius</a></p>
-            <p class="painting-desc">Vibrant Meadow Landscape</p>
-            <div class="card-footer">
-              <span class="price">$245</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(1)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(1, 'Sunshine Valley', 245)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 2 -->
-        <article class="painting-card theme-light" data-category="floral" data-id="2">
-          <div class="card-header">
-            <h3 class="painting-title">Dancing Blooms</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_2.png" alt="Dancing Blooms - Floral Burst on Canvas" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(2)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Julian S. Thorne')">Julian S. Thorne</a></p>
-            <p class="painting-desc">Floral Burst on Canvas</p>
-            <div class="card-footer">
-              <span class="price">$190</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(2)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(2, 'Dancing Blooms', 190)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 3 -->
-        <article class="painting-card theme-light" data-category="minimalist" data-id="3">
-          <div class="card-header">
-            <h3 class="painting-title">Ocean Whisper</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_3.png" alt="Ocean Whisper - Minimal Coastal Study" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(3)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Mikaela Wu')">Mikaela Wu</a></p>
-            <p class="painting-desc">Minimal Coastal Study</p>
-            <div class="card-footer">
-              <span class="price">$220</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(3)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(3, 'Ocean Whisper', 220)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 4 -->
-        <article class="painting-card theme-light" data-category="abstract" data-id="4">
-          <div class="card-header">
-            <h3 class="painting-title">Colorful Abstract</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_4.png" alt="Colorful Abstract - Palette Knife Texture" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(4)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Sarah J.')">Sarah J.</a></p>
-            <p class="painting-desc">Textured Abstract Expression</p>
-            <div class="card-footer">
-              <span class="price">$280</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(4)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(4, 'Colorful Abstract', 280)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 5 -->
-        <article class="painting-card theme-light" data-category="urban" data-id="5">
-          <div class="card-header">
-            <h3 class="painting-title">Midnight Jazz</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_5.png" alt="Midnight Jazz - Rain-slicked City Street" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(5)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Alex M.')">Alex M.</a></p>
-            <p class="painting-desc">Rain-slicked City Scene</p>
-            <div class="card-footer">
-              <span class="price">$310</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(5)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(5, 'Midnight Jazz', 310)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 6 -->
-        <article class="painting-card theme-light" data-category="landscape" data-id="6">
-          <div class="card-header">
-            <h3 class="painting-title">Serene Heights</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_6.png" alt="Serene Heights - Misty Mountain Sunrise" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(6)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Marcus Vance')">Marcus Vance</a></p>
-            <p class="painting-desc">Misty Mountain Sunrise</p>
-            <div class="card-footer">
-              <span class="price">$350</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(6)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(6, 'Serene Heights', 350)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 7 -->
-        <article class="painting-card theme-light" data-category="landscape" data-id="7">
-          <div class="card-header">
-            <h3 class="painting-title">Golden Field</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_7.png" alt="Golden Field - Sun-kissed Summer Study" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(7)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Elena Valerius')">Elena Valerius</a></p>
-            <p class="painting-desc">Sunlit Summer Meadow Study</p>
-            <div class="card-footer">
-              <span class="price">$260</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(7)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(7, 'Golden Field', 260)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 8 -->
-        <article class="painting-card theme-light" data-category="floral" data-id="8">
-          <div class="card-header">
-            <h3 class="painting-title">Spring Whispers</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_8.png" alt="Spring Whispers - Watercolor Pastels" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(8)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Julian S. Thorne')">Julian S. Thorne</a></p>
-            <p class="painting-desc">Watercolor Wildflower Pastel</p>
-            <div class="card-footer">
-              <span class="price">$180</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(8)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(8, 'Spring Whispers', 180)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Painting 9 -->
-        <article class="painting-card theme-light" data-category="minimalist" data-id="9">
-          <div class="card-header">
-            <h3 class="painting-title">Midnight Tide</h3>
-          </div>
-          <div class="painting-image-wrapper frame-wood">
-            <img src="assets/paintings/painting_9.png" alt="Midnight Tide - Deep Indigo Horizon" class="painting-img" loading="lazy">
-            <div class="card-overlay">
-              <button class="btn-view-overlay" onclick="openPaintingModal(9)"><i class="fa-solid fa-expand"></i> View Details</button>
-            </div>
-          </div>
-          <div class="card-body">
-            <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('Mikaela Wu')">Mikaela Wu</a></p>
-            <p class="painting-desc">Indigo and Silver Coastline</p>
-            <div class="card-footer">
-              <span class="price">$230</span>
-              <div class="card-actions">
-                <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(9)">View Painting</a>
-                <button class="btn-add-cart" onclick="addToCart(9, 'Midnight Tide', 230)"><i class="fa-solid fa-plus"></i></button>
-              </div>
-            </div>
-          </div>
-        </article>
-      </div>
+      <div class="paintings-grid" id="paintings-grid-el"></div>
 
       <!-- Gallery Pagination -->
       <div class="gallery-pagination">
@@ -334,51 +118,7 @@
         <p class="section-subtitle">Meet the visionary minds behind the gallery's centerpiece works</p>
       </div>
       
-      <div class="artists-grid">
-        <div class="artist-profile-card" onclick="openArtistModal('Elena Valerius')">
-          <div class="artist-avatar-wrapper">
-            <img src="assets/artists/elena_valerius.png" alt="Elena Valerius Profile Picture" class="artist-avatar">
-          </div>
-          <h3 class="artist-profile-title">Elena Valerius</h3>
-          <p class="artist-medium">Landscape & Impressionist Painter</p>
-          <p class="artist-bio">
-            Elena specializes in heavy-textured palette knife landscapes. Her work utilizes thick strokes and gold overlays to capture the dramatic effects of natural lighting in meadows.
-          </p>
-        </div>
-
-        <div class="artist-profile-card" onclick="openArtistModal('Julian S. Thorne')">
-          <div class="artist-avatar-wrapper">
-            <img src="assets/artists/julian_thorne.png" alt="Julian S. Thorne Profile Picture" class="artist-avatar">
-          </div>
-          <h3 class="artist-profile-title">Julian S. Thorne</h3>
-          <p class="artist-medium">Floral Watercolor Specialist</p>
-          <p class="artist-bio">
-            Julian creates whimsical, fluid watercolor arrangements. His signature style focuses on the delicate movement of wildflowers, capturing the wild energy of flora on custom textured papers.
-          </p>
-        </div>
-
-        <div class="artist-profile-card" onclick="openArtistModal('Mikaela Wu')">
-          <div class="artist-avatar-wrapper">
-            <img src="assets/artists/mikaela_wu.png" alt="Mikaela Wu Profile Picture" class="artist-avatar">
-          </div>
-          <h3 class="artist-profile-title">Mikaela Wu</h3>
-          <p class="artist-medium">Minimalist Acrylic Artist</p>
-          <p class="artist-bio">
-            Mikaela explores empty spaces and metallic boundary lines. Her coastal studies balance pitch black acrylic bases with silver dust horizons to represent silent tides.
-          </p>
-        </div>
-
-        <div class="artist-profile-card" onclick="openArtistModal('Fernando Velasquez')">
-          <div class="artist-avatar-wrapper">
-            <img src="assets/artists/fernando_velasquez.png" alt="Fernando Velasquez Profile Picture" class="artist-avatar">
-          </div>
-          <h3 class="artist-profile-title">Fernando Velasquez</h3>
-          <p class="artist-medium">Geometric Abstract Sculptor</p>
-          <p class="artist-bio">
-            Fernando works with bold shapes and primary colors on heavy linen canvas, blending geometric structure and painted forms to find order in chaos.
-          </p>
-        </div>
-      </div>
+      <div class="artists-grid" id="artists-grid-el"></div>
     </div>
   </section>
 
@@ -740,6 +480,115 @@
         <div class="css-control-group">
           <label for="custom-glow-size">Glow Strength: <span id="val-glow-size">25px</span></label>
           <input type="range" id="custom-glow-size" min="0" max="60" value="25">
+        </div>
+      </div>
+      <!-- Section 4: Content Management (CMS) -->
+    <div class="css-panel-section" id="section-cms">
+      <h4 class="css-section-toggle">Manage Content <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
+      <div class="css-section-content">
+        <!-- Add Artist Sub-section -->
+        <div class="cms-subheader">Add New Artist</div>
+        <form id="cms-artist-form" onsubmit="handleCmsAddArtist(event)">
+          <div class="css-control-group">
+            <label for="cms-artist-name">Artist Name</label>
+            <input type="text" id="cms-artist-name" required placeholder="e.g. Elena Valerius">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-medium">Medium/Style</label>
+            <input type="text" id="cms-artist-medium" required placeholder="e.g. Watercolor Specialist">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-origin">Origin</label>
+            <input type="text" id="cms-artist-origin" placeholder="e.g. Portland, OR">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-avatar">Avatar Image URL</label>
+            <input type="text" id="cms-artist-avatar" placeholder="e.g. assets/artists/elena_valerius.png">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-philosophy">Philosophy</label>
+            <textarea id="cms-artist-philosophy" rows="2" placeholder="Art philosophy..."></textarea>
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-bio">Biography</label>
+            <textarea id="cms-artist-bio" rows="2" required placeholder="Artist biography..."></textarea>
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-years">Years of Exp</label>
+            <input type="number" id="cms-artist-years" min="0" placeholder="10">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-artist-messiness">Messiness Index</label>
+            <input type="text" id="cms-artist-messiness" placeholder="e.g. 8/10 Splatters">
+          </div>
+          <button type="submit" class="cms-btn-submit">Add Artist</button>
+        </form>
+
+        <hr class="cms-divider">
+
+        <!-- Add Painting Sub-section -->
+        <div class="cms-subheader">Add New Painting</div>
+        <form id="cms-painting-form" onsubmit="handleCmsAddPainting(event)">
+          <div class="css-control-group">
+            <label for="cms-painting-title">Painting Title</label>
+            <input type="text" id="cms-painting-title" required placeholder="e.g. Sunshine Valley">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-artist">Artist</label>
+            <select id="cms-painting-artist" required>
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-category">Category</label>
+            <select id="cms-painting-category" required>
+              <option value="landscape">Landscape</option>
+              <option value="floral">Floral</option>
+              <option value="minimalist">Minimalist</option>
+              <option value="abstract">Abstract</option>
+              <option value="urban">Urban / Moody</option>
+            </select>
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-price">Price ($)</label>
+            <input type="number" id="cms-painting-price" required min="0" placeholder="1200">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-image">Image URL</label>
+            <input type="text" id="cms-painting-image" required placeholder="e.g. assets/paintings/painting_1.png">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-medium">Medium</label>
+            <input type="text" id="cms-painting-medium" required placeholder="e.g. Oil on Canvas">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-dimensions">Dimensions</label>
+            <input type="text" id="cms-painting-dimensions" required placeholder="e.g. 24&quot; x 36&quot;">
+          </div>
+          <div class="css-control-group">
+            <label for="cms-painting-desc">Description</label>
+            <textarea id="cms-painting-desc" rows="2" placeholder="Description..."></textarea>
+          </div>
+          <button type="submit" class="cms-btn-submit">Add Painting</button>
+        </form>
+
+        <hr class="cms-divider">
+
+        <!-- Manage List Sub-section -->
+        <div class="cms-subheader">Manage Items</div>
+        <div class="cms-manage-lists">
+          <div class="cms-list-section">
+            <h5 style="font-size: 0.8rem; margin-bottom: 6px; color: var(--accent-silver);">Paintings</h5>
+            <ul id="cms-paintings-list" class="cms-item-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
+          <div class="cms-list-section" style="margin-top: 12px;">
+            <h5 style="font-size: 0.8rem; margin-bottom: 6px; color: var(--accent-silver);">Artists</h5>
+            <ul id="cms-artists-list" class="cms-item-list">
+              <!-- Populated dynamically -->
+            </ul>
+          </div>
         </div>
       </div>
     </div>
