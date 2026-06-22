@@ -3,7 +3,7 @@
    ========================================================================== */
 
 // 1. Painting Database
-const paintingDatabase = {
+let paintingDatabase = {
   1: {
     id: 1,
     title: "Sunshine Valley",
@@ -122,15 +122,142 @@ function addToCart(paintingId, title, price) {
 };
 
 // ==========================================================================
-// Global Layout Syncing (kvdb.io integration)
+// Global Layout Syncing (kvdb.io integration) & CMS Renderers
 // ==========================================================================
 
 const DATABASE_URL = 'https://kvdb.io/spb_studios_cfg_2026_dbx1/settings';
 let isApplyingStyles = false;
+const root = document.documentElement;
+const cssResetBtn = document.getElementById('css-reset-btn-el');
 
+// --- Dynamic Content Rendering ---
+window.renderPaintings = function() {
+  const gridEl = document.getElementById('paintings-grid-el');
+  if (!gridEl) return;
+  gridEl.innerHTML = '';
+  
+  Object.values(paintingDatabase).forEach(painting => {
+    const card = document.createElement('article');
+    card.className = 'painting-card theme-light';
+    card.setAttribute('data-category', painting.category.toLowerCase());
+    card.setAttribute('data-id', painting.id);
+    
+    card.innerHTML = `
+      <div class="card-header">
+        <h3 class="painting-title">${painting.title}</h3>
+      </div>
+      <div class="painting-image-wrapper frame-wood">
+        <img src="${painting.image}" alt="${painting.title} - ${painting.medium}" class="painting-img" loading="lazy">
+        <div class="card-overlay">
+          <button class="btn-view-overlay" onclick="openPaintingModal(${painting.id})"><i class="fa-solid fa-expand"></i> View Details</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('${painting.artist.replace(/'/g, "\\'")}')">${painting.artist}</a></p>
+        <p class="painting-desc">${painting.medium}</p>
+        <div class="card-footer">
+          <span class="price">$${painting.price}</span>
+          <div class="card-actions">
+            <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(${painting.id})">View Painting</a>
+            <button class="btn-add-cart" onclick="addToCart(${painting.id}, '${painting.title.replace(/'/g, "\\'")}', ${painting.price})"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+      </div>
+    `;
+    gridEl.appendChild(card);
+  });
+};
+
+window.renderArtists = function() {
+  const gridEl = document.getElementById('artists-grid-el');
+  if (!gridEl) return;
+  gridEl.innerHTML = '';
+  
+  Object.values(artistDatabase).forEach(artist => {
+    const avatar = artist.image || 'assets/artists/default_avatar.png';
+    const card = document.createElement('div');
+    card.className = 'artist-profile-card';
+    card.setAttribute('onclick', `openArtistModal('${artist.name.replace(/'/g, "\\'")}')`);
+    
+    card.innerHTML = `
+      <div class="artist-avatar-wrapper">
+        <img src="${avatar}" alt="${artist.name} Profile Picture" class="artist-avatar">
+      </div>
+      <h3 class="artist-profile-title">${artist.name}</h3>
+      <p class="artist-medium">${artist.style}</p>
+      <p class="artist-bio">${artist.ideas || artist.philosophy}</p>
+    `;
+    gridEl.appendChild(card);
+  });
+};
+
+window.populateSelectors = function() {
+  // Populate Target Painting dropdown in CSS customizer
+  const filterTargetSel = document.getElementById('custom-filter-target');
+  if (filterTargetSel) {
+    const currentValue = filterTargetSel.value;
+    filterTargetSel.innerHTML = '<option value="all">All Paintings (Default)</option>';
+    Object.values(paintingDatabase).forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = p.title;
+      filterTargetSel.appendChild(opt);
+    });
+    if (paintingDatabase[currentValue] || currentValue === 'all') {
+      filterTargetSel.value = currentValue;
+    } else {
+      filterTargetSel.value = 'all';
+    }
+  }
+
+  // Populate Artist dropdown in CMS Add Painting Form
+  const cmsArtistSel = document.getElementById('cms-painting-artist');
+  if (cmsArtistSel) {
+    cmsArtistSel.innerHTML = '';
+    Object.values(artistDatabase).forEach(a => {
+      const opt = document.createElement('option');
+      opt.value = a.name;
+      opt.textContent = a.name;
+      cmsArtistSel.appendChild(opt);
+    });
+  }
+};
+
+window.renderCmsLists = function() {
+  const pList = document.getElementById('cms-paintings-list');
+  const aList = document.getElementById('cms-artists-list');
+  if (!pList || !aList) return;
+
+  pList.innerHTML = '';
+  aList.innerHTML = '';
+
+  Object.values(paintingDatabase).forEach(p => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span>${p.title} (${p.artist})</span>
+      <button class="cms-btn-delete" onclick="handleCmsDeletePainting(${p.id})" title="Delete Painting">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    `;
+    pList.appendChild(li);
+  });
+
+  Object.values(artistDatabase).forEach(a => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span>${a.name}</span>
+      <button class="cms-btn-delete" onclick="handleCmsDeleteArtist('${a.name.replace(/'/g, "\\'")}')" title="Delete Artist">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    `;
+    aList.appendChild(li);
+  });
+};
+
+// --- Sync Functions ---
 window.saveGalleryStyles = function() {
   if (localStorage.getItem('bucky_admin_unlocked') !== 'true') return;
-  if (isApplyingStyles) return; // Prevent loop when loading styles
+  if (isApplyingStyles) return;
 
   const variables = [
     '--painting-padding',
@@ -200,6 +327,8 @@ window.saveGalleryStyles = function() {
     rootStyles,
     cardStyles,
     inputValues,
+    paintingDatabase,
+    artistDatabase,
     timestamp: Date.now()
   };
 
@@ -219,9 +348,23 @@ window.loadGalleryStyles = function() {
       return res.json();
     })
     .then(data => {
-      if (!data || !data.rootStyles) return;
-      
-      // If we are currently editing as admin, don't overwrite local session in real-time
+      if (!data) return;
+
+      if (data.paintingDatabase) {
+        paintingDatabase = data.paintingDatabase;
+      }
+      if (data.artistDatabase) {
+        artistDatabase = data.artistDatabase;
+      }
+
+      // Re-render components with newly loaded DB data
+      renderPaintings();
+      renderArtists();
+      populateSelectors();
+      renderCmsLists();
+
+      if (!data.rootStyles) return;
+
       if (localStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
         return;
       }
@@ -271,7 +414,6 @@ window.loadGalleryStyles = function() {
           if (el) {
             el.value = data.inputValues[id];
             
-            // Sync the span text labels
             const spanId = 'val-' + id.replace('custom-', '');
             const valSpan = document.getElementById(spanId);
             if (valSpan) {
@@ -302,7 +444,6 @@ inputControls.forEach(id => {
   if (el) {
     const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
     el.addEventListener(eventType, () => {
-      // Small debounce delay before saving
       clearTimeout(window.saveStylesDebounce);
       window.saveStylesDebounce = setTimeout(saveGalleryStyles, 500);
     });
@@ -318,9 +459,13 @@ if (cssResetBtn) {
 
 // Load styles initially on page load
 document.addEventListener('DOMContentLoaded', () => {
+  // Initial render from defaults
+  renderPaintings();
+  renderArtists();
+  populateSelectors();
+  renderCmsLists();
+
   loadGalleryStyles();
-  
-  // Real-time synchronization: poll the DB every 5 seconds
   setInterval(loadGalleryStyles, 5000);
 });
 
@@ -475,7 +620,6 @@ if (modal) {
 
 // 5. Gallery Filtering
 const filterButtons = document.querySelectorAll('.filter-btn');
-const paintingCards = document.querySelectorAll('.painting-card');
 
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
@@ -484,8 +628,9 @@ filterButtons.forEach(button => {
     button.classList.add('active');
     
     const filterValue = button.getAttribute('data-filter');
+    const currentCards = document.querySelectorAll('.painting-card');
     
-    paintingCards.forEach(card => {
+    currentCards.forEach(card => {
       const cardCategory = card.getAttribute('data-category');
       
       // Animate filter change
@@ -593,7 +738,6 @@ function handleContactSubmit(event) {
 const cssPanel = document.getElementById('css-control-panel-el');
 const cssPanelToggle = document.getElementById('css-panel-toggle-btn');
 const cssPanelClose = document.getElementById('css-panel-close-btn');
-const cssResetBtn = document.getElementById('css-reset-btn-el');
 
 // Toggle Open/Close panel
 if (cssPanelToggle && cssPanel) {
@@ -608,7 +752,6 @@ if (cssPanelClose && cssPanel) {
 }
 
 // Bind sliders to CSS custom variables on :root or individual cards
-const root = document.documentElement;
 const filterTargetSelect = document.getElementById('custom-filter-target');
 const resetTargetBtn = document.getElementById('css-reset-target-btn');
 
@@ -995,7 +1138,7 @@ document.querySelectorAll('.css-section-toggle').forEach(toggle => {
 });
 
 // 10. Artist Database & Modal Controller
-const artistDatabase = {
+let artistDatabase = {
   "Elena Valerius": {
     name: "Elena Valerius",
     style: "Landscape & Impressionist Painter",
@@ -1258,4 +1401,149 @@ window.handleAdminLogout = function() {
     }, 2500);
   }
 };
+
+
+// ==========================================================================
+// CMS Content Management Form & Event Handlers
+// ==========================================================================
+
+// Add Artist Form Handler
+window.handleCmsAddArtist = function(event) {
+  event.preventDefault();
+  const name = document.getElementById('cms-artist-name').value.trim();
+  const style = document.getElementById('cms-artist-medium').value.trim();
+  const origin = document.getElementById('cms-artist-origin').value.trim() || 'Unknown';
+  const avatar = document.getElementById('cms-artist-avatar').value.trim() || 'assets/artists/default_avatar.png';
+  const philosophy = document.getElementById('cms-artist-philosophy').value.trim() || 'Art is life.';
+  const bio = document.getElementById('cms-artist-bio').value.trim();
+  const years = document.getElementById('cms-artist-years').value.trim() || '1';
+  const messiness = document.getElementById('cms-artist-messiness').value.trim() || '5/10 splatters';
+
+  if (artistDatabase[name]) {
+    alert('Artist already exists!');
+    return;
+  }
+
+  artistDatabase[name] = {
+    name: name,
+    style: style,
+    origin: origin,
+    image: avatar,
+    philosophy: philosophy,
+    ideas: bio,
+    statPaintings: '0 Paintings',
+    statExperience: `${years} Years`,
+    statMessy: messiness.includes('%') ? messiness : (messiness.includes('/') ? Math.round((parseInt(messiness)/10)*100)+'%' : '50%')
+  };
+
+  renderArtists();
+  populateSelectors();
+  renderCmsLists();
+  saveGalleryStyles();
+  
+  // Reset form
+  document.getElementById('cms-artist-form').reset();
+  
+  showCmsToast('Artist added successfully!');
+};
+
+// Add Painting Form Handler
+window.handleCmsAddPainting = function(event) {
+  event.preventDefault();
+  const title = document.getElementById('cms-painting-title').value.trim();
+  const artistName = document.getElementById('cms-painting-artist').value;
+  const category = document.getElementById('cms-painting-category').value;
+  const price = parseInt(document.getElementById('cms-painting-price').value.trim()) || 0;
+  const image = document.getElementById('cms-painting-image').value.trim();
+  const medium = document.getElementById('cms-painting-medium').value.trim();
+  const dimensions = document.getElementById('cms-painting-dimensions').value.trim();
+  const desc = document.getElementById('cms-painting-desc').value.trim() || '';
+
+  // Generate unique ID
+  const existingIds = Object.keys(paintingDatabase).map(Number);
+  const nextId = existingIds.length > 0 ? Math.max(...existingIds) + 1 : 1;
+
+  paintingDatabase[nextId] = {
+    id: nextId,
+    title: title,
+    artist: artistName,
+    desc: desc,
+    price: price,
+    image: image,
+    medium: medium,
+    dimensions: dimensions,
+    category: category.charAt(0).toUpperCase() + category.slice(1)
+  };
+
+  // Increment artist painting count
+  if (artistDatabase[artistName]) {
+    const currentCount = parseInt(artistDatabase[artistName].statPaintings) || 0;
+    artistDatabase[artistName].statPaintings = `${currentCount + 1} Painting${currentCount + 1 !== 1 ? 's' : ''}`;
+  }
+
+  renderPaintings();
+  populateSelectors();
+  renderCmsLists();
+  saveGalleryStyles();
+
+  // Reset form
+  document.getElementById('cms-painting-form').reset();
+
+  showCmsToast('Painting added successfully!');
+};
+
+window.handleCmsDeletePainting = function(id) {
+  if (!confirm('Are you sure you want to delete this painting?')) return;
+  const p = paintingDatabase[id];
+  if (p && artistDatabase[p.artist]) {
+    const currentCount = parseInt(artistDatabase[p.artist].statPaintings) || 1;
+    artistDatabase[p.artist].statPaintings = `${currentCount - 1} Painting${currentCount - 1 !== 1 ? 's' : ''}`;
+  }
+  delete paintingDatabase[id];
+  renderPaintings();
+  populateSelectors();
+  renderCmsLists();
+  saveGalleryStyles();
+  showCmsToast('Painting deleted.');
+};
+
+window.handleCmsDeleteArtist = function(name) {
+  if (!confirm(`Are you sure you want to delete artist "${name}" and all of their paintings?`)) return;
+  
+  // Delete all paintings by this artist
+  Object.keys(paintingDatabase).forEach(id => {
+    if (paintingDatabase[id].artist === name) {
+      delete paintingDatabase[id];
+    }
+  });
+
+  delete artistDatabase[name];
+
+  renderPaintings();
+  renderArtists();
+  populateSelectors();
+  renderCmsLists();
+  saveGalleryStyles();
+  showCmsToast('Artist and their paintings deleted.');
+};
+
+function showCmsToast(message) {
+  const container = document.getElementById('toast-container-el');
+  if (container) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.style.borderColor = '#3b82f6';
+    toast.innerHTML = `
+      <i class="fa-solid fa-circle-info" style="color: #3b82f6;"></i>
+      <span>${message}</span>
+    `;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+      setTimeout(() => {
+        toast.remove();
+      }, 400);
+    }, 2500);
+  }
+}
 

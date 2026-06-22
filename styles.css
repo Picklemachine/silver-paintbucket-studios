@@ -2313,3 +2313,118 @@ body.admin-logged-in .css-panel-toggle {
   gap: 8px;
 }
 
+
+/* ==========================================================================
+   CMS Content Management System Panel Styles
+   ========================================================================== */
+#section-cms {
+  display: none;
+}
+
+body.admin-logged-in #section-cms {
+  display: block;
+}
+
+.cms-subheader {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent-silver);
+  margin-top: 16px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 4px;
+}
+
+.cms-divider {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin: 16px 0;
+}
+
+.css-control-group input[type="text"],
+.css-control-group input[type="number"],
+.css-control-group textarea {
+  background-color: rgba(5, 10, 24, 0.8);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  outline: none;
+  transition: var(--transition-smooth);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.css-control-group input[type="text"]:focus,
+.css-control-group input[type="number"]:focus,
+.css-control-group textarea:focus {
+  border-color: var(--accent-silver-dark);
+}
+
+.cms-btn-submit {
+  width: 100%;
+  background-color: var(--accent-red);
+  border: 1px solid transparent;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  margin-top: 8px;
+}
+
+.cms-btn-submit:hover {
+  background-color: #d90429;
+  box-shadow: 0 0 10px rgba(239, 35, 60, 0.4);
+}
+
+.cms-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.cms-item-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.cms-item-list li:last-child {
+  border-bottom: none;
+}
+
+.cms-item-list span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.cms-btn-delete {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
+
+.cms-btn-delete:hover {
+  color: var(--accent-red);
+}
+
