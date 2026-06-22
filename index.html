@@ -371,15 +371,17 @@
     <div class="css-panel-section" id="section-cms">
       <h4 class="css-section-toggle">Manage Content <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
       <div class="css-section-content">
+        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px; font-style: italic; border-left: 2px solid var(--accent-silver-dark); padding-left: 8px;">Note: Fields marked with an asterisk (*) are required.</p>
+        
         <!-- Add Artist Sub-section -->
         <div class="cms-subheader">Add New Artist</div>
         <form id="cms-artist-form" onsubmit="handleCmsAddArtist(event)">
           <div class="css-control-group">
-            <label for="cms-artist-name">Artist Name</label>
+            <label for="cms-artist-name">Artist Name *</label>
             <input type="text" id="cms-artist-name" required placeholder="e.g. Elena Valerius">
           </div>
           <div class="css-control-group">
-            <label for="cms-artist-medium">Medium/Style</label>
+            <label for="cms-artist-medium">Medium/Style *</label>
             <input type="text" id="cms-artist-medium" required placeholder="e.g. Watercolor Specialist">
           </div>
           <div class="css-control-group">
@@ -387,7 +389,7 @@
             <input type="text" id="cms-artist-origin" placeholder="e.g. Portland, OR">
           </div>
           <div class="css-control-group">
-            <label for="cms-artist-avatar">Avatar Photo</label>
+            <label for="cms-artist-avatar">Avatar Photo *</label>
             <input type="file" id="cms-artist-avatar" accept="image/*" required>
           </div>
           <div class="css-control-group">
@@ -395,7 +397,7 @@
             <textarea id="cms-artist-philosophy" rows="2" placeholder="Art philosophy..."></textarea>
           </div>
           <div class="css-control-group">
-            <label for="cms-artist-bio">Biography</label>
+            <label for="cms-artist-bio">Biography *</label>
             <textarea id="cms-artist-bio" rows="2" required placeholder="Artist biography..."></textarea>
           </div>
           <div class="css-control-group">
@@ -415,17 +417,17 @@
         <div class="cms-subheader">Add New Painting</div>
         <form id="cms-painting-form" onsubmit="handleCmsAddPainting(event)">
           <div class="css-control-group">
-            <label for="cms-painting-title">Painting Title</label>
+            <label for="cms-painting-title">Painting Title *</label>
             <input type="text" id="cms-painting-title" required placeholder="e.g. Sunshine Valley">
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-artist">Artist</label>
+            <label for="cms-painting-artist">Artist *</label>
             <select id="cms-painting-artist" required>
               <!-- Populated dynamically -->
             </select>
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-category">Category</label>
+            <label for="cms-painting-category">Category *</label>
             <select id="cms-painting-category" required>
               <option value="landscape">Landscape</option>
               <option value="floral">Floral</option>
@@ -435,19 +437,19 @@
             </select>
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-price">Price ($)</label>
+            <label for="cms-painting-price">Price ($) *</label>
             <input type="number" id="cms-painting-price" required min="0" placeholder="1200">
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-image">Painting Photo</label>
+            <label for="cms-painting-image">Painting Photo *</label>
             <input type="file" id="cms-painting-image" accept="image/*" required>
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-medium">Medium</label>
+            <label for="cms-painting-medium">Medium *</label>
             <input type="text" id="cms-painting-medium" required placeholder="e.g. Oil on Canvas">
           </div>
           <div class="css-control-group">
-            <label for="cms-painting-dimensions">Dimensions</label>
+            <label for="cms-painting-dimensions">Dimensions *</label>
             <input type="text" id="cms-painting-dimensions" required placeholder="e.g. 24&quot; x 36&quot;">
           </div>
           <div class="css-control-group">
