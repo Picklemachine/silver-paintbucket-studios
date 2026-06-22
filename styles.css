@@ -2428,6 +2428,26 @@ body.admin-logged-in #section-cms {
   color: var(--accent-red);
 }
 
+.cms-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cms-btn-sort {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  padding: 2px 6px;
+  font-size: 0.85rem;
+}
+
+.cms-btn-sort:hover:not(:disabled) {
+  color: var(--accent-gold);
+}
+
 .css-control-group input[type="file"] {
   background-color: rgba(5, 10, 24, 0.8);
   border: 1px solid var(--glass-border);

@@ -134,6 +134,32 @@ const cssResetBtn = document.getElementById('css-reset-btn-el');
 let currentPage = 1;
 const itemsPerPage = 9;
 let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
+let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// --- Sorting Helpers ---
+window.movePaintingUp = function(id) {
+  const index = paintingOrder.indexOf(id);
+  if (index > 0) {
+    paintingOrder[index] = paintingOrder[index - 1];
+    paintingOrder[index - 1] = id;
+    
+    renderPaintings();
+    renderCmsLists();
+    saveGalleryStyles();
+  }
+};
+
+window.movePaintingDown = function(id) {
+  const index = paintingOrder.indexOf(id);
+  if (index >= 0 && index < paintingOrder.length - 1) {
+    paintingOrder[index] = paintingOrder[index + 1];
+    paintingOrder[index + 1] = id;
+    
+    renderPaintings();
+    renderCmsLists();
+    saveGalleryStyles();
+  }
+};
 
 function applyLoadedCardStyles() {
   if (!currentCardStyles) return;
@@ -227,7 +253,21 @@ window.renderPaintings = function() {
   const activeFilterBtn = document.querySelector('.filter-btn.active');
   const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
 
-  const allPaintings = Object.values(paintingDatabase);
+  // Re-synchronize paintingOrder with paintingDatabase keys
+  const allPaintings = [];
+  paintingOrder.forEach(id => {
+    if (paintingDatabase[id]) {
+      allPaintings.push(paintingDatabase[id]);
+    }
+  });
+  Object.keys(paintingDatabase).forEach(id => {
+    const numId = Number(id);
+    if (!paintingOrder.includes(numId)) {
+      paintingOrder.push(numId);
+      allPaintings.push(paintingDatabase[numId]);
+    }
+  });
+
   const filteredPaintings = allPaintings.filter(p => {
     return activeFilter === 'all' || p.category.toLowerCase() === activeFilter;
   });
@@ -308,12 +348,18 @@ window.populateSelectors = function() {
   if (filterTargetSel) {
     const currentValue = filterTargetSel.value;
     filterTargetSel.innerHTML = '<option value="all">All Paintings (Default)</option>';
-    Object.values(paintingDatabase).forEach(p => {
-      const opt = document.createElement('option');
-      opt.value = p.id;
-      opt.textContent = p.title;
-      filterTargetSel.appendChild(opt);
+    
+    // Populate ordered paintings in the selector
+    paintingOrder.forEach(id => {
+      const p = paintingDatabase[id];
+      if (p) {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.title;
+        filterTargetSel.appendChild(opt);
+      }
     });
+
     if (paintingDatabase[currentValue] || currentValue === 'all') {
       filterTargetSel.value = currentValue;
     } else {
@@ -341,13 +387,25 @@ window.renderCmsLists = function() {
   pList.innerHTML = '';
   aList.innerHTML = '';
 
-  Object.values(paintingDatabase).forEach(p => {
+  // Render paintings in order with sorting arrows
+  paintingOrder.forEach((id, index) => {
+    const p = paintingDatabase[id];
+    if (!p) return;
+
     const li = document.createElement('li');
     li.innerHTML = `
-      <span>${p.title} (${p.artist})</span>
-      <button class="cms-btn-delete" onclick="handleCmsDeletePainting(${p.id})" title="Delete Painting">
-        <i class="fa-solid fa-trash-can"></i>
-      </button>
+      <span style="max-width: 140px; display: inline-block;">${p.title} (${p.artist})</span>
+      <div class="cms-item-actions">
+        <button class="cms-btn-sort" onclick="movePaintingUp(${p.id})" title="Move Up" ${index === 0 ? 'disabled style="opacity: 0.3; cursor: default;"' : ''}>
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+        <button class="cms-btn-sort" onclick="movePaintingDown(${p.id})" title="Move Down" ${index === paintingOrder.length - 1 ? 'disabled style="opacity: 0.3; cursor: default;"' : ''}>
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+        <button class="cms-btn-delete" onclick="handleCmsDeletePainting(${p.id})" title="Delete Painting">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
     `;
     pList.appendChild(li);
   });
@@ -428,36 +486,6 @@ window.saveGalleryStyles = function() {
     rootStyles[varName] = root.style.getPropertyValue(varName) || getComputedStyle(root).getPropertyValue(varName).trim();
   });
 
-  const cardStyles = [];
-  document.querySelectorAll('.painting-card').forEach(card => {
-    const cardId = card.getAttribute('data-id');
-    const overrides = {};
-    variables.forEach(varName => {
-      const val = card.style.getPropertyValue(varName);
-      if (val) {
-        overrides[varName] = val;
-      }
-    });
-
-    const wrapper = card.querySelector('.painting-image-wrapper');
-    let frameClass = '';
-    if (wrapper) {
-      if (wrapper.classList.contains('frame-silver')) frameClass = 'frame-silver';
-      else if (wrapper.classList.contains('frame-gold')) frameClass = 'frame-gold';
-      else if (wrapper.classList.contains('frame-wood')) frameClass = 'frame-wood';
-    }
-    const isLight = card.classList.contains('theme-light');
-
-    if (Object.keys(overrides).length > 0 || frameClass || isLight) {
-      cardStyles.push({
-        id: cardId,
-        overrides: overrides,
-        frameClass: frameClass,
-        isLight: isLight
-      });
-    }
-  });
-
   const inputValues = {};
   const inputsToSave = [
     'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
@@ -474,10 +502,11 @@ window.saveGalleryStyles = function() {
 
   const payload = {
     rootStyles,
-    cardStyles,
+    cardStyles: currentCardStyles,
     inputValues,
     paintingDatabase,
     artistDatabase,
+    paintingOrder,
     timestamp: Date.now()
   };
 
@@ -504,6 +533,11 @@ window.loadGalleryStyles = function() {
       }
       if (data.artistDatabase) {
         artistDatabase = data.artistDatabase;
+      }
+      if (data.paintingOrder) {
+        paintingOrder = data.paintingOrder;
+      } else {
+        paintingOrder = Object.keys(paintingDatabase).map(Number);
       }
 
       currentCardStyles = data.cardStyles || [];
