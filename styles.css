@@ -2458,3 +2458,12 @@ body.admin-logged-in #section-cms {
   background: var(--accent-red);
 }
 
+/* CMS Height Limits Fix */
+#section-cms .css-section-content {
+  max-height: 2000px !important;
+}
+
+#section-cms.collapsed .css-section-content {
+  max-height: 0 !important;
+}
+
