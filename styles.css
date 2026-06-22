@@ -1367,8 +1367,8 @@ body.admin-logged-in .css-panel-toggle {
 .css-control-panel {
   position: fixed;
   bottom: 95px;
-  left: -450px;
-  width: 400px;
+  left: -55%;
+  width: 50%;
   max-height: 85vh;
   background-color: rgba(10, 17, 40, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.1);
