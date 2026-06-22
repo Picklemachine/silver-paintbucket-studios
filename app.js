@@ -108,7 +108,7 @@ let paintingDatabase = {
 // 2. Shopping Cart System
 let cart = [];
 
-function addToCart(paintingId, title, price) {
+window.addToCart = function(paintingId, title, price) {
   cart.push({ id: paintingId, title: title, price: price });
   updateCartCount();
   showToast(title);
@@ -526,7 +526,7 @@ const modal = document.getElementById('detail-modal');
 const modalCloseBtn = document.getElementById('modal-close-btn-el');
 let lastActiveElement = null;
 
-function openPaintingModal(id) {
+window.openPaintingModal = function(id) {
   const painting = paintingDatabase[id];
   if (!painting || !modal) return;
   
@@ -586,7 +586,7 @@ function openPaintingModal(id) {
   document.addEventListener('keydown', handleEscClose);
 }
 
-function closePaintingModal() {
+window.closePaintingModal = function() {
   if (!modal) return;
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
