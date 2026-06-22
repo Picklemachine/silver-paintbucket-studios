@@ -928,9 +928,13 @@ if (filterTargetSelect) {
   filterTargetSelect.addEventListener('change', syncSlidersToTarget);
 }
 
-// Bind card clicks to select target painting cell
-document.querySelectorAll('.painting-card').forEach(card => {
-  card.addEventListener('click', (e) => {
+// Bind card clicks to select target painting cell via event delegation
+const gridEl = document.getElementById('paintings-grid-el');
+if (gridEl) {
+  gridEl.addEventListener('click', (e) => {
+    const card = e.target.closest('.painting-card');
+    if (!card) return;
+    
     if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.modal-overlay')) {
       return;
     }
@@ -956,7 +960,7 @@ document.querySelectorAll('.painting-card').forEach(card => {
       }
     }
   });
-});
+}
 
 // Bind reset single target override
 if (resetTargetBtn) {
@@ -994,6 +998,39 @@ if (resetTargetBtn) {
   });
 }
 
+// Helper to manage cache overrides for paginated elements
+function setCardStyleOverride(cardId, varName, value) {
+  let c = currentCardStyles.find(item => item.id == cardId);
+  if (!c) {
+    c = { id: cardId.toString(), overrides: {}, frameClass: '', isLight: true };
+    currentCardStyles.push(c);
+  }
+  if (!c.overrides) c.overrides = {};
+  if (value === null || value === undefined) {
+    delete c.overrides[varName];
+  } else {
+    c.overrides[varName] = value;
+  }
+}
+
+function setCardFrameOverride(cardId, frameClass) {
+  let c = currentCardStyles.find(item => item.id == cardId);
+  if (!c) {
+    c = { id: cardId.toString(), overrides: {}, frameClass: '', isLight: true };
+    currentCardStyles.push(c);
+  }
+  c.frameClass = frameClass;
+}
+
+function setCardLightOverride(cardId, isLight) {
+  let c = currentCardStyles.find(item => item.id == cardId);
+  if (!c) {
+    c = { id: cardId.toString(), overrides: {}, frameClass: '', isLight: true };
+    currentCardStyles.push(c);
+  }
+  c.isLight = isLight;
+}
+
 // Helper to bind input slider
 function bindCssVar(sliderId, cssVarName, suffix = '') {
   const slider = document.getElementById(sliderId);
@@ -1011,6 +1048,7 @@ function bindCssVar(sliderId, cssVarName, suffix = '') {
       if (card) {
         card.style.setProperty(cssVarName, val + suffix);
       }
+      setCardStyleOverride(target, cssVarName, val + suffix);
     }
     
     if (valSpan) {
@@ -1043,16 +1081,29 @@ const frameSelect = document.getElementById('custom-frame');
 if (frameSelect) {
   frameSelect.addEventListener('change', (e) => {
     const selectedFrame = e.target.value;
-    const wrappers = document.querySelectorAll('.painting-image-wrapper');
+    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
     
-    wrappers.forEach(wrapper => {
-      // Remove all frame classes
-      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
-      // Add the chosen one
-      if (selectedFrame !== 'none') {
-        wrapper.classList.add('frame-' + selectedFrame);
+    if (target === 'all') {
+      const wrappers = document.querySelectorAll('.painting-image-wrapper');
+      wrappers.forEach(wrapper => {
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        if (selectedFrame !== 'none') {
+          wrapper.classList.add('frame-' + selectedFrame);
+        }
+      });
+    } else {
+      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+      if (card) {
+        const wrapper = card.querySelector('.painting-image-wrapper');
+        if (wrapper) {
+          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+          if (selectedFrame !== 'none') {
+            wrapper.classList.add('frame-' + selectedFrame);
+          }
+        }
       }
-    });
+      setCardFrameOverride(target, selectedFrame !== 'none' ? 'frame-' + selectedFrame : 'none');
+    }
   });
 }
 
@@ -1081,19 +1132,32 @@ const cardBgSelect = document.getElementById('custom-card-bg');
 if (cardBgSelect) {
   cardBgSelect.addEventListener('change', (e) => {
     const selectedVal = e.target.value;
-    root.style.setProperty('--card-bg-color', selectedVal);
-    
-    // Toggle light text theme for readability if a light cell background is chosen
-    const cards = document.querySelectorAll('.painting-card');
+    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
     const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc'].includes(selectedVal);
     
-    cards.forEach(card => {
-      if (isLight) {
-        card.classList.add('theme-light');
-      } else {
-        card.classList.remove('theme-light');
+    if (target === 'all') {
+      root.style.setProperty('--card-bg-color', selectedVal);
+      const cards = document.querySelectorAll('.painting-card');
+      cards.forEach(card => {
+        if (isLight) {
+          card.classList.add('theme-light');
+        } else {
+          card.classList.remove('theme-light');
+        }
+      });
+    } else {
+      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+      if (card) {
+        card.style.setProperty('--card-bg-color', selectedVal);
+        if (isLight) {
+          card.classList.add('theme-light');
+        } else {
+          card.classList.remove('theme-light');
+        }
       }
-    });
+      setCardStyleOverride(target, '--card-bg-color', selectedVal);
+      setCardLightOverride(target, isLight);
+    }
   });
 }
 
@@ -1112,6 +1176,7 @@ if (cssResetBtn) {
     document.getElementById('custom-frame-margin').value = 12;
     
     // Clear all card-level filter overrides
+    currentCardStyles = [];
     document.querySelectorAll('.painting-card').forEach(card => {
       slidersToSync.forEach(item => {
         card.style.removeProperty(item.varName);
