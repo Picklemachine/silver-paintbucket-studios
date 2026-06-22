@@ -130,13 +130,122 @@ let isApplyingStyles = false;
 const root = document.documentElement;
 const cssResetBtn = document.getElementById('css-reset-btn-el');
 
-// --- Dynamic Content Rendering ---
+// --- Dynamic Content Rendering & Pagination State ---
+let currentPage = 1;
+const itemsPerPage = 9;
+let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
+
+function applyLoadedCardStyles() {
+  if (!currentCardStyles) return;
+
+  document.querySelectorAll('.painting-card').forEach(card => {
+    const cardId = card.getAttribute('data-id');
+    const c = currentCardStyles.find(item => item.id == cardId);
+    if (c) {
+      const variables = [
+        '--painting-padding',
+        '--painting-radius',
+        '--painting-bg-color',
+        '--card-bg-color',
+        '--frame-border-width',
+        '--frame-margin',
+        '--painting-brightness',
+        '--painting-contrast',
+        '--painting-saturate',
+        '--painting-hue-rotate'
+      ];
+      if (c.overrides) {
+        variables.forEach(varName => {
+          const val = c.overrides[varName];
+          if (val) {
+            card.style.setProperty(varName, val);
+          }
+        });
+      }
+      if (c.isLight) {
+        card.classList.add('theme-light');
+      }
+      if (c.frameClass && c.frameClass !== 'none') {
+        const wrapper = card.querySelector('.painting-image-wrapper');
+        if (wrapper) {
+          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+          wrapper.classList.add(c.frameClass);
+        }
+      }
+    }
+  });
+}
+
+function renderPaginationControls(totalPages) {
+  const pagEl = document.querySelector('.gallery-pagination');
+  if (!pagEl) return;
+  pagEl.innerHTML = '';
+
+  if (totalPages <= 1) {
+    pagEl.style.display = 'none';
+    return;
+  }
+  pagEl.style.display = 'flex';
+
+  // Page buttons
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.className = `pag-btn ${i === currentPage ? 'active' : ''}`;
+    btn.textContent = i;
+    btn.addEventListener('click', () => {
+      currentPage = i;
+      renderPaintings();
+      const targetSec = document.getElementById('paintings');
+      if (targetSec) {
+        targetSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    pagEl.appendChild(btn);
+  }
+
+  // Next button
+  if (currentPage < totalPages) {
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pag-btn next-btn';
+    nextBtn.innerHTML = 'Next <i class="fa-solid fa-angle-right"></i>';
+    nextBtn.addEventListener('click', () => {
+      currentPage++;
+      renderPaintings();
+      const targetSec = document.getElementById('paintings');
+      if (targetSec) {
+        targetSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    pagEl.appendChild(nextBtn);
+  }
+}
+
 window.renderPaintings = function() {
   const gridEl = document.getElementById('paintings-grid-el');
   if (!gridEl) return;
+
+  const activeFilterBtn = document.querySelector('.filter-btn.active');
+  const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+
+  const allPaintings = Object.values(paintingDatabase);
+  const filteredPaintings = allPaintings.filter(p => {
+    return activeFilter === 'all' || p.category.toLowerCase() === activeFilter;
+  });
+
+  const totalPages = Math.ceil(filteredPaintings.length / itemsPerPage) || 1;
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+  if (currentPage < 1) {
+    currentPage = 1;
+  }
+
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const pagePaintings = filteredPaintings.slice(startIdx, startIdx + itemsPerPage);
+
   gridEl.innerHTML = '';
   
-  Object.values(paintingDatabase).forEach(painting => {
+  pagePaintings.forEach(painting => {
     const card = document.createElement('article');
     card.className = 'painting-card theme-light';
     card.setAttribute('data-category', painting.category.toLowerCase());
@@ -166,6 +275,9 @@ window.renderPaintings = function() {
     `;
     gridEl.appendChild(card);
   });
+
+  renderPaginationControls(totalPages);
+  applyLoadedCardStyles();
 };
 
 window.renderArtists = function() {
@@ -192,7 +304,6 @@ window.renderArtists = function() {
 };
 
 window.populateSelectors = function() {
-  // Populate Target Painting dropdown in CSS customizer
   const filterTargetSel = document.getElementById('custom-filter-target');
   if (filterTargetSel) {
     const currentValue = filterTargetSel.value;
@@ -210,7 +321,6 @@ window.populateSelectors = function() {
     }
   }
 
-  // Populate Artist dropdown in CMS Add Painting Form
   const cmsArtistSel = document.getElementById('cms-painting-artist');
   if (cmsArtistSel) {
     cmsArtistSel.innerHTML = '';
@@ -253,6 +363,45 @@ window.renderCmsLists = function() {
     aList.appendChild(li);
   });
 };
+
+// --- Image Compression and Downscaling ---
+function resizeAndConvertImage(file, maxDimension = 600) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          }
+        } else {
+          if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+        resolve(dataUrl);
+      };
+      img.onerror = reject;
+      img.src = event.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 // --- Sync Functions ---
 window.saveGalleryStyles = function() {
@@ -357,6 +506,8 @@ window.loadGalleryStyles = function() {
         artistDatabase = data.artistDatabase;
       }
 
+      currentCardStyles = data.cardStyles || [];
+
       // Re-render components with newly loaded DB data
       renderPaintings();
       renderArtists();
@@ -385,27 +536,6 @@ window.loadGalleryStyles = function() {
           wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
         }
       });
-
-      // Apply card overrides
-      if (data.cardStyles) {
-        data.cardStyles.forEach(c => {
-          const card = document.querySelector(`.painting-card[data-id="${c.id}"]`);
-          if (card) {
-            Object.keys(c.overrides).forEach(varName => {
-              card.style.setProperty(varName, c.overrides[varName]);
-            });
-            if (c.isLight) {
-              card.classList.add('theme-light');
-            }
-            if (c.frameClass && c.frameClass !== 'none') {
-              const wrapper = card.querySelector('.painting-image-wrapper');
-              if (wrapper) {
-                wrapper.classList.add(c.frameClass);
-              }
-            }
-          }
-        });
-      }
 
       // Sync customizer UI inputs
       if (data.inputValues) {
@@ -623,28 +753,11 @@ const filterButtons = document.querySelectorAll('.filter-btn');
 
 filterButtons.forEach(button => {
   button.addEventListener('click', () => {
-    // Update active filter button
     filterButtons.forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
     
-    const filterValue = button.getAttribute('data-filter');
-    const currentCards = document.querySelectorAll('.painting-card');
-    
-    currentCards.forEach(card => {
-      const cardCategory = card.getAttribute('data-category');
-      
-      // Animate filter change
-      if (filterValue === 'all' || cardCategory === filterValue) {
-        card.style.display = 'flex';
-        card.style.opacity = '0';
-        setTimeout(() => {
-          card.style.opacity = '1';
-          card.style.transition = 'opacity 0.4s ease';
-        }, 50);
-      } else {
-        card.style.display = 'none';
-      }
-    });
+    currentPage = 1; // Reset to page 1 on filter change
+    renderPaintings();
   });
 });
 
@@ -1408,12 +1521,12 @@ window.handleAdminLogout = function() {
 // ==========================================================================
 
 // Add Artist Form Handler
-window.handleCmsAddArtist = function(event) {
+window.handleCmsAddArtist = async function(event) {
   event.preventDefault();
   const name = document.getElementById('cms-artist-name').value.trim();
   const style = document.getElementById('cms-artist-medium').value.trim();
   const origin = document.getElementById('cms-artist-origin').value.trim() || 'Unknown';
-  const avatar = document.getElementById('cms-artist-avatar').value.trim() || 'assets/artists/default_avatar.png';
+  const avatarFile = document.getElementById('cms-artist-avatar').files[0];
   const philosophy = document.getElementById('cms-artist-philosophy').value.trim() || 'Art is life.';
   const bio = document.getElementById('cms-artist-bio').value.trim();
   const years = document.getElementById('cms-artist-years').value.trim() || '1';
@@ -1424,11 +1537,22 @@ window.handleCmsAddArtist = function(event) {
     return;
   }
 
+  let avatarUrl = 'assets/artists/default_avatar.png';
+  if (avatarFile) {
+    try {
+      avatarUrl = await resizeAndConvertImage(avatarFile, 400);
+    } catch (e) {
+      console.error('Error scaling avatar image:', e);
+      alert('Failed to scale avatar image.');
+      return;
+    }
+  }
+
   artistDatabase[name] = {
     name: name,
     style: style,
     origin: origin,
-    image: avatar,
+    image: avatarUrl,
     philosophy: philosophy,
     ideas: bio,
     statPaintings: '0 Paintings',
@@ -1448,16 +1572,30 @@ window.handleCmsAddArtist = function(event) {
 };
 
 // Add Painting Form Handler
-window.handleCmsAddPainting = function(event) {
+window.handleCmsAddPainting = async function(event) {
   event.preventDefault();
   const title = document.getElementById('cms-painting-title').value.trim();
   const artistName = document.getElementById('cms-painting-artist').value;
   const category = document.getElementById('cms-painting-category').value;
   const price = parseInt(document.getElementById('cms-painting-price').value.trim()) || 0;
-  const image = document.getElementById('cms-painting-image').value.trim();
+  const imageFile = document.getElementById('cms-painting-image').files[0];
   const medium = document.getElementById('cms-painting-medium').value.trim();
   const dimensions = document.getElementById('cms-painting-dimensions').value.trim();
   const desc = document.getElementById('cms-painting-desc').value.trim() || '';
+
+  if (!imageFile) {
+    alert('Please upload a painting photo.');
+    return;
+  }
+
+  let imageUrl = '';
+  try {
+    imageUrl = await resizeAndConvertImage(imageFile, 800);
+  } catch (e) {
+    console.error('Error scaling painting image:', e);
+    alert('Failed to scale painting image.');
+    return;
+  }
 
   // Generate unique ID
   const existingIds = Object.keys(paintingDatabase).map(Number);
@@ -1469,7 +1607,7 @@ window.handleCmsAddPainting = function(event) {
     artist: artistName,
     desc: desc,
     price: price,
-    image: image,
+    image: imageUrl,
     medium: medium,
     dimensions: dimensions,
     category: category.charAt(0).toUpperCase() + category.slice(1)

@@ -1367,9 +1367,9 @@ body.admin-logged-in .css-panel-toggle {
 .css-control-panel {
   position: fixed;
   bottom: 95px;
-  left: -350px;
-  width: 320px;
-  max-height: 75vh;
+  left: -450px;
+  width: 400px;
+  max-height: 85vh;
   background-color: rgba(10, 17, 40, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -2426,5 +2426,35 @@ body.admin-logged-in #section-cms {
 
 .cms-btn-delete:hover {
   color: var(--accent-red);
+}
+
+.css-control-group input[type="file"] {
+  background-color: rgba(5, 10, 24, 0.8);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.css-control-group input[type="file"]::file-selector-button {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+
+.css-control-group input[type="file"]::file-selector-button:hover {
+  background: var(--accent-red);
 }
 
