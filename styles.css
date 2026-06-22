@@ -24,10 +24,10 @@
   --header-height: 80px;
 
   /* Painting Customizer Variables */
-  --painting-padding: 30px;
+  --painting-padding: 16px;
   --painting-radius: 4px;
-  --painting-bg-color: #050a18;
-  --card-bg-color: var(--glass-bg);
+  --painting-bg-color: #001f54;
+  --card-bg-color: #eddcd2;
   --frame-border-width: 4px;
   --frame-margin: 12px;
   --painting-brightness: 100%;
