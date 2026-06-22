@@ -207,10 +207,6 @@ function renderPaginationControls(totalPages) {
   if (!pagEl) return;
   pagEl.innerHTML = '';
 
-  if (totalPages <= 1) {
-    pagEl.style.display = 'none';
-    return;
-  }
   pagEl.style.display = 'flex';
 
   // Page buttons
