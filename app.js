@@ -993,6 +993,57 @@ function syncSlidersToTarget() {
       }
     }
   });
+  
+  syncDropdownsToTarget();
+}
+
+function syncDropdownsToTarget() {
+  const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+  const frameSelect = document.getElementById('custom-frame');
+  const bgColorSelect = document.getElementById('custom-bg-color');
+  const cardBgSelect = document.getElementById('custom-card-bg');
+  
+  if (target === 'all') {
+    if (bgColorSelect) {
+      const globalBg = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+      bgColorSelect.value = globalBg.trim();
+    }
+    if (cardBgSelect) {
+      const globalCardBg = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+      cardBgSelect.value = globalCardBg.trim();
+    }
+  } else {
+    const c = currentCardStyles.find(item => item.id == target);
+    if (c) {
+      if (frameSelect && c.frameClass) {
+        frameSelect.value = c.frameClass.replace('frame-', '');
+      } else if (frameSelect) {
+        frameSelect.value = 'none';
+      }
+      
+      if (bgColorSelect && c.overrides && c.overrides['--painting-bg-color']) {
+        bgColorSelect.value = c.overrides['--painting-bg-color'];
+      } else if (bgColorSelect) {
+        bgColorSelect.value = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+      }
+      
+      if (cardBgSelect && c.overrides && c.overrides['--card-bg-color']) {
+        cardBgSelect.value = c.overrides['--card-bg-color'];
+      } else if (cardBgSelect) {
+        cardBgSelect.value = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+      }
+    } else {
+      if (frameSelect) frameSelect.value = 'none';
+      if (bgColorSelect) {
+        const val = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+        bgColorSelect.value = val.trim();
+      }
+      if (cardBgSelect) {
+        const val = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+        cardBgSelect.value = val.trim();
+      }
+    }
+  }
 }
 
 if (filterTargetSelect) {
@@ -1194,7 +1245,22 @@ if (frameBorderSlider) {
 const bgColorSelect = document.getElementById('custom-bg-color');
 if (bgColorSelect) {
   bgColorSelect.addEventListener('change', (e) => {
-    root.style.setProperty('--painting-bg-color', e.target.value);
+    const selectedVal = e.target.value;
+    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+    
+    if (target === 'all') {
+      root.style.setProperty('--painting-bg-color', selectedVal);
+      document.querySelectorAll('.painting-card').forEach(card => {
+        card.style.removeProperty('--painting-bg-color');
+        setCardStyleOverride(card.getAttribute('data-id'), '--painting-bg-color', null);
+      });
+    } else {
+      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+      if (card) {
+        card.style.setProperty('--painting-bg-color', selectedVal);
+      }
+      setCardStyleOverride(target, '--painting-bg-color', selectedVal);
+    }
   });
 }
 
