@@ -225,6 +225,16 @@ img {
   object-fit: contain;
 }
 
+.header-admin-trigger {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+}
+
 .header-paintbrush-icon {
   width: 28px;
   height: 28px;
@@ -237,6 +247,12 @@ img {
 .header-paintbrush-icon:hover {
   transform: scale(1.2) rotate(-15deg);
   filter: drop-shadow(0 4px 10px rgba(239, 35, 60, 0.4)) brightness(1.2);
+}
+
+@media (max-width: 1300px) {
+  .logo {
+    margin-left: 44px; /* Shift logo to avoid overlapping the absolute paintbrush link */
+  }
 }
 
 .nav-links {
