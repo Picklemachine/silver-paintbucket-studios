@@ -114,18 +114,22 @@ try {
 }
 
 
-window.addToCart = function(paintingId, title, price) {
-  cart.push({ id: paintingId, title: title, price: price });
+window.addToCart = function(paintingId, title, price, quantity = 1) {
+  for (let i = 0; i < quantity; i++) {
+    cart.push({ id: paintingId, title: title, price: price });
+  }
   localStorage.setItem('spb_cart_data', JSON.stringify(cart));
   updateCartCount();
-  showToast(title);
+  showToast(quantity > 1 ? `${quantity}x ${title}` : title);
   
   // Animation effect on cart badge
   const cartBadge = document.getElementById('cart-badge-container');
-  cartBadge.classList.add('jiggle');
-  setTimeout(() => {
-    cartBadge.classList.remove('jiggle');
-  }, 2500);
+  if (cartBadge) {
+    cartBadge.classList.add('jiggle');
+    setTimeout(() => {
+      cartBadge.classList.remove('jiggle');
+    }, 2500);
+  }
 };
 
 // ==========================================================================
@@ -760,12 +764,30 @@ window.openPaintingModal = function(id) {
   
   // Wire up the add to cart button in the modal
   const buyBtn = document.getElementById('modal-add-to-cart-btn');
+  // Reset quantity select
+  const qtySelect = document.getElementById('modal-quantity-select');
+  if (qtySelect) qtySelect.value = "1";
+
+  // Reset button state
+  buyBtn.disabled = false;
+  buyBtn.style.opacity = "";
+  buyBtn.style.cursor = "";
+  buyBtn.innerHTML = 'Add to Cart <i class="fa-solid fa-bag-shopping"></i>';
+
   // Remove existing listeners by replacing button with a clone
   const newBuyBtn = buyBtn.cloneNode(true);
   buyBtn.parentNode.replaceChild(newBuyBtn, buyBtn);
   
   newBuyBtn.addEventListener('click', () => {
-    addToCart(painting.id, painting.title, painting.price);
+    const qtyValSelect = document.getElementById('modal-quantity-select');
+    const quantity = qtyValSelect ? parseInt(qtyValSelect.value, 10) || 1 : 1;
+    addToCart(painting.id, painting.title, painting.price, quantity);
+    
+    // Disable to only allow pressing once
+    newBuyBtn.disabled = true;
+    newBuyBtn.innerHTML = 'Added to Cart <i class="fa-solid fa-check"></i>';
+    newBuyBtn.style.opacity = "0.6";
+    newBuyBtn.style.cursor = "not-allowed";
   });
   
   // Open modal
@@ -2163,7 +2185,7 @@ window.handleCheckoutSubmit = function(event) {
   const submitBtn = document.getElementById('btn-checkout-submit-el');
   const btnText = document.getElementById('checkout-btn-text');
   const spinner = document.getElementById('checkout-spinner-el');
-  const inputs = document.querySelectorAll('#checkout-payment-form input');
+  const inputs = document.querySelectorAll('#checkout-payment-form input, #checkout-payment-form select');
 
   if (!submitBtn || !spinner || !btnText) return;
 
@@ -2201,7 +2223,7 @@ window.handleCheckoutSubmit = function(event) {
       sameAddressCheckbox.checked = true;
       if (billingSection) {
         billingSection.style.display = 'none';
-        const billingInputs = billingSection.querySelectorAll('input');
+        const billingInputs = billingSection.querySelectorAll('input, select');
         billingInputs.forEach(input => input.required = false);
       }
     }
@@ -2275,7 +2297,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sameAddressCheckbox = document.getElementById('checkout-same-address');
   const billingSection = document.getElementById('billing-address-section');
   if (sameAddressCheckbox && billingSection) {
-    const billingInputs = billingSection.querySelectorAll('input');
+    const billingInputs = billingSection.querySelectorAll('input, select');
     sameAddressCheckbox.addEventListener('change', (e) => {
       if (e.target.checked) {
         billingSection.style.display = 'none';
