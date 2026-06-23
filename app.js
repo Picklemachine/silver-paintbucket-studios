@@ -263,12 +263,34 @@ window.renderPaintings = function() {
   applyLoadedCardStyles();
 };
 
+let artistIndexOffset = 0;
+
+window.scrollArtists = function(direction) {
+  const artistsList = Object.values(artistDatabase);
+  if (direction === 'left') {
+    artistIndexOffset = Math.max(0, artistIndexOffset - 1);
+  } else if (direction === 'right') {
+    artistIndexOffset = Math.min(artistsList.length - 4, artistIndexOffset + 1);
+  }
+  if (artistIndexOffset < 0) artistIndexOffset = 0;
+  renderArtists();
+};
+
 window.renderArtists = function() {
   const gridEl = document.getElementById('artists-grid-el');
   if (!gridEl) return;
   gridEl.innerHTML = '';
   
-  Object.values(artistDatabase).forEach(artist => {
+  const artistsList = Object.values(artistDatabase);
+  
+  // Bounds check in case list size changed via CMS
+  if (artistIndexOffset > artistsList.length - 4) {
+    artistIndexOffset = Math.max(0, artistsList.length - 4);
+  }
+  
+  const visibleArtists = artistsList.slice(artistIndexOffset, artistIndexOffset + 4);
+  
+  visibleArtists.forEach(artist => {
     const avatar = artist.image || 'assets/artists/default_avatar.png';
     const card = document.createElement('div');
     card.className = 'artist-profile-card';
@@ -284,6 +306,23 @@ window.renderArtists = function() {
     `;
     gridEl.appendChild(card);
   });
+
+  // Enable/disable arrows based on offset position
+  const prevBtn = document.getElementById('artists-prev-btn');
+  const nextBtn = document.getElementById('artists-next-btn');
+  if (prevBtn && nextBtn) {
+    prevBtn.disabled = (artistIndexOffset === 0);
+    nextBtn.disabled = (artistIndexOffset >= artistsList.length - 4);
+    
+    // Hide buttons if total artists is 4 or less
+    if (artistsList.length <= 4) {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+    } else {
+      prevBtn.style.display = 'flex';
+      nextBtn.style.display = 'flex';
+    }
+  }
 };
 
 window.populateSelectors = function() {
