@@ -1004,6 +1004,12 @@ function bindCssVar(sliderId, cssVarName, suffix = '') {
 // Customizer ranges, dropdowns, and target reset logic are initialized inside initializeDOMBindings
 function initializeDOMBindings() {
   console.log("SPB App: initializeDOMBindings executing.");
+  
+  // Diagnostic Click Tracker
+  document.addEventListener('click', (e) => {
+    console.log("SPB App: Click registered on:", e.target);
+  });
+
   // Resolve global selectors safely when DOM is loaded
   cssPanel = document.getElementById('css-control-panel-el');
   cssPanelToggle = document.getElementById('css-panel-toggle-btn');
