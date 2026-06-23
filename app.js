@@ -1395,6 +1395,20 @@ function initializeDOMBindings() {
       }
     });
   }
+
+  // Bind Artist modal event listeners
+  const artistModal = document.getElementById('artist-modal');
+  const artistModalCloseBtn = document.getElementById('artist-modal-close-btn-el');
+  if (artistModalCloseBtn) {
+    artistModalCloseBtn.addEventListener('click', closeArtistModal);
+  }
+  if (artistModal) {
+    artistModal.addEventListener('click', (e) => {
+      if (e.target === artistModal) {
+        closeArtistModal();
+      }
+    });
+  }
 }
 
 // Interactive Bucky Mascot Switcher
@@ -1588,16 +1602,6 @@ function handleArtistEscClose(e) {
   }
 }
 
-if (artistModalCloseBtn) {
-  artistModalCloseBtn.addEventListener('click', closeArtistModal);
-}
-if (artistModal) {
-  artistModal.addEventListener('click', (e) => {
-    if (e.target === artistModal) {
-      closeArtistModal();
-    }
-  });
-}
 
 // 11. Admin Access & Password Lock Controller
 let adminLastActiveElement = null;
