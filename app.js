@@ -2236,9 +2236,7 @@ window.handleCheckoutSubmit = function(event) {
     }
     const successSubtitle = document.getElementById('receipt-success-subtitle');
     if (successSubtitle) {
-      successSubtitle.innerHTML = emailVal 
-        ? `Thank you for supporting our local artists. Your transaction has been finalized.<br><span style="color: var(--accent-red); font-weight: 600;">Receipt sent to: ${emailVal}</span>` 
-        : 'Thank you for supporting our local artists. Your transaction has been finalized.';
+      successSubtitle.textContent = 'Thank you for supporting our local artists. Your transaction has been finalized.';
     }
 
     // Reset Form
