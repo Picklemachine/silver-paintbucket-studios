@@ -3019,22 +3019,27 @@ body.admin-logged-in #section-cms {
 }
 
 .success-checkmark-circle {
-  width: 72px;
-  height: 72px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.08);
   border: 3px solid #10b981;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  margin-top: 25px; /* Extra spacing to accommodate pop-out */
+  overflow: visible;
 }
 
-.success-checkmark-icon {
-  font-size: 2.2rem;
-  color: #10b981;
-  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+.success-bucky-img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  position: absolute;
+  bottom: 0px; /* Bucky stands on the bottom rim of the circle */
+  animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
 }
 
 @keyframes scaleUp {
