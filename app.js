@@ -2184,6 +2184,18 @@ window.handleCheckoutSubmit = function(event) {
 
     // Reset Form
     document.getElementById('checkout-payment-form').reset();
+    
+    // Reset billing address same checkbox state
+    const sameAddressCheckbox = document.getElementById('checkout-same-address');
+    const billingSection = document.getElementById('billing-address-section');
+    if (sameAddressCheckbox) {
+      sameAddressCheckbox.checked = true;
+      if (billingSection) {
+        billingSection.style.display = 'none';
+        const billingInputs = billingSection.querySelectorAll('input');
+        billingInputs.forEach(input => input.required = false);
+      }
+    }
 
     // Close checkout and show success
     closeCheckout();
@@ -2245,6 +2257,27 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
       } else {
         e.target.value = value;
+      }
+    });
+  }
+
+  // Same Address Checkbox Toggle
+  const sameAddressCheckbox = document.getElementById('checkout-same-address');
+  const billingSection = document.getElementById('billing-address-section');
+  if (sameAddressCheckbox && billingSection) {
+    const billingInputs = billingSection.querySelectorAll('input');
+    sameAddressCheckbox.addEventListener('change', (e) => {
+      if (e.target.checked) {
+        billingSection.style.display = 'none';
+        billingInputs.forEach(input => {
+          input.required = false;
+          input.value = '';
+        });
+      } else {
+        billingSection.style.display = 'block';
+        billingInputs.forEach(input => {
+          input.required = true;
+        });
       }
     });
   }
