@@ -1341,7 +1341,7 @@ img {
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
   border-radius: 50%;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
@@ -1351,6 +1351,10 @@ img {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: var(--transition-smooth);
+}
+
+body.admin-logged-in .css-panel-toggle {
+  display: flex;
 }
 
 .css-panel-toggle:hover {
