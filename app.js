@@ -1547,11 +1547,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function openAdminLogin() {
+  console.log("SPB App: openAdminLogin executed.");
   const adminModal = document.getElementById('admin-login-modal');
   if (!adminModal) {
     console.error("SPB App: admin-login-modal element NOT found in DOM!");
     return;
   }
+  console.log("SPB App: admin-login-modal found:", adminModal);
   adminLastActiveElement = document.activeElement;
   
   // Clear inputs and error fields
@@ -1561,6 +1563,7 @@ function openAdminLogin() {
   if (errorEl) errorEl.textContent = '';
   
   adminModal.classList.add('open');
+  console.log("SPB App: admin-login-modal classList after adding 'open':", adminModal.classList.toString());
   adminModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   
