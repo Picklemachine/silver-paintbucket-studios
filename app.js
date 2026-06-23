@@ -270,7 +270,7 @@ window.scrollArtists = function(direction) {
   if (direction === 'left') {
     artistIndexOffset = Math.max(0, artistIndexOffset - 1);
   } else if (direction === 'right') {
-    artistIndexOffset = Math.min(artistsList.length - 4, artistIndexOffset + 1);
+    artistIndexOffset = Math.min(artistsList.length - 3, artistIndexOffset + 1);
   }
   if (artistIndexOffset < 0) artistIndexOffset = 0;
   renderArtists();
@@ -284,11 +284,11 @@ window.renderArtists = function() {
   const artistsList = Object.values(artistDatabase);
   
   // Bounds check in case list size changed via CMS
-  if (artistIndexOffset > artistsList.length - 4) {
-    artistIndexOffset = Math.max(0, artistsList.length - 4);
+  if (artistIndexOffset > artistsList.length - 3) {
+    artistIndexOffset = Math.max(0, artistsList.length - 3);
   }
   
-  const visibleArtists = artistsList.slice(artistIndexOffset, artistIndexOffset + 4);
+  const visibleArtists = artistsList.slice(artistIndexOffset, artistIndexOffset + 3);
   
   visibleArtists.forEach(artist => {
     const avatar = artist.image || 'assets/artists/default_avatar.png';
@@ -312,10 +312,10 @@ window.renderArtists = function() {
   const nextBtn = document.getElementById('artists-next-btn');
   if (prevBtn && nextBtn) {
     prevBtn.disabled = (artistIndexOffset === 0);
-    nextBtn.disabled = (artistIndexOffset >= artistsList.length - 4);
+    nextBtn.disabled = (artistIndexOffset >= artistsList.length - 3);
     
-    // Hide buttons if total artists is 4 or less
-    if (artistsList.length <= 4) {
+    // Hide buttons if total artists is 3 or less
+    if (artistsList.length <= 3) {
       prevBtn.style.display = 'none';
       nextBtn.style.display = 'none';
     } else {
