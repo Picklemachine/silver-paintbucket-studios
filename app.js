@@ -2222,6 +2222,12 @@ window.handleCheckoutSubmit = function(event) {
     if (receiptEmailNotice) {
       receiptEmailNotice.textContent = emailVal ? `A copy of your receipt has been emailed to: ${emailVal}` : 'A copy of your receipt has been emailed.';
     }
+    const successSubtitle = document.getElementById('receipt-success-subtitle');
+    if (successSubtitle) {
+      successSubtitle.innerHTML = emailVal 
+        ? `Thank you for supporting our local artists. Your transaction has been finalized.<br><span style="color: var(--accent-red); font-weight: 600;">Receipt sent to: ${emailVal}</span>` 
+        : 'Thank you for supporting our local artists. Your transaction has been finalized.';
+    }
 
     // Reset Form
     document.getElementById('checkout-payment-form').reset();
