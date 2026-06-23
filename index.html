@@ -251,7 +251,7 @@
         <a href="#artists">Artists</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <a href="javascript:void(0)" onclick="openAdminLogin()" class="admin-panel-link">Admin Panel</a>
+        <a href="javascript:void(0)" onclick="console.log('HTML: Admin Link Clicked!'); openAdminLogin()" class="admin-panel-link">Admin Panel</a>
       </div>
       <div class="footer-socials">
         <h4>Follow Bucky</h4>
@@ -355,7 +355,7 @@
   </div>
 
   <!-- Floating CSS Customizer Control Panel -->
-  <button class="css-panel-toggle" id="css-panel-toggle-btn" aria-label="Open CSS Control Panel">
+  <button class="css-panel-toggle" id="css-panel-toggle-btn" onclick="console.log('HTML: Toggle Button Clicked!')" aria-label="Open CSS Control Panel">
     <i class="fa-solid fa-sliders"></i>
   </button>
 
@@ -635,6 +635,6 @@
   <div class="toast-container" id="toast-container-el"></div>
 
   <!-- JavaScript -->
-  <script src="app.js?v=105"></script>
+  <script src="app.js?v=106"></script>
 </body>
 </html>
