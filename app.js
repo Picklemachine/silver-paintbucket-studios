@@ -1913,3 +1913,113 @@ window.handleResetDatabaseToDefaults = function() {
   location.reload();
 };
 
+// ==========================================================================
+// Lightbox & Magnifying Glass Controller
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const detailImg = document.getElementById('modal-painting-image');
+  const lightboxModal = document.getElementById('lightbox-modal');
+  const lightboxImg = document.getElementById('lightbox-image-el');
+  const lightboxCloseBtn = document.getElementById('lightbox-close-btn-el');
+  const magnifierLens = document.getElementById('magnifier-lens-el');
+  const magnifierContainer = document.getElementById('magnifier-container-el');
+
+  if (!detailImg || !lightboxModal || !lightboxImg || !lightboxCloseBtn || !magnifierLens || !magnifierContainer) {
+    return;
+  }
+
+  // Open Lightbox Zoom Modal when clicking modal image
+  detailImg.addEventListener('click', () => {
+    lightboxImg.src = detailImg.src;
+    lightboxImg.alt = detailImg.alt;
+    
+    // Copy filters from detail modal image to lightbox image
+    lightboxImg.style.filter = detailImg.style.filter;
+
+    // Apply customizer variables to lightbox image
+    const filtersToSync = [
+      '--painting-brightness',
+      '--painting-contrast',
+      '--painting-saturate',
+      '--painting-hue-rotate'
+    ];
+    filtersToSync.forEach(varName => {
+      const val = detailImg.style.getPropertyValue(varName);
+      if (val) {
+        lightboxImg.style.setProperty(varName, val);
+      } else {
+        lightboxImg.style.removeProperty(varName);
+      }
+    });
+
+    lightboxModal.classList.add('open');
+    lightboxModal.setAttribute('aria-hidden', 'false');
+  });
+
+  // Close Lightbox Zoom Modal
+  const closeLightbox = () => {
+    lightboxModal.classList.remove('open');
+    lightboxModal.setAttribute('aria-hidden', 'true');
+    magnifierLens.style.display = 'none';
+  };
+
+  lightboxCloseBtn.addEventListener('click', closeLightbox);
+  lightboxModal.addEventListener('click', (e) => {
+    if (e.target === lightboxModal || e.target === lightboxModal.querySelector('.lightbox-content')) {
+      closeLightbox();
+    }
+  });
+
+  // Listen for Escape key to close lightbox
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightboxModal.classList.contains('open')) {
+      closeLightbox();
+      e.stopPropagation(); // Stop detail modal from closing at same time
+    }
+  });
+
+  // Magnifying Glass Logic
+  const zoomLevel = 2.5;
+
+  const moveMagnifier = (e) => {
+    const rect = lightboxImg.getBoundingClientRect();
+    
+    // Position of cursor relative to the image
+    let x = e.clientX - rect.left;
+    let y = e.clientY - rect.top;
+
+    // Keep cursor positions inside bounds of the image
+    if (x < 0) x = 0;
+    if (x > rect.width) x = rect.width;
+    if (y < 0) y = 0;
+    if (y > rect.height) y = rect.height;
+
+    // Show lens
+    magnifierLens.style.display = 'block';
+
+    // Position lens
+    magnifierLens.style.left = `${x}px`;
+    magnifierLens.style.top = `${y}px`;
+
+    // Set background image (same as current image)
+    magnifierLens.style.backgroundImage = `url("${lightboxImg.src}")`;
+    magnifierLens.style.backgroundSize = `${rect.width * zoomLevel}px ${rect.height * zoomLevel}px`;
+    
+    // Copy filters of the lightboxImg to the lens background to apply filters inside the lens
+    const activeFilters = getComputedStyle(lightboxImg).filter;
+    magnifierLens.style.filter = activeFilters;
+
+    // Calculate background position
+    const bgX = (x * zoomLevel) - 90; // 90 is half of 180px width
+    const bgY = (y * zoomLevel) - 90; // 90 is half of 180px height
+    magnifierLens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
+  };
+
+  lightboxImg.addEventListener('mousemove', moveMagnifier);
+  magnifierLens.addEventListener('mousemove', moveMagnifier);
+
+  lightboxImg.addEventListener('mouseleave', () => {
+    magnifierLens.style.display = 'none';
+  });
+});
+
