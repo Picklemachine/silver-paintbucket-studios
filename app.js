@@ -107,9 +107,16 @@ let paintingDatabase = {
 
 // 2. Shopping Cart System
 let cart = [];
+try {
+  cart = JSON.parse(localStorage.getItem('spb_cart_data')) || [];
+} catch (e) {
+  console.error("Error reading cart from localStorage:", e);
+}
+
 
 window.addToCart = function(paintingId, title, price) {
   cart.push({ id: paintingId, title: title, price: price });
+  localStorage.setItem('spb_cart_data', JSON.stringify(cart));
   updateCartCount();
   showToast(title);
   
@@ -650,6 +657,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderArtists();
   populateSelectors();
   renderCmsLists();
+  updateCartCount();
 
   loadGalleryStyles();
   setInterval(loadGalleryStyles, 5000);
@@ -2092,6 +2100,7 @@ window.renderCartDrawer = function() {
 window.removeFromCart = function(index) {
   if (index >= 0 && index < cart.length) {
     cart.splice(index, 1);
+    localStorage.setItem('spb_cart_data', JSON.stringify(cart));
     updateCartCount();
     renderCartDrawer();
   }
@@ -2208,6 +2217,7 @@ window.handleCheckoutSubmit = function(event) {
 
     // Reset global cart state
     cart = [];
+    localStorage.setItem('spb_cart_data', JSON.stringify(cart));
     updateCartCount();
   }, 2000);
 };
