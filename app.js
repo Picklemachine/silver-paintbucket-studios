@@ -452,55 +452,55 @@ function applyLoadedConfig(data) {
     renderArtists();
     populateSelectors();
     renderCmsLists();
-  } catch (e) {
-    console.error('Error applying loaded configurations:', e);
-  }
 
-  if (!data.rootStyles) return;
+    if (!data.rootStyles || typeof data.rootStyles !== 'object') return;
 
-  const cssPanelEl = document.getElementById('css-control-panel-el');
-  if (safeStorage.getItem('bucky_admin_unlocked') === 'true' && cssPanelEl && cssPanelEl.classList.contains('open')) {
-    return;
-  }
-
-  isApplyingStyles = true;
-
-  // Apply root variables
-  Object.keys(data.rootStyles).forEach(varName => {
-    root.style.setProperty(varName, data.rootStyles[varName]);
-  });
-
-  // Clear existing card overrides first
-  document.querySelectorAll('.painting-card').forEach(card => {
-    card.style.cssText = '';
-    card.classList.remove('theme-light');
-    const wrapper = card.querySelector('.painting-image-wrapper');
-    if (wrapper) {
-      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+    const cssPanelEl = document.getElementById('css-control-panel-el');
+    if (safeStorage.getItem('bucky_admin_unlocked') === 'true' && cssPanelEl && cssPanelEl.classList.contains('open')) {
+      return;
     }
-  });
 
-  // Sync customizer UI inputs
-  if (data.inputValues) {
-    Object.keys(data.inputValues).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.value = data.inputValues[id];
-        
-        const spanId = 'val-' + id.replace('custom-', '');
-        const valSpan = document.getElementById(spanId);
-        if (valSpan) {
-          let suffix = '';
-          if (id.includes('margin') || id.includes('radius') || id.includes('border') || id.includes('size')) suffix = 'px';
-          else if (id.includes('brightness') || id.includes('contrast') || id.includes('saturation')) suffix = '%';
-          else if (id.includes('hue')) suffix = '°';
-          valSpan.textContent = el.value + suffix;
-        }
+    isApplyingStyles = true;
+
+    // Apply root variables
+    Object.keys(data.rootStyles).forEach(varName => {
+      root.style.setProperty(varName, data.rootStyles[varName]);
+    });
+
+    // Clear existing card overrides first
+    document.querySelectorAll('.painting-card').forEach(card => {
+      card.style.cssText = '';
+      card.classList.remove('theme-light');
+      const wrapper = card.querySelector('.painting-image-wrapper');
+      if (wrapper) {
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
       }
     });
-  }
 
-  isApplyingStyles = false;
+    // Sync customizer UI inputs
+    if (data.inputValues && typeof data.inputValues === 'object') {
+      Object.keys(data.inputValues).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.value = data.inputValues[id];
+          
+          const spanId = 'val-' + id.replace('custom-', '');
+          const valSpan = document.getElementById(spanId);
+          if (valSpan) {
+            let suffix = '';
+            if (id.includes('margin') || id.includes('radius') || id.includes('border') || id.includes('size')) suffix = 'px';
+            else if (id.includes('brightness') || id.includes('contrast') || id.includes('saturation')) suffix = '%';
+            else if (id.includes('hue')) suffix = '°';
+            valSpan.textContent = el.value + suffix;
+          }
+        }
+      });
+    }
+  } catch (e) {
+    console.error('Error applying loaded configurations:', e);
+  } finally {
+    isApplyingStyles = false;
+  }
 }
 
 // --- Sorting Helpers ---
@@ -1705,24 +1705,10 @@ window.handleAdminLogout = function() {
     cssPanel.classList.remove('open');
   }
   
-  // Show lock toast
-  const container = document.getElementById('toast-container-el');
-  if (container) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.style.borderColor = '#f59e0b';
-    toast.innerHTML = `
-      <i class="fa-solid fa-lock" style="color: #f59e0b;"></i>
-      <span>Admin customizer panel locked.</span>
-    `;
-    container.appendChild(toast);
-    setTimeout(() => {
-      toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-      setTimeout(() => {
-        toast.remove();
-      }, 400);
-    }, 2500);
-  }
+  // Reload page to reset DOM state cleanly and prevent sync leaks
+  setTimeout(() => {
+    location.reload();
+  }, 300);
 };
 
 
