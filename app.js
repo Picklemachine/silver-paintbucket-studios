@@ -609,7 +609,7 @@ window.loadGalleryStyles = function() {
       applyLoadedConfig(data);
       console.log('Synced with online database successfully.');
     })
-    .catch(err => console.log('No online config loaded, using local defaults/localStorage.'));
+    .catch(err => {});
 };
 
 // Hook into Customizer changes to auto-save
@@ -1350,7 +1350,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=116';
+      avatarImg.src = imgSrc + '?v=117';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
