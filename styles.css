@@ -1082,6 +1082,12 @@ img {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
   border-radius: 8px;
   filter: brightness(var(--painting-brightness, 100%)) contrast(var(--painting-contrast, 100%)) saturate(var(--painting-saturate, 100%)) hue-rotate(var(--painting-hue-rotate, 0deg));
+  cursor: zoom-in;
+  transition: transform var(--transition-smooth);
+}
+
+.modal-image-side img:hover {
+  transform: scale(1.02);
 }
 
 .modal-info-side {
@@ -2506,5 +2512,27 @@ body.admin-logged-in #section-cms {
 
 #section-cms.collapsed .css-section-content {
   max-height: 0 !important;
+}
+
+/* Magnifying Glass Styles */
+.magnifier-container {
+  position: relative;
+  display: inline-block;
+  cursor: crosshair;
+  overflow: visible;
+}
+
+.magnifier-lens {
+  position: absolute;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  pointer-events: none;
+  display: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 0, 0, 0.3);
+  background-repeat: no-repeat;
+  z-index: 2010;
+  transform: translate(-50%, -50%); /* Center the lens on cursor */
 }
 
