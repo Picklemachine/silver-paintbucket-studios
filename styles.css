@@ -901,7 +901,7 @@ img {
   letter-spacing: 0.02em;
 }
 
-.form-group input, .form-group textarea {
+.form-group input, .form-group textarea, .form-group select {
   background-color: rgba(10, 17, 40, 0.5);
   border: 1px solid var(--glass-border);
   border-radius: 8px;
@@ -911,11 +911,16 @@ img {
   transition: var(--transition-smooth);
 }
 
-.form-group input:focus, .form-group textarea:focus {
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   outline: none;
   border-color: var(--accent-silver-dark);
   box-shadow: 0 0 10px rgba(181, 194, 201, 0.2);
   background-color: rgba(10, 17, 40, 0.8);
+}
+
+.form-group select option {
+  background-color: #0b1128;
+  color: var(--text-primary);
 }
 
 .btn-submit {
@@ -1219,6 +1224,38 @@ img {
 
 .modal-buy-btn {
   padding: 14px 32px;
+}
+
+.modal-quantity-box {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.quantity-label {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.modal-quantity-dropdown {
+  background-color: rgba(10, 17, 40, 0.5);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 6px;
+  outline: none;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+}
+
+.modal-quantity-dropdown option {
+  background-color: #0b1128;
+  color: var(--text-primary);
 }
 
 /* ==========================================================================
