@@ -1455,7 +1455,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=110';
+      avatarImg.src = imgSrc + '?v=111';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
@@ -1625,6 +1625,17 @@ let adminLastActiveElement = null;
 
 function openAdminLogin() {
   console.log("SPB App: openAdminLogin triggered.");
+  
+  const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
+  if (isUnlocked) {
+    const cssPanel = document.getElementById('css-control-panel-el');
+    if (cssPanel) {
+      console.log("SPB App: Admin already unlocked, directly opening customizer panel.");
+      cssPanel.classList.add('open');
+      return;
+    }
+  }
+
   const adminModal = document.getElementById('admin-login-modal');
   if (!adminModal) {
     console.error("SPB App: admin-login-modal element NOT found in DOM!");
