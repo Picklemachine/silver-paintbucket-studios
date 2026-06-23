@@ -216,7 +216,7 @@ window.renderPaintings = function() {
   if (!gridEl) return;
 
   const activeFilterBtn = document.querySelector('.filter-btn.active');
-  const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+  const activeFilter = (activeFilterBtn && typeof activeFilterBtn.getAttribute === 'function') ? activeFilterBtn.getAttribute('data-filter') : 'all';
 
   // Re-synchronize paintingOrder with paintingDatabase keys
   const allPaintings = [];
@@ -650,10 +650,9 @@ window.loadGalleryStyles = function() {
     .catch(err => console.log('No online config loaded, using local defaults/localStorage.'));
 };
 
-// Load styles initially on page load
-document.addEventListener('DOMContentLoaded', () => {
+const initSPBApp = () => {
   // Disable scroll restoration and force scroll to top on refresh
-  if ('scrollRestoration' in history) {
+  if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
   window.scrollTo(0, 0);
@@ -664,12 +663,19 @@ document.addEventListener('DOMContentLoaded', () => {
   populateSelectors();
   renderCmsLists();
 
+  // Restore admin logged-in class if previously unlocked
+  const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
+  if (isUnlocked) {
+    document.body.classList.add('admin-logged-in');
+  }
+
   // Initialize DOM bindings now that DOM elements are parsed and rendered
   initializeDOMBindings();
 
   loadGalleryStyles();
   setInterval(loadGalleryStyles, 5000);
-});
+};
+
 
 function updateCartCount() {
   const countEl = document.getElementById('cart-count');
@@ -1606,13 +1612,7 @@ function handleArtistEscClose(e) {
 // 11. Admin Access & Password Lock Controller
 let adminLastActiveElement = null;
 
-// Initialize Admin Status from LocalStorage on load
-document.addEventListener('DOMContentLoaded', () => {
-  const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
-  if (isUnlocked) {
-    document.body.classList.add('admin-logged-in');
-  }
-});
+
 
 function openAdminLogin() {
   const adminModal = document.getElementById('admin-login-modal');
@@ -1909,4 +1909,11 @@ window.handleResetDatabaseToDefaults = function() {
   safeStorage.removeItem('spb_gallery_data');
   location.reload();
 };
+
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSPBApp);
+} else {
+  initSPBApp();
+}
 
