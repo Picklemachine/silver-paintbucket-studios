@@ -1104,6 +1104,7 @@ img {
   background-color: #050a18;
   padding: 40px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-right: 1px solid var(--glass-border);
@@ -1123,6 +1124,21 @@ img {
 
 .modal-image-side img:hover {
   transform: scale(1.02);
+}
+
+.click-to-enlarge-label {
+  margin-top: 15px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.75;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.modal-image-side img:hover ~ .click-to-enlarge-label {
+  color: var(--text-primary);
+  opacity: 1;
 }
 
 .modal-info-side {
