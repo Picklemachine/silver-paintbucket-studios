@@ -225,6 +225,20 @@ img {
   object-fit: contain;
 }
 
+.header-paintbrush-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.header-paintbrush-icon:hover {
+  transform: scale(1.2) rotate(-15deg);
+  filter: drop-shadow(0 4px 10px rgba(239, 35, 60, 0.4)) brightness(1.2);
+}
+
 .nav-links {
   display: flex;
   align-items: center;
