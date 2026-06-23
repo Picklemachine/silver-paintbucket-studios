@@ -3033,3 +3033,44 @@ body.admin-logged-in #section-cms {
   font-weight: 700;
 }
 
+/* Shipping & Billing Form Grid Rows & Checkboxes */
+.form-row-3 {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+}
+
+.checkout-section-sub {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-silver-dark);
+  margin-top: 15px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 4px;
+}
+
+.form-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+  padding: 4px 0;
+}
+
+.form-checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent-red);
+}
+
+.form-checkbox-group label {
+  text-transform: none;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  margin-bottom: 0;
+  cursor: pointer;
+}
+

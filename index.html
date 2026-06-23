@@ -15,20 +15,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=123">
+  <link rel="stylesheet" href="styles.css?v=124">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/logo_palette.png?v=123">
+  <link rel="icon" type="image/png" href="assets/logo_palette.png?v=124">
 </head>
 <body>
 
   <header class="main-header">
     <a href="javascript:void(0)" onclick="openAdminLogin()" class="header-admin-trigger" aria-label="Admin Portal">
-      <img src="assets/paintbrush.png?v=123" alt="Admin Portal Trigger" class="header-paintbrush-icon">
+      <img src="assets/paintbrush.png?v=124" alt="Admin Portal Trigger" class="header-paintbrush-icon">
     </a>
     <div class="header-container">
       <a href="#" class="logo">
-        <img src="assets/logo_palette.png?v=123" alt="Silver Paintbucket Studios Logo" class="logo-icon">
+        <img src="assets/logo_palette.png?v=124" alt="Silver Paintbucket Studios Logo" class="logo-icon">
         <span>Silver Paintbucket Studios</span>
       </a>
       
@@ -79,7 +79,7 @@
       <!-- Gallery Header Wrapper (Bucky next to the left of Curated Collection title) -->
       <div class="gallery-header-wrapper">
         <div class="gallery-header-mascot">
-          <img src="assets/bucky_gallery_view.png?v=123" alt="Bucky viewing the gallery" class="gallery-header-mascot-img">
+          <img src="assets/bucky_gallery_view.png?v=124" alt="Bucky viewing the gallery" class="gallery-header-mascot-img">
         </div>
         <div class="section-header" id="gallery">
           <h2 class="section-title">The Curated Collection</h2>
@@ -132,7 +132,7 @@
     <div class="about-container">
       <div class="about-image-side">
         <div class="card-3d-effect">
-          <img src="assets/bucky_color_green.png?v=123" alt="Bucky - Mascot" class="about-bucky-img" id="about-bucky-img-el">
+          <img src="assets/bucky_color_green.png?v=124" alt="Bucky - Mascot" class="about-bucky-img" id="about-bucky-img-el">
         </div>
         
         <!-- Bucky Pose & Profile Selector -->
@@ -725,9 +725,56 @@
               <input type="password" id="checkout-cvv" required placeholder="•••" maxlength="4">
             </div>
           </div>
-          <div class="form-group">
-            <label for="checkout-billing">Billing Address</label>
-            <input type="text" id="checkout-billing" required placeholder="123 Art Street, Seattle, WA">
+          <!-- Shipping / Sending Address -->
+          <div class="checkout-address-section">
+            <h4 class="checkout-section-sub">Shipping Address</h4>
+            <div class="form-group">
+              <label for="checkout-shipping-street">Street Address</label>
+              <input type="text" id="checkout-shipping-street" required placeholder="123 Art Street">
+            </div>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label for="checkout-shipping-city">City</label>
+                <input type="text" id="checkout-shipping-city" required placeholder="Seattle">
+              </div>
+              <div class="form-group">
+                <label for="checkout-shipping-state">State</label>
+                <input type="text" id="checkout-shipping-state" required placeholder="WA" maxlength="2">
+              </div>
+              <div class="form-group">
+                <label for="checkout-shipping-zip">ZIP Code</label>
+                <input type="text" id="checkout-shipping-zip" required placeholder="98101" maxlength="10">
+              </div>
+            </div>
+          </div>
+
+          <!-- Same Address Checkbox -->
+          <div class="form-checkbox-group">
+            <input type="checkbox" id="checkout-same-address" checked>
+            <label for="checkout-same-address">Billing address is same as shipping</label>
+          </div>
+
+          <!-- Billing Address -->
+          <div class="checkout-address-section" id="billing-address-section" style="display: none;">
+            <h4 class="checkout-section-sub">Billing Address</h4>
+            <div class="form-group">
+              <label for="checkout-billing-street">Street Address</label>
+              <input type="text" id="checkout-billing-street" placeholder="123 Art Street">
+            </div>
+            <div class="form-row-3">
+              <div class="form-group">
+                <label for="checkout-billing-city">City</label>
+                <input type="text" id="checkout-billing-city" placeholder="Seattle">
+              </div>
+              <div class="form-group">
+                <label for="checkout-billing-state">State</label>
+                <input type="text" id="checkout-billing-state" placeholder="WA" maxlength="2">
+              </div>
+              <div class="form-group">
+                <label for="checkout-billing-zip">ZIP Code</label>
+                <input type="text" id="checkout-billing-zip" placeholder="98101" maxlength="10">
+              </div>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-checkout-submit" id="btn-checkout-submit-el">
             <span id="checkout-btn-text">Pay & Finalize Purchase</span>
@@ -774,6 +821,6 @@
   <div class="toast-container" id="toast-container-el"></div>
 
   <!-- JavaScript -->
-  <script src="app.js?v=123"></script>
+  <script src="app.js?v=124"></script>
 </body>
 </html>
