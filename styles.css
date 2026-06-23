@@ -3059,7 +3059,7 @@ body.admin-logged-in #section-cms {
 
 .receipt-notice {
   font-size: 0.78rem;
-  color: var(--text-secondary);
+  color: #ffd700; /* Yellow / Gold color */
   text-align: center;
   font-style: italic;
 }
