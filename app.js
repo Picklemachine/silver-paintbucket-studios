@@ -834,7 +834,7 @@ window.addEventListener('scroll', () => {
 });
 
 // 8. Contact Form Submission Mock
-function handleContactSubmit(event) {
+window.handleContactSubmit = function(event) {
   event.preventDefault();
   const form = event.target;
   const name = form.elements['name'].value;
