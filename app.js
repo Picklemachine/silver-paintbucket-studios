@@ -432,25 +432,29 @@ function resizeAndConvertImage(file, maxDimension = 600) {
 function applyLoadedConfig(data) {
   if (!data) return;
 
-  if (data.paintingDatabase && Object.keys(data.paintingDatabase).length > 0) {
-    paintingDatabase = data.paintingDatabase;
-  }
-  if (data.artistDatabase && Object.keys(data.artistDatabase).length > 0) {
-    artistDatabase = data.artistDatabase;
-  }
-  if (data.paintingOrder && data.paintingOrder.length > 0) {
-    paintingOrder = data.paintingOrder;
-  } else {
-    paintingOrder = Object.keys(paintingDatabase).map(Number);
-  }
+  try {
+    if (data.paintingDatabase && typeof data.paintingDatabase === 'object') {
+      paintingDatabase = data.paintingDatabase;
+    }
+    if (data.artistDatabase && typeof data.artistDatabase === 'object') {
+      artistDatabase = data.artistDatabase;
+    }
+    if (data.paintingOrder && Array.isArray(data.paintingOrder)) {
+      paintingOrder = data.paintingOrder;
+    } else {
+      paintingOrder = Object.keys(paintingDatabase).map(Number);
+    }
 
-  currentCardStyles = data.cardStyles || [];
+    currentCardStyles = Array.isArray(data.cardStyles) ? data.cardStyles : [];
 
-  // Re-render components with newly loaded DB data
-  renderPaintings();
-  renderArtists();
-  populateSelectors();
-  renderCmsLists();
+    // Re-render components with newly loaded DB data
+    renderPaintings();
+    renderArtists();
+    populateSelectors();
+    renderCmsLists();
+  } catch (e) {
+    console.error('Error applying loaded configurations:', e);
+  }
 
   if (!data.rootStyles) return;
 
@@ -525,7 +529,7 @@ window.movePaintingDown = function(id) {
 };
 
 function applyLoadedCardStyles() {
-  if (!currentCardStyles) return;
+  if (!currentCardStyles || !Array.isArray(currentCardStyles)) return;
   currentCardStyles.forEach(c => {
     const card = document.querySelector(`.painting-card[data-id="${c.id}"]`);
     if (card) {
