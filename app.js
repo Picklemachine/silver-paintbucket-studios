@@ -929,7 +929,11 @@ if (cssPanelClose && cssPanel) {
 // Close panel when clicking off / outside
 document.addEventListener('click', (e) => {
   if (cssPanel && cssPanel.classList.contains('open')) {
-    if (!cssPanel.contains(e.target) && !cssPanelToggle.contains(e.target) && !e.target.closest('.painting-card')) {
+    const clickedInsidePanel = cssPanel.contains(e.target);
+    const clickedToggle = cssPanelToggle && cssPanelToggle.contains(e.target);
+    const clickedCard = e.target.closest && e.target.closest('.painting-card');
+    
+    if (!clickedInsidePanel && !clickedToggle && !clickedCard) {
       cssPanel.classList.remove('open');
     }
   }
@@ -1552,7 +1556,12 @@ function openAdminLogin() {
   adminModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   
-  document.getElementById('admin-password').focus();
+  // Delay focus until transition begins to prevent browser freeze on hidden element focus
+  setTimeout(() => {
+    const pwdInput = document.getElementById('admin-password');
+    if (pwdInput) pwdInput.focus();
+  }, 100);
+  
   document.addEventListener('keydown', handleAdminEscClose);
 }
 window.openAdminLogin = openAdminLogin;
