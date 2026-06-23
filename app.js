@@ -1534,7 +1534,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-window.openAdminLogin = function() {
+function openAdminLogin() {
   if (!adminModal) return;
   adminLastActiveElement = document.activeElement;
   
@@ -1548,9 +1548,10 @@ window.openAdminLogin = function() {
   
   document.getElementById('admin-password').focus();
   document.addEventListener('keydown', handleAdminEscClose);
-};
+}
+window.openAdminLogin = openAdminLogin;
 
-window.closeAdminLogin = function() {
+function closeAdminLogin() {
   if (!adminModal) return;
   adminModal.classList.remove('open');
   adminModal.setAttribute('aria-hidden', 'true');
@@ -1559,7 +1560,8 @@ window.closeAdminLogin = function() {
     adminLastActiveElement.focus();
   }
   document.removeEventListener('keydown', handleAdminEscClose);
-};
+}
+window.closeAdminLogin = closeAdminLogin;
 
 function handleAdminEscClose(e) {
   if (e.key === 'Escape') {
@@ -1578,7 +1580,7 @@ if (adminModal) {
   });
 }
 
-window.handleAdminLogin = function(event) {
+function handleAdminLogin(event) {
   event.preventDefault();
   const passwordInput = document.getElementById('admin-password');
   const errorEl = document.getElementById('admin-login-error');
@@ -1613,7 +1615,8 @@ window.handleAdminLogin = function(event) {
     passwordInput.value = '';
     passwordInput.focus();
   }
-};
+}
+window.handleAdminLogin = handleAdminLogin;
 
 window.handleAdminLogout = function() {
   localStorage.removeItem('bucky_admin_unlocked');
