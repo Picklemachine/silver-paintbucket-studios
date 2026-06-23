@@ -723,6 +723,10 @@
 
         <form id="checkout-payment-form" onsubmit="handleCheckoutSubmit(event)">
           <div class="form-group">
+            <label for="checkout-email">Email Address</label>
+            <input type="email" id="checkout-email" required placeholder="email@example.com">
+          </div>
+          <div class="form-group">
             <label for="checkout-name">Cardholder Name</label>
             <input type="text" id="checkout-name" required placeholder="John Doe">
           </div>
@@ -927,7 +931,7 @@
           <span id="receipt-total-paid" style="font-weight: 600; color: var(--accent-red);">$0</span>
         </div>
         <div class="receipt-divider"></div>
-        <div class="receipt-notice">A copy of the invoice details has been sent to your email.</div>
+        <div class="receipt-notice" id="receipt-email-notice">A copy of the invoice details has been sent to your email.</div>
       </div>
       
       <button class="btn btn-primary btn-success-close" onclick="closeCheckoutSuccess()">
