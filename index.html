@@ -491,6 +491,24 @@
       <h4 class="css-section-toggle">Layout & Margins <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
       <div class="css-section-content">
         <div class="css-control-group">
+          <label for="custom-filter-target">Target Painting</label>
+          <select id="custom-filter-target">
+            <option value="all">All Paintings (Default)</option>
+            <option value="1">Sunshine Valley</option>
+            <option value="2">Dancing Blooms</option>
+            <option value="3">Ocean Whisper</option>
+            <option value="4">Colorful Abstract</option>
+            <option value="5">Midnight Jazz</option>
+            <option value="6">Serene Heights</option>
+            <option value="7">Golden Field</option>
+            <option value="8">Spring Whispers</option>
+            <option value="9">Midnight Tide</option>
+          </select>
+          <a href="javascript:void(0)" class="css-reset-target-link" id="css-reset-target-btn" style="font-size: 0.75rem; color: var(--accent-silver-dark); text-align: right; text-decoration: underline; margin-top: 4px; display: none;">
+            Reset Selected Overrides
+          </a>
+        </div>
+        <div class="css-control-group">
           <label for="custom-margin">Matte Border Size: <span id="val-margin">16px</span></label>
           <input type="range" id="custom-margin" min="10" max="60" value="16">
         </div>
@@ -558,24 +576,7 @@
     <div class="css-panel-section" id="section-filters">
       <h4 class="css-section-toggle">Art CSS Filters <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
       <div class="css-section-content">
-        <div class="css-control-group">
-          <label for="custom-filter-target">Target Painting</label>
-          <select id="custom-filter-target">
-            <option value="all">All Paintings (Default)</option>
-            <option value="1">Sunshine Valley</option>
-            <option value="2">Dancing Blooms</option>
-            <option value="3">Ocean Whisper</option>
-            <option value="4">Colorful Abstract</option>
-            <option value="5">Midnight Jazz</option>
-            <option value="6">Serene Heights</option>
-            <option value="7">Golden Field</option>
-            <option value="8">Spring Whispers</option>
-            <option value="9">Midnight Tide</option>
-          </select>
-          <a href="javascript:void(0)" class="css-reset-target-link" id="css-reset-target-btn" style="font-size: 0.75rem; color: var(--accent-silver-dark); text-align: right; text-decoration: underline; margin-top: 4px; display: none;">
-            Reset Selected Overrides
-          </a>
-        </div>
+
         <div class="css-control-group">
           <label for="custom-brightness">Brightness: <span id="val-brightness">100%</span></label>
           <input type="range" id="custom-brightness" min="50" max="150" value="100">
