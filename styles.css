@@ -3015,31 +3015,15 @@ body.admin-logged-in #section-cms {
 .success-icon-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
-}
-
-.success-checkmark-circle {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.08);
-  border: 3px solid #10b981;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  margin-top: 25px; /* Extra spacing to accommodate pop-out */
-  overflow: visible;
+  margin-top: 15px;
+  margin-bottom: 25px;
 }
 
 .success-bucky-img {
-  width: 140px;
-  height: 140px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
-  position: absolute;
-  bottom: 0px; /* Bucky stands on the bottom rim of the circle */
-  animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+  animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
 @keyframes scaleUp {
