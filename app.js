@@ -913,6 +913,21 @@ if (cssPanelClose && cssPanel) {
     cssPanel.classList.remove('open');
   });
 }
+const cssPanelBottomClose = document.getElementById('css-panel-bottom-close-btn');
+if (cssPanelBottomClose && cssPanel) {
+  cssPanelBottomClose.addEventListener('click', () => {
+    cssPanel.classList.remove('open');
+  });
+}
+
+// Close panel when clicking off / outside
+document.addEventListener('click', (e) => {
+  if (cssPanel && cssPanel.classList.contains('open')) {
+    if (!cssPanel.contains(e.target) && !cssPanelToggle.contains(e.target) && !e.target.closest('.painting-card')) {
+      cssPanel.classList.remove('open');
+    }
+  }
+});
 
 // Bind sliders to CSS custom variables on :root or individual cards
 const filterTargetSelect = document.getElementById('custom-filter-target');
@@ -992,7 +1007,7 @@ if (gridEl) {
     const id = card.getAttribute('data-id');
     if (id && filterTargetSelect) {
       if (cssPanel && !cssPanel.classList.contains('open')) {
-        cssPanel.classList.add('open');
+        return;
       }
       filterTargetSelect.value = id;
       syncSlidersToTarget();
