@@ -15,20 +15,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=122">
+  <link rel="stylesheet" href="styles.css?v=123">
   
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/logo_palette.png?v=122">
+  <link rel="icon" type="image/png" href="assets/logo_palette.png?v=123">
 </head>
 <body>
 
   <header class="main-header">
     <a href="javascript:void(0)" onclick="openAdminLogin()" class="header-admin-trigger" aria-label="Admin Portal">
-      <img src="assets/paintbrush.png?v=122" alt="Admin Portal Trigger" class="header-paintbrush-icon">
+      <img src="assets/paintbrush.png?v=123" alt="Admin Portal Trigger" class="header-paintbrush-icon">
     </a>
     <div class="header-container">
       <a href="#" class="logo">
-        <img src="assets/logo_palette.png?v=122" alt="Silver Paintbucket Studios Logo" class="logo-icon">
+        <img src="assets/logo_palette.png?v=123" alt="Silver Paintbucket Studios Logo" class="logo-icon">
         <span>Silver Paintbucket Studios</span>
       </a>
       
@@ -43,7 +43,7 @@
         <a href="#artists" class="nav-item">Artists</a>
         <a href="#about" class="nav-item">About</a>
         <a href="#contact" class="nav-item">Contact</a>
-        <a href="#cart" class="nav-item cart-btn" id="cart-badge-container">
+        <a href="javascript:void(0)" onclick="openCartDrawer()" class="nav-item cart-btn" id="cart-badge-container">
           <i class="fa-solid fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)
         </a>
       </nav>
@@ -79,7 +79,7 @@
       <!-- Gallery Header Wrapper (Bucky next to the left of Curated Collection title) -->
       <div class="gallery-header-wrapper">
         <div class="gallery-header-mascot">
-          <img src="assets/bucky_gallery_view.png?v=122" alt="Bucky viewing the gallery" class="gallery-header-mascot-img">
+          <img src="assets/bucky_gallery_view.png?v=123" alt="Bucky viewing the gallery" class="gallery-header-mascot-img">
         </div>
         <div class="section-header" id="gallery">
           <h2 class="section-title">The Curated Collection</h2>
@@ -132,7 +132,7 @@
     <div class="about-container">
       <div class="about-image-side">
         <div class="card-3d-effect">
-          <img src="assets/bucky_color_green.png?v=122" alt="Bucky - Mascot" class="about-bucky-img" id="about-bucky-img-el">
+          <img src="assets/bucky_color_green.png?v=123" alt="Bucky - Mascot" class="about-bucky-img" id="about-bucky-img-el">
         </div>
         
         <!-- Bucky Pose & Profile Selector -->
@@ -665,10 +665,115 @@
     </div>
   </div>
 
+  <!-- Shopping Cart Drawer (Slide-Over Panel) -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el"></div>
+  <div class="cart-drawer" id="cart-drawer-el" role="dialog" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h3><i class="fa-solid fa-shopping-cart"></i> Shopping Cart</h3>
+      <button class="cart-drawer-close" id="cart-drawer-close-btn-el" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-items-list">
+      <!-- Items dynamically populated -->
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>Total:</span>
+        <span id="cart-total-value">$0.00</span>
+      </div>
+      <button class="btn btn-primary cart-checkout-btn" id="cart-checkout-btn-el">
+        Proceed to Checkout <i class="fa-solid fa-credit-card"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkout Payment Modal -->
+  <div class="modal-overlay" id="checkout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card checkout-card">
+      <button class="modal-close-btn" id="checkout-close-btn-el" aria-label="Close modal">&times;</button>
+      <div class="checkout-content">
+        <h3><i class="fa-solid fa-shield-halved"></i> Secure Checkout</h3>
+        <p class="checkout-subtitle">Enter payment details to purchase your selections.</p>
+        
+        <!-- Summary block containing thumbs -->
+        <div class="checkout-summary-box">
+          <h4>Order Summary</h4>
+          <div class="checkout-summary-list" id="checkout-summary-items">
+            <!-- Thumbs and titles populated by JS -->
+          </div>
+          <div class="checkout-summary-total">
+            <span>Total:</span>
+            <span id="checkout-summary-total-val">$0</span>
+          </div>
+        </div>
+
+        <form id="checkout-payment-form" onsubmit="handleCheckoutSubmit(event)">
+          <div class="form-group">
+            <label for="checkout-name">Cardholder Name</label>
+            <input type="text" id="checkout-name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="checkout-card-number">Card Number</label>
+            <input type="text" id="checkout-card-number" required placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+          </div>
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="checkout-expiry">Expiry Date</label>
+              <input type="text" id="checkout-expiry" required placeholder="MM/YY" maxlength="5">
+            </div>
+            <div class="form-group">
+              <label for="checkout-cvv">CVV</label>
+              <input type="password" id="checkout-cvv" required placeholder="•••" maxlength="4">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="checkout-billing">Billing Address</label>
+            <input type="text" id="checkout-billing" required placeholder="123 Art Street, Seattle, WA">
+          </div>
+          <button type="submit" class="btn btn-primary btn-checkout-submit" id="btn-checkout-submit-el">
+            <span id="checkout-btn-text">Pay & Finalize Purchase</span>
+            <div class="spinner" id="checkout-spinner-el" style="display: none;"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Success Modal -->
+  <div class="modal-overlay" id="checkout-success-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card checkout-success-card">
+      <div class="success-icon-wrapper">
+        <div class="success-checkmark-circle">
+          <div class="success-checkmark-stem"></div>
+          <div class="success-checkmark-kick"></div>
+        </div>
+      </div>
+      <h3>Order Placed Successfully!</h3>
+      <p class="success-subtitle">Thank you for supporting our local artists. Your transaction has been finalized.</p>
+      
+      <div class="receipt-box">
+        <div class="receipt-header">Transaction Receipt</div>
+        <div class="receipt-row">
+          <span>Order ID:</span>
+          <span id="receipt-order-id" style="font-weight: 600;">#SPB-2026-8942</span>
+        </div>
+        <div class="receipt-row">
+          <span>Amount Paid:</span>
+          <span id="receipt-total-paid" style="font-weight: 600; color: var(--accent-red);">$0</span>
+        </div>
+        <div class="receipt-divider"></div>
+        <div class="receipt-notice">A copy of the invoice details has been sent to your email.</div>
+      </div>
+      
+      <button class="btn btn-primary btn-success-close" onclick="closeCheckoutSuccess()">
+        Return to Gallery
+      </button>
+    </div>
+  </div>
+
   <!-- Toast Notification for Add to Cart -->
   <div class="toast-container" id="toast-container-el"></div>
 
   <!-- JavaScript -->
-  <script src="app.js?v=122"></script>
+  <script src="app.js?v=123"></script>
 </body>
 </html>

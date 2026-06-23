@@ -2023,3 +2023,230 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// ==========================================================================
+// Shopping Cart Drawer & Checkout Payment System Controllers
+// ==========================================================================
+
+window.openCartDrawer = function() {
+  const drawer = document.getElementById('cart-drawer-el');
+  const backdrop = document.getElementById('cart-drawer-backdrop-el');
+  if (drawer && backdrop) {
+    drawer.classList.add('open');
+    backdrop.classList.add('open');
+    renderCartDrawer();
+  }
+};
+
+window.closeCartDrawer = function() {
+  const drawer = document.getElementById('cart-drawer-el');
+  const backdrop = document.getElementById('cart-drawer-backdrop-el');
+  if (drawer && backdrop) {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('open');
+  }
+};
+
+window.renderCartDrawer = function() {
+  const container = document.getElementById('cart-drawer-items-list');
+  const totalValEl = document.getElementById('cart-total-value');
+  const checkoutBtn = document.getElementById('cart-checkout-btn-el');
+  if (!container) return;
+
+  container.innerHTML = '';
+  let total = 0;
+
+  if (cart.length === 0) {
+    container.innerHTML = '<div class="cart-empty-message">Your cart is empty.</div>';
+    if (totalValEl) totalValEl.textContent = '$0.00';
+    if (checkoutBtn) checkoutBtn.disabled = true;
+    return;
+  }
+
+  if (checkoutBtn) checkoutBtn.disabled = false;
+
+  cart.forEach((item, index) => {
+    total += item.price;
+    const painting = paintingDatabase[item.id] || { image: 'assets/logo_palette.png', artist: 'Unknown Artist' };
+    
+    const row = document.createElement('div');
+    row.className = 'cart-item-row';
+    row.innerHTML = `
+      <img src="${painting.image}" alt="${item.title}" class="cart-item-thumbnail">
+      <div class="cart-item-info">
+        <span class="cart-item-title">${item.title}</span>
+        <span class="cart-item-artist">${painting.artist}</span>
+      </div>
+      <span class="cart-item-price">$${item.price}</span>
+      <button class="cart-item-remove-btn" onclick="removeFromCart(${index})" aria-label="Remove item">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+    `;
+    container.appendChild(row);
+  });
+
+  if (totalValEl) {
+    totalValEl.textContent = `$${total.toFixed(2)}`;
+  }
+};
+
+window.removeFromCart = function(index) {
+  if (index >= 0 && index < cart.length) {
+    cart.splice(index, 1);
+    updateCartCount();
+    renderCartDrawer();
+  }
+};
+
+window.openCheckoutModal = function() {
+  closeCartDrawer();
+  const checkoutModal = document.getElementById('checkout-modal');
+  if (!checkoutModal) return;
+
+  checkoutModal.classList.add('open');
+  checkoutModal.setAttribute('aria-hidden', 'false');
+
+  // Populate order summary
+  const summaryList = document.getElementById('checkout-summary-items');
+  const summaryTotal = document.getElementById('checkout-summary-total-val');
+  if (summaryList) {
+    summaryList.innerHTML = '';
+    let total = 0;
+    
+    cart.forEach(item => {
+      total += item.price;
+      const painting = paintingDatabase[item.id] || { image: 'assets/logo_palette.png' };
+      
+      const summaryItem = document.createElement('div');
+      summaryItem.className = 'checkout-summary-item';
+      summaryItem.innerHTML = `
+        <img src="${painting.image}" alt="${item.title}">
+        <span>${item.title}</span>
+        <span>$${item.price}</span>
+      `;
+      summaryList.appendChild(summaryItem);
+    });
+
+    if (summaryTotal) {
+      summaryTotal.textContent = `$${total}`;
+    }
+  }
+};
+
+window.closeCheckout = function() {
+  const checkoutModal = document.getElementById('checkout-modal');
+  if (checkoutModal) {
+    checkoutModal.classList.remove('open');
+    checkoutModal.setAttribute('aria-hidden', 'true');
+  }
+};
+
+window.closeCheckoutSuccess = function() {
+  const successModal = document.getElementById('checkout-success-modal');
+  if (successModal) {
+    successModal.classList.remove('open');
+    successModal.setAttribute('aria-hidden', 'true');
+  }
+};
+
+window.handleCheckoutSubmit = function(event) {
+  event.preventDefault();
+  
+  const submitBtn = document.getElementById('btn-checkout-submit-el');
+  const btnText = document.getElementById('checkout-btn-text');
+  const spinner = document.getElementById('checkout-spinner-el');
+  const inputs = document.querySelectorAll('#checkout-payment-form input');
+
+  if (!submitBtn || !spinner || !btnText) return;
+
+  // Compute total paid
+  const totalPaid = cart.reduce((sum, item) => sum + item.price, 0);
+
+  // Disable inputs and show loading state
+  inputs.forEach(input => input.disabled = true);
+  submitBtn.disabled = true;
+  btnText.textContent = 'Processing Payment...';
+  spinner.style.display = 'block';
+
+  setTimeout(() => {
+    // Hide loading state
+    inputs.forEach(input => input.disabled = false);
+    submitBtn.disabled = false;
+    btnText.textContent = 'Pay & Finalize Purchase';
+    spinner.style.display = 'none';
+
+    // Generate Invoice receipt and clear cart
+    const receiptTotal = document.getElementById('receipt-total-paid');
+    const receiptOrderId = document.getElementById('receipt-order-id');
+    const randomOrderId = '#SPB-2026-' + Math.floor(1000 + Math.random() * 9000);
+    
+    if (receiptTotal) receiptTotal.textContent = `$${totalPaid}`;
+    if (receiptOrderId) receiptOrderId.textContent = randomOrderId;
+
+    // Reset Form
+    document.getElementById('checkout-payment-form').reset();
+
+    // Close checkout and show success
+    closeCheckout();
+    
+    const successModal = document.getElementById('checkout-success-modal');
+    if (successModal) {
+      successModal.classList.add('open');
+      successModal.setAttribute('aria-hidden', 'false');
+    }
+
+    // Reset global cart state
+    cart = [];
+    updateCartCount();
+  }, 2000);
+};
+
+// Bind Backdrop clicks & inputs inside DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  const backdrop = document.getElementById('cart-drawer-backdrop-el');
+  const closeBtn = document.getElementById('cart-drawer-close-btn-el');
+  const checkoutTrigger = document.getElementById('cart-checkout-btn-el');
+  const closeCheckoutBtn = document.getElementById('checkout-close-btn-el');
+
+  if (backdrop) {
+    backdrop.addEventListener('click', closeCartDrawer);
+  }
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeCartDrawer);
+  }
+  if (checkoutTrigger) {
+    checkoutTrigger.addEventListener('click', openCheckoutModal);
+  }
+  if (closeCheckoutBtn) {
+    closeCheckoutBtn.addEventListener('click', closeCheckout);
+  }
+
+  // Credit Card Input Formatting
+  const cardNumberInput = document.getElementById('checkout-card-number');
+  if (cardNumberInput) {
+    cardNumberInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+      let formattedValue = '';
+      for (let i = 0; i < value.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+          formattedValue += ' ';
+        }
+        formattedValue += value[i];
+      }
+      e.target.value = formattedValue;
+    });
+  }
+
+  // Expiry Date Formatting
+  const expiryInput = document.getElementById('checkout-expiry');
+  if (expiryInput) {
+    expiryInput.addEventListener('input', (e) => {
+      let value = e.target.value.replace(/[^0-9]/gi, '');
+      if (value.length > 2) {
+        e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      } else {
+        e.target.value = value;
+      }
+    });
+  }
+});
+
