@@ -1555,19 +1555,33 @@ function openAdminLogin() {
   if (!adminModal) return;
   adminLastActiveElement = document.activeElement;
   
-  // Clear inputs and error fields
-  document.getElementById('admin-password').value = '';
-  document.getElementById('admin-login-error').textContent = '';
+  // Clear inputs and error fields safely
+  const pwdInput = document.getElementById('admin-password');
+  if (pwdInput) pwdInput.value = '';
+  const errorEl = document.getElementById('admin-login-error');
+  if (errorEl) errorEl.textContent = '';
   
   adminModal.classList.add('open');
   adminModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   
-  // Delay focus until transition begins to prevent browser freeze on hidden element focus
+  // Wait until the transition has fully completed before focusing the input to prevent layout/transform engine conflicts
+  const handleTransitionEnd = (e) => {
+    if (e.target === adminModal && adminModal.classList.contains('open')) {
+      if (pwdInput) pwdInput.focus();
+      adminModal.removeEventListener('transitionend', handleTransitionEnd);
+    }
+  };
+  adminModal.addEventListener('transitionend', handleTransitionEnd);
+  
+  // Safe fallback timeout (500ms) in case transitionend event does not fire
   setTimeout(() => {
-    const pwdInput = document.getElementById('admin-password');
-    if (pwdInput) pwdInput.focus();
-  }, 100);
+    if (adminModal.classList.contains('open')) {
+      if (pwdInput && document.activeElement !== pwdInput) {
+        pwdInput.focus();
+      }
+    }
+  }, 500);
   
   document.addEventListener('keydown', handleAdminEscClose);
 }
