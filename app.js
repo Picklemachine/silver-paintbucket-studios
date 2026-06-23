@@ -2,6 +2,13 @@
    Silver Paintbucket Studios - JavaScript Application Code
    ========================================================================== */
 
+// Global Error Handler to catch and alert exceptions
+window.onerror = function(message, source, lineno, colno, error) {
+  console.error("GLOBAL ERROR:", message, "at", source, ":", lineno, ":", colno, error);
+  alert("Global JS Error: " + message + " (Line " + lineno + ", Col " + colno + ")");
+  return false;
+};
+
 // 1. Painting Database
 let paintingDatabase = {
   1: {
