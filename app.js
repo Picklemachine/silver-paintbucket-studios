@@ -913,12 +913,7 @@ if (cssPanelClose && cssPanel) {
     cssPanel.classList.remove('open');
   });
 }
-const cssPanelBottomClose = document.getElementById('css-panel-bottom-close-btn');
-if (cssPanelBottomClose && cssPanel) {
-  cssPanelBottomClose.addEventListener('click', () => {
-    cssPanel.classList.remove('open');
-  });
-}
+
 
 // Close panel when clicking off / outside
 document.addEventListener('click', (e) => {
