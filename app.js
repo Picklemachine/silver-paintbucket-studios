@@ -2378,5 +2378,16 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Custom Validation Message for Email Input
+  const emailInput = document.getElementById('checkout-email');
+  if (emailInput) {
+    emailInput.addEventListener('invalid', () => {
+      emailInput.setCustomValidity("Please provide an email in order to send you a receipt.");
+    });
+    emailInput.addEventListener('input', () => {
+      emailInput.setCustomValidity("");
+    });
+  }
 });
 
