@@ -9,6 +9,32 @@ window.onerror = function(message, source, lineno, colno, error) {
   return false;
 };
 
+// Safe localStorage wrapper to prevent crashes in private windows/sandboxes
+const safeStorage = {
+  store: {},
+  getItem(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      return this.store[key] || null;
+    }
+  },
+  setItem(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      this.store[key] = String(value);
+    }
+  },
+  removeItem(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      delete this.store[key];
+    }
+  }
+};
+
 // 1. Painting Database
 let paintingDatabase = {
   1: {
@@ -428,7 +454,7 @@ function applyLoadedConfig(data) {
 
   if (!data.rootStyles) return;
 
-  if (localStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
+  if (safeStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
     return;
   }
 
@@ -524,7 +550,7 @@ function applyLoadedCardStyles() {
 }
 
 window.saveGalleryStyles = function() {
-  if (localStorage.getItem('bucky_admin_unlocked') !== 'true') return;
+  if (safeStorage.getItem('bucky_admin_unlocked') !== 'true') return;
   if (isApplyingStyles) return;
 
   const variables = [
@@ -567,7 +593,7 @@ window.saveGalleryStyles = function() {
   };
 
   // Save to Local Storage immediately as a secure backup
-  localStorage.setItem('spb_gallery_data', JSON.stringify(payload));
+  safeStorage.setItem('spb_gallery_data', JSON.stringify(payload));
 
   // Also POST to online database
   fetch(DATABASE_URL, {
@@ -581,7 +607,7 @@ window.saveGalleryStyles = function() {
 
 window.loadGalleryStyles = function() {
   // First load from localStorage to prevent loss of newly added data
-  const localDataStr = localStorage.getItem('spb_gallery_data');
+  const localDataStr = safeStorage.getItem('spb_gallery_data');
   if (localDataStr) {
     try {
       const localData = JSON.parse(localDataStr);
@@ -602,7 +628,7 @@ window.loadGalleryStyles = function() {
       if (!data) return;
 
       // Only apply online data if it is newer than local storage data
-      const localDataStr = localStorage.getItem('spb_gallery_data');
+      const localDataStr = safeStorage.getItem('spb_gallery_data');
       if (localDataStr) {
         try {
           const localData = JSON.parse(localDataStr);
@@ -918,7 +944,7 @@ const cssPanelClose = document.getElementById('css-panel-close-btn');
 // Toggle Open/Close panel or open login modal
 if (cssPanelToggle && cssPanel) {
   cssPanelToggle.addEventListener('click', () => {
-    const isUnlocked = localStorage.getItem('bucky_admin_unlocked') === 'true';
+    const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
     if (isUnlocked) {
       cssPanel.classList.toggle('open');
     } else {
@@ -1545,7 +1571,7 @@ let adminLastActiveElement = null;
 
 // Initialize Admin Status from LocalStorage on load
 document.addEventListener('DOMContentLoaded', () => {
-  const isUnlocked = localStorage.getItem('bucky_admin_unlocked') === 'true';
+  const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
   if (isUnlocked) {
     document.body.classList.add('admin-logged-in');
   }
@@ -1592,7 +1618,7 @@ function closeAdminLogin() {
   adminModal.classList.remove('open');
   adminModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
-  if (adminLastActiveElement) {
+  if (adminLastActiveElement && typeof adminLastActiveElement.focus === 'function') {
     adminLastActiveElement.focus();
   }
   document.removeEventListener('keydown', handleAdminEscClose);
@@ -1621,11 +1647,17 @@ function handleAdminLogin(event) {
   const passwordInput = document.getElementById('admin-password');
   const errorEl = document.getElementById('admin-login-error');
   
-  if (passwordInput.value === 'admin') {
+  if (passwordInput && passwordInput.value === 'admin') {
     // Correct Password
-    localStorage.setItem('bucky_admin_unlocked', 'true');
+    safeStorage.setItem('bucky_admin_unlocked', 'true');
     document.body.classList.add('admin-logged-in');
     closeAdminLogin();
+    
+    // Automatically open the customizer control panel upon successful login
+    const cssPanel = document.getElementById('css-control-panel-el');
+    if (cssPanel) {
+      cssPanel.classList.add('open');
+    }
     
     // Show success toast
     const container = document.getElementById('toast-container-el');
@@ -1647,15 +1679,19 @@ function handleAdminLogin(event) {
     }
   } else {
     // Incorrect Password
-    errorEl.textContent = 'Invalid administrator password. Access denied.';
-    passwordInput.value = '';
-    passwordInput.focus();
+    if (errorEl) {
+      errorEl.textContent = 'Invalid administrator password. Access denied.';
+    }
+    if (passwordInput) {
+      passwordInput.value = '';
+      passwordInput.focus();
+    }
   }
 }
 window.handleAdminLogin = handleAdminLogin;
 
 window.handleAdminLogout = function() {
-  localStorage.removeItem('bucky_admin_unlocked');
+  safeStorage.removeItem('bucky_admin_unlocked');
   document.body.classList.remove('admin-logged-in');
   
   // Close panel if open
@@ -1856,7 +1892,7 @@ function showCmsToast(message) {
 
 window.handleResetDatabaseToDefaults = function() {
   if (!confirm('Are you sure you want to reset the database to defaults? This will restore all default paintings/artists and clear your local backups.')) return;
-  localStorage.removeItem('spb_gallery_data');
+  safeStorage.removeItem('spb_gallery_data');
   location.reload();
 };
 
