@@ -438,7 +438,7 @@ function applyLoadedConfig(data) {
     card.classList.remove('theme-light');
     const wrapper = card.querySelector('.painting-image-wrapper');
     if (wrapper) {
-      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood', 'frame-rose-gold', 'frame-ebony', 'frame-neon-crimson', 'frame-bronze');
     }
   });
 
@@ -507,7 +507,7 @@ function applyLoadedCardStyles() {
       }
       const wrapper = card.querySelector('.painting-image-wrapper');
       if (wrapper) {
-        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood', 'frame-rose-gold', 'frame-ebony', 'frame-neon-crimson', 'frame-bronze');
         if (c.frameClass && c.frameClass !== 'none') {
           wrapper.classList.add(c.frameClass);
         }
@@ -1157,7 +1157,7 @@ if (frameSelect) {
     if (target === 'all') {
       const wrappers = document.querySelectorAll('.painting-image-wrapper');
       wrappers.forEach(wrapper => {
-        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood', 'frame-rose-gold', 'frame-ebony', 'frame-neon-crimson', 'frame-bronze');
         if (selectedFrame !== 'none') {
           wrapper.classList.add('frame-' + selectedFrame);
         }
@@ -1167,7 +1167,7 @@ if (frameSelect) {
       if (card) {
         const wrapper = card.querySelector('.painting-image-wrapper');
         if (wrapper) {
-          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+          wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood', 'frame-rose-gold', 'frame-ebony', 'frame-neon-crimson', 'frame-bronze');
           if (selectedFrame !== 'none') {
             wrapper.classList.add('frame-' + selectedFrame);
           }
@@ -1204,7 +1204,7 @@ if (cardBgSelect) {
   cardBgSelect.addEventListener('change', (e) => {
     const selectedVal = e.target.value;
     const target = filterTargetSelect ? filterTargetSelect.value : 'all';
-    const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc'].includes(selectedVal);
+    const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc', '#e2e2fc', '#ffe5ec', '#ffffff'].includes(selectedVal);
     
     if (target === 'all') {
       root.style.setProperty('--card-bg-color', selectedVal);
@@ -1295,7 +1295,7 @@ if (cssResetBtn) {
     // Reset wrapper frame classes and card light theme classes
     const wrappers = document.querySelectorAll('.painting-image-wrapper');
     wrappers.forEach(wrapper => {
-      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood', 'frame-rose-gold', 'frame-ebony', 'frame-neon-crimson', 'frame-bronze');
       wrapper.classList.add('frame-wood');
     });
     

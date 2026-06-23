@@ -515,6 +515,27 @@ img {
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.6);
 }
 
+.painting-image-wrapper.frame-rose-gold {
+  border: var(--frame-border-width) solid #b76e79;
+  box-shadow: 0 4px 15px rgba(183, 110, 121, 0.4);
+}
+
+.painting-image-wrapper.frame-ebony {
+  border: var(--frame-border-width) solid #1a1a1a;
+  outline: calc(var(--frame-border-width) / 8) solid #0d0d0d;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.75);
+}
+
+.painting-image-wrapper.frame-neon-crimson {
+  border: var(--frame-border-width) solid #ef233c;
+  box-shadow: 0 0 15px rgba(239, 35, 60, 0.6);
+}
+
+.painting-image-wrapper.frame-bronze {
+  border: var(--frame-border-width) solid #cd7f32;
+  box-shadow: 0 4px 10px rgba(205, 127, 50, 0.5);
+}
+
 .card-overlay {
   position: absolute;
   top: 0;
