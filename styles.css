@@ -2179,9 +2179,30 @@ body.admin-logged-in .css-panel-toggle {
 /* Customizer Panel Actions Layout */
 .css-panel-actions {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 15px;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 10px;
   margin-top: 24px;
+}
+
+.css-close-btn {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition-smooth);
+}
+
+.css-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .css-logout-btn {
