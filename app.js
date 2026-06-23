@@ -639,6 +639,12 @@ if (cssResetBtn) {
 
 // Load styles initially on page load
 document.addEventListener('DOMContentLoaded', () => {
+  // Disable scroll restoration and force scroll to top on refresh
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   // Initial render from defaults
   renderPaintings();
   renderArtists();
