@@ -2218,15 +2218,15 @@ window.handleCheckoutSubmit = function(event) {
     // Reset Form
     document.getElementById('checkout-payment-form').reset();
     
-    // Reset billing address same checkbox state
+    // Reset billing address same checkbox state (default: unchecked)
     const sameAddressCheckbox = document.getElementById('checkout-same-address');
     const billingSection = document.getElementById('billing-address-section');
     if (sameAddressCheckbox) {
-      sameAddressCheckbox.checked = true;
+      sameAddressCheckbox.checked = false;
       if (billingSection) {
-        billingSection.style.display = 'none';
+        billingSection.style.display = 'block';
         const billingInputs = billingSection.querySelectorAll('input, select');
-        billingInputs.forEach(input => input.required = false);
+        billingInputs.forEach(input => input.required = true);
       }
     }
 
