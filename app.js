@@ -2210,10 +2210,18 @@ window.handleCheckoutSubmit = function(event) {
     // Generate Invoice receipt and clear cart
     const receiptTotal = document.getElementById('receipt-total-paid');
     const receiptOrderId = document.getElementById('receipt-order-id');
+    const receiptEmailNotice = document.getElementById('receipt-email-notice');
+    
+    const emailInput = document.getElementById('checkout-email');
+    const emailVal = emailInput ? emailInput.value : '';
+    
     const randomOrderId = '#SPB-2026-' + Math.floor(1000 + Math.random() * 9000);
     
     if (receiptTotal) receiptTotal.textContent = `$${totalPaid}`;
     if (receiptOrderId) receiptOrderId.textContent = randomOrderId;
+    if (receiptEmailNotice) {
+      receiptEmailNotice.textContent = emailVal ? `A copy of your receipt has been emailed to: ${emailVal}` : 'A copy of your receipt has been emailed.';
+    }
 
     // Reset Form
     document.getElementById('checkout-payment-form').reset();
