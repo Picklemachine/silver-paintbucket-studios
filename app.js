@@ -671,7 +671,7 @@ function showToast(paintingTitle) {
   toast.className = 'toast cart-added';
   toast.innerHTML = `
     <i class="fa-solid fa-circle-check"></i>
-    <span><strong>${paintingTitle}</strong> added to collection!</span>
+    <span><strong>${paintingTitle}</strong> added to cart!</span>
   `;
   
   container.appendChild(toast);
