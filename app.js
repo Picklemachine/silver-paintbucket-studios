@@ -651,6 +651,7 @@ window.loadGalleryStyles = function() {
 };
 
 const initSPBApp = () => {
+  console.log("SPB App: initSPBApp triggered. readyState = " + document.readyState);
   // Disable scroll restoration and force scroll to top on refresh
   if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
@@ -1002,6 +1003,7 @@ function bindCssVar(sliderId, cssVarName, suffix = '') {
 // Bind range sliders
 // Customizer ranges, dropdowns, and target reset logic are initialized inside initializeDOMBindings
 function initializeDOMBindings() {
+  console.log("SPB App: initializeDOMBindings executing.");
   // Resolve global selectors safely when DOM is loaded
   cssPanel = document.getElementById('css-control-panel-el');
   cssPanelToggle = document.getElementById('css-panel-toggle-btn');
@@ -1615,8 +1617,13 @@ let adminLastActiveElement = null;
 
 
 function openAdminLogin() {
+  console.log("SPB App: openAdminLogin triggered.");
   const adminModal = document.getElementById('admin-login-modal');
-  if (!adminModal) return;
+  if (!adminModal) {
+    console.error("SPB App: admin-login-modal element NOT found in DOM!");
+    return;
+  }
+  console.log("SPB App: admin-login-modal found, applying open state...");
   adminLastActiveElement = document.activeElement;
   
   // Clear inputs and error fields safely
