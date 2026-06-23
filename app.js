@@ -1350,7 +1350,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=113';
+      avatarImg.src = imgSrc + '?v=114';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
@@ -1522,8 +1522,6 @@ if (artistModal) {
 }
 
 // 11. Admin Access & Password Lock Controller
-const adminModal = document.getElementById('admin-login-modal');
-const adminModalCloseBtn = document.getElementById('admin-login-close-btn-el');
 let adminLastActiveElement = null;
 
 // Initialize Admin Status from LocalStorage on load
@@ -1532,26 +1530,47 @@ document.addEventListener('DOMContentLoaded', () => {
   if (isUnlocked) {
     document.body.classList.add('admin-logged-in');
   }
+  
+  // Bind Admin Login modal event listeners safely inside DOMContentLoaded
+  const adminModal = document.getElementById('admin-login-modal');
+  const adminModalCloseBtn = document.getElementById('admin-login-close-btn-el');
+  if (adminModalCloseBtn) {
+    adminModalCloseBtn.addEventListener('click', closeAdminLogin);
+  }
+  if (adminModal) {
+    adminModal.addEventListener('click', (e) => {
+      if (e.target === adminModal) {
+        closeAdminLogin();
+      }
+    });
+  }
 });
 
 function openAdminLogin() {
-  if (!adminModal) return;
+  const adminModal = document.getElementById('admin-login-modal');
+  if (!adminModal) {
+    console.error("SPB App: admin-login-modal element NOT found in DOM!");
+    return;
+  }
   adminLastActiveElement = document.activeElement;
   
   // Clear inputs and error fields
-  document.getElementById('admin-password').value = '';
-  document.getElementById('admin-login-error').textContent = '';
+  const pwdInput = document.getElementById('admin-password');
+  if (pwdInput) pwdInput.value = '';
+  const errorEl = document.getElementById('admin-login-error');
+  if (errorEl) errorEl.textContent = '';
   
   adminModal.classList.add('open');
   adminModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   
-  document.getElementById('admin-password').focus();
+  if (pwdInput) pwdInput.focus();
   document.addEventListener('keydown', handleAdminEscClose);
 }
 window.openAdminLogin = openAdminLogin;
 
 function closeAdminLogin() {
+  const adminModal = document.getElementById('admin-login-modal');
   if (!adminModal) return;
   adminModal.classList.remove('open');
   adminModal.setAttribute('aria-hidden', 'true');
@@ -1567,17 +1586,6 @@ function handleAdminEscClose(e) {
   if (e.key === 'Escape') {
     closeAdminLogin();
   }
-}
-
-if (adminModalCloseBtn) {
-  adminModalCloseBtn.addEventListener('click', closeAdminLogin);
-}
-if (adminModal) {
-  adminModal.addEventListener('click', (e) => {
-    if (e.target === adminModal) {
-      closeAdminLogin();
-    }
-  });
 }
 
 function handleAdminLogin(event) {
