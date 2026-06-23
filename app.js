@@ -902,10 +902,15 @@ const cssPanel = document.getElementById('css-control-panel-el');
 const cssPanelToggle = document.getElementById('css-panel-toggle-btn');
 const cssPanelClose = document.getElementById('css-panel-close-btn');
 
-// Toggle Open/Close panel
+// Toggle Open/Close panel or open login modal
 if (cssPanelToggle && cssPanel) {
   cssPanelToggle.addEventListener('click', () => {
-    cssPanel.classList.toggle('open');
+    const isUnlocked = localStorage.getItem('bucky_admin_unlocked') === 'true';
+    if (isUnlocked) {
+      cssPanel.classList.toggle('open');
+    } else {
+      openAdminLogin();
+    }
   });
 }
 if (cssPanelClose && cssPanel) {
