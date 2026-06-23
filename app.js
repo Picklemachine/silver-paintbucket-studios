@@ -1350,7 +1350,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=115';
+      avatarImg.src = imgSrc + '?v=116';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
@@ -1598,6 +1598,12 @@ function handleAdminLogin(event) {
     localStorage.setItem('bucky_admin_unlocked', 'true');
     document.body.classList.add('admin-logged-in');
     closeAdminLogin();
+    
+    // Automatically open the customizer control panel upon successful login
+    const cssPanel = document.getElementById('css-control-panel-el');
+    if (cssPanel) {
+      cssPanel.classList.add('open');
+    }
     
     // Show success toast
     const container = document.getElementById('toast-container-el');
