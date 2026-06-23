@@ -766,7 +766,12 @@ window.openPaintingModal = function(id) {
   const buyBtn = document.getElementById('modal-add-to-cart-btn');
   // Reset quantity select
   const qtySelect = document.getElementById('modal-quantity-select');
-  if (qtySelect) qtySelect.value = "1";
+  if (qtySelect) {
+    qtySelect.value = "1";
+    qtySelect.disabled = false;
+    qtySelect.style.opacity = "";
+    qtySelect.style.cursor = "";
+  }
 
   // Reset button state
   buyBtn.disabled = false;
@@ -788,6 +793,13 @@ window.openPaintingModal = function(id) {
     newBuyBtn.innerHTML = 'Added to Cart <i class="fa-solid fa-check"></i>';
     newBuyBtn.style.opacity = "0.6";
     newBuyBtn.style.cursor = "not-allowed";
+    
+    // Disable quantity selection dropdown too
+    if (qtyValSelect) {
+      qtyValSelect.disabled = true;
+      qtyValSelect.style.opacity = "0.6";
+      qtyValSelect.style.cursor = "not-allowed";
+    }
   });
   
   // Open modal
