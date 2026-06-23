@@ -161,7 +161,7 @@ window.addToCart = function(paintingId, title, price) {
 const DATABASE_URL = 'https://kvdb.io/spb_studios_cfg_2026_dbx1/settings';
 let isApplyingStyles = false;
 const root = document.documentElement;
-const cssResetBtn = document.getElementById('css-reset-btn-el');
+// cssResetBtn resolved in initializeDOMBindings
 
 // --- Dynamic Content Rendering & Pagination State ---
 let currentPage = 1;
@@ -650,31 +650,6 @@ window.loadGalleryStyles = function() {
     .catch(err => console.log('No online config loaded, using local defaults/localStorage.'));
 };
 
-// Hook into Customizer changes to auto-save
-const inputControls = [
-  'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
-  'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
-  'custom-brightness', 'custom-contrast', 'custom-saturation',
-  'custom-hue', 'custom-glow-color', 'custom-glow-size'
-];
-inputControls.forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
-    el.addEventListener(eventType, () => {
-      clearTimeout(window.saveStylesDebounce);
-      window.saveStylesDebounce = setTimeout(saveGalleryStyles, 500);
-    });
-  }
-});
-
-// Sync after reset button click
-if (cssResetBtn) {
-  cssResetBtn.addEventListener('click', () => {
-    setTimeout(saveGalleryStyles, 100);
-  });
-}
-
 // Load styles initially on page load
 document.addEventListener('DOMContentLoaded', () => {
   // Disable scroll restoration and force scroll to top on refresh
@@ -688,6 +663,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderArtists();
   populateSelectors();
   renderCmsLists();
+
+  // Initialize DOM bindings now that DOM elements are parsed and rendered
+  initializeDOMBindings();
 
   loadGalleryStyles();
   setInterval(loadGalleryStyles, 5000);
@@ -746,12 +724,11 @@ styleSheet.innerText = `
 document.head.appendChild(styleSheet);
 
 // 4. Painting Modal Controller
-const modal = document.getElementById('detail-modal');
-const modalCloseBtn = document.getElementById('modal-close-btn-el');
 let lastActiveElement = null;
 
 window.openPaintingModal = function(id) {
   const painting = paintingDatabase[id];
+  const modal = document.getElementById('detail-modal');
   if (!painting || !modal) return;
   
   // Keep track of focused element for accessibility
@@ -811,6 +788,7 @@ window.openPaintingModal = function(id) {
 }
 
 window.closePaintingModal = function() {
+  const modal = document.getElementById('detail-modal');
   if (!modal) return;
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
@@ -830,58 +808,7 @@ function handleEscClose(e) {
   }
 }
 
-// Wire modal close actions
-if (modalCloseBtn) {
-  modalCloseBtn.addEventListener('click', closePaintingModal);
-}
-if (modal) {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closePaintingModal();
-    }
-  });
-}
-
-// 5. Gallery Filtering
-const filterButtons = document.querySelectorAll('.filter-btn');
-
-filterButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    
-    currentPage = 1; // Reset to page 1 on filter change
-    renderPaintings();
-  });
-});
-
-// 6. Mobile Menu Toggle
-const mobileNavBtn = document.getElementById('mobile-nav-btn');
-const mainNav = document.getElementById('main-nav');
-
-if (mobileNavBtn && mainNav) {
-  mobileNavBtn.addEventListener('click', () => {
-    mainNav.classList.toggle('open');
-    const icon = mobileNavBtn.querySelector('i');
-    if (icon) {
-      icon.classList.toggle('fa-bars');
-      icon.classList.toggle('fa-times');
-    }
-  });
-  
-  // Close menu when clicking nav item
-  const navItems = mainNav.querySelectorAll('.nav-item');
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      mainNav.classList.remove('open');
-      const icon = mobileNavBtn.querySelector('i');
-      if (icon) {
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
-      }
-    });
-  });
-}
+// Wire modal close actions, gallery filtering, and mobile nav are resolved in initializeDOMBindings
 
 // 7. Navigation Highlighting on Scroll
 const sections = document.querySelectorAll('section');
@@ -942,44 +869,14 @@ function handleContactSubmit(event) {
 }
 
 // 9. CSS Control Panel Customizer Logic
-const cssPanel = document.getElementById('css-control-panel-el');
-const cssPanelToggle = document.getElementById('css-panel-toggle-btn');
-const cssPanelClose = document.getElementById('css-panel-close-btn');
-
-// Toggle Open/Close panel or open login modal
-if (cssPanelToggle && cssPanel) {
-  cssPanelToggle.addEventListener('click', () => {
-    const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
-    if (isUnlocked) {
-      cssPanel.classList.toggle('open');
-    } else {
-      openAdminLogin();
-    }
-  });
-}
-if (cssPanelClose && cssPanel) {
-  cssPanelClose.addEventListener('click', () => {
-    cssPanel.classList.remove('open');
-  });
-}
-
-
-// Close panel when clicking off / outside
-document.addEventListener('click', (e) => {
-  if (cssPanel && cssPanel.classList.contains('open')) {
-    const clickedInsidePanel = cssPanel.contains(e.target);
-    const clickedToggle = cssPanelToggle && cssPanelToggle.contains(e.target);
-    const clickedCard = e.target.closest && e.target.closest('.painting-card');
-    
-    if (!clickedInsidePanel && !clickedToggle && !clickedCard) {
-      cssPanel.classList.remove('open');
-    }
-  }
-});
+let cssPanel = null;
+let cssPanelToggle = null;
+let cssPanelClose = null;
 
 // Bind sliders to CSS custom variables on :root or individual cards
-const filterTargetSelect = document.getElementById('custom-filter-target');
-const resetTargetBtn = document.getElementById('css-reset-target-btn');
+let filterTargetSelect = null;
+let resetTargetBtn = null;
+let gridEl = null;
 
 const slidersToSync = [
   { id: 'custom-margin', varName: '--painting-padding', suffix: 'px' },
@@ -1031,80 +928,6 @@ function syncSlidersToTarget() {
         slider.value = numVal;
         if (valSpan) {
           valSpan.textContent = numVal + item.suffix;
-        }
-      }
-    }
-  });
-}
-
-if (filterTargetSelect) {
-  filterTargetSelect.addEventListener('change', syncSlidersToTarget);
-}
-
-// Bind card clicks to select target painting cell via event delegation
-const gridEl = document.getElementById('paintings-grid-el');
-if (gridEl) {
-  gridEl.addEventListener('click', (e) => {
-    const card = e.target.closest('.painting-card');
-    if (!card) return;
-    
-    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.modal-overlay')) {
-      return;
-    }
-    
-    const id = card.getAttribute('data-id');
-    if (id && filterTargetSelect) {
-      if (cssPanel && !cssPanel.classList.contains('open')) {
-        return;
-      }
-      filterTargetSelect.value = id;
-      syncSlidersToTarget();
-      
-      // Auto expand filters section if collapsed
-      const filtersSection = document.getElementById('section-filters');
-      if (filtersSection && filtersSection.classList.contains('collapsed')) {
-        filtersSection.classList.remove('collapsed');
-      }
-      
-      const filterSection = document.querySelector('.css-control-panel');
-      if (filterSection) {
-        // Scroll target select and filters into view in customizer panel
-        filterSection.scrollTop = 150;
-      }
-    }
-  });
-}
-
-// Bind reset single target override
-if (resetTargetBtn) {
-  resetTargetBtn.addEventListener('click', () => {
-    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
-    if (target !== 'all') {
-      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
-      if (card) {
-        slidersToSync.forEach(item => {
-          card.style.removeProperty(item.varName);
-        });
-        syncSlidersToTarget();
-        
-        // Show success toast for single card reset
-        const container = document.getElementById('toast-container-el');
-        if (container) {
-          const title = card.querySelector('.painting-title')?.textContent || 'Painting';
-          const toast = document.createElement('div');
-          toast.className = 'toast';
-          toast.style.borderColor = '#10b981';
-          toast.innerHTML = `
-            <i class="fa-solid fa-rotate-left" style="color: #10b981;"></i>
-            <span>Reset filters for <strong>${title}</strong></span>
-          `;
-          container.appendChild(toast);
-          setTimeout(() => {
-            toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-            setTimeout(() => {
-              toast.remove();
-            }, 400);
-          }, 2500);
         }
       }
     }
@@ -1171,201 +994,407 @@ function bindCssVar(sliderId, cssVarName, suffix = '') {
 }
 
 // Bind range sliders
-bindCssVar('custom-margin', '--painting-padding', 'px');
-bindCssVar('custom-radius', '--painting-radius', 'px');
-bindCssVar('custom-brightness', '--painting-brightness', '%');
-bindCssVar('custom-contrast', '--painting-contrast', '%');
-bindCssVar('custom-saturation', '--painting-saturate', '%');
-bindCssVar('custom-hue', '--painting-hue-rotate', 'deg');
-bindCssVar('custom-glow-size', '--mascot-glow-size', 'px');
-bindCssVar('custom-frame-border', '--frame-border-width', 'px');
-bindCssVar('custom-frame-margin', '--frame-margin', 'px');
+// Customizer ranges, dropdowns, and target reset logic are initialized inside initializeDOMBindings
+function initializeDOMBindings() {
+  // Resolve global selectors safely when DOM is loaded
+  cssPanel = document.getElementById('css-control-panel-el');
+  cssPanelToggle = document.getElementById('css-panel-toggle-btn');
+  cssPanelClose = document.getElementById('css-panel-close-btn');
+  filterTargetSelect = document.getElementById('custom-filter-target');
+  resetTargetBtn = document.getElementById('css-reset-target-btn');
+  gridEl = document.getElementById('paintings-grid-el');
 
-// Bind Bucky's Glow color dropdown
-const glowColorSelect = document.getElementById('custom-glow-color');
-if (glowColorSelect) {
-  glowColorSelect.addEventListener('change', (e) => {
-    root.style.setProperty('--mascot-glow-color', e.target.value);
+  // Toggle Customizer Panel or open login modal
+  if (cssPanelToggle && cssPanel) {
+    cssPanelToggle.addEventListener('click', () => {
+      const isUnlocked = safeStorage.getItem('bucky_admin_unlocked') === 'true';
+      if (isUnlocked) {
+        cssPanel.classList.toggle('open');
+      } else {
+        openAdminLogin();
+      }
+    });
+  }
+  if (cssPanelClose && cssPanel) {
+    cssPanelClose.addEventListener('click', () => {
+      cssPanel.classList.remove('open');
+    });
+  }
+
+  // Close Customizer panel when clicking off/outside
+  document.addEventListener('click', (e) => {
+    if (cssPanel && cssPanel.classList.contains('open')) {
+      const clickedInsidePanel = cssPanel.contains(e.target);
+      const clickedToggle = cssPanelToggle && cssPanelToggle.contains(e.target);
+      const clickedCard = e.target.closest && e.target.closest('.painting-card');
+      
+      if (!clickedInsidePanel && !clickedToggle && !clickedCard) {
+        cssPanel.classList.remove('open');
+      }
+    }
   });
-}
 
-// Bind Painting Frame selector
-const frameSelect = document.getElementById('custom-frame');
-if (frameSelect) {
-  frameSelect.addEventListener('change', (e) => {
-    const selectedFrame = e.target.value;
-    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
-    
-    if (target === 'all') {
-      const wrappers = document.querySelectorAll('.painting-image-wrapper');
-      wrappers.forEach(wrapper => {
-        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
-        if (selectedFrame !== 'none') {
-          wrapper.classList.add('frame-' + selectedFrame);
+  // Bind change target dropdown
+  if (filterTargetSelect) {
+    filterTargetSelect.addEventListener('change', syncSlidersToTarget);
+  }
+
+  // Bind card clicks to select target painting cell via event delegation
+  if (gridEl) {
+    gridEl.addEventListener('click', (e) => {
+      const card = e.target.closest('.painting-card');
+      if (!card) return;
+      
+      if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.modal-overlay')) {
+        return;
+      }
+      
+      const id = card.getAttribute('data-id');
+      if (id && filterTargetSelect) {
+        if (cssPanel && !cssPanel.classList.contains('open')) {
+          return;
+        }
+        filterTargetSelect.value = id;
+        syncSlidersToTarget();
+        
+        const filtersSection = document.getElementById('section-filters');
+        if (filtersSection && filtersSection.classList.contains('collapsed')) {
+          filtersSection.classList.remove('collapsed');
+        }
+        
+        const filterSection = document.querySelector('.css-control-panel');
+        if (filterSection) {
+          filterSection.scrollTop = 150;
+        }
+      }
+    });
+  }
+
+  // Bind reset single target override
+  if (resetTargetBtn) {
+    resetTargetBtn.addEventListener('click', () => {
+      const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+      if (target !== 'all') {
+        const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+        if (card) {
+          slidersToSync.forEach(item => {
+            card.style.removeProperty(item.varName);
+          });
+          syncSlidersToTarget();
+          
+          const container = document.getElementById('toast-container-el');
+          if (container) {
+            const title = card.querySelector('.painting-title')?.textContent || 'Painting';
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.style.borderColor = '#10b981';
+            toast.innerHTML = `
+              <i class="fa-solid fa-rotate-left" style="color: #10b981;"></i>
+              <span>Reset filters for <strong>${title}</strong></span>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => {
+              toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+              setTimeout(() => {
+                toast.remove();
+              }, 400);
+            }, 2500);
+          }
+        }
+      }
+    });
+  }
+
+  const modal = document.getElementById('detail-modal');
+  const modalCloseBtn = document.getElementById('modal-close-btn-el');
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', closePaintingModal);
+  }
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closePaintingModal();
+      }
+    });
+  }
+
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      currentPage = 1;
+      renderPaintings();
+    });
+  });
+
+  const mobileNavBtn = document.getElementById('mobile-nav-btn');
+  const mainNav = document.getElementById('main-nav');
+  if (mobileNavBtn && mainNav) {
+    mobileNavBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+      const icon = mobileNavBtn.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      }
+    });
+    const navItems = mainNav.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        const icon = mobileNavBtn.querySelector('i');
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
         }
       });
-    } else {
-      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
-      if (card) {
-        const wrapper = card.querySelector('.painting-image-wrapper');
-        if (wrapper) {
+    });
+  }
+
+  // Hook into Customizer changes to auto-save
+  const inputControls = [
+    'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
+    'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
+    'custom-brightness', 'custom-contrast', 'custom-saturation',
+    'custom-hue', 'custom-glow-color', 'custom-glow-size'
+  ];
+  inputControls.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      const eventType = el.tagName === 'SELECT' ? 'change' : 'input';
+      el.addEventListener(eventType, () => {
+        clearTimeout(window.saveStylesDebounce);
+        window.saveStylesDebounce = setTimeout(saveGalleryStyles, 500);
+      });
+    }
+  });
+
+  // Sync after reset button click
+  const cssResetBtn = document.getElementById('css-reset-btn-el');
+  if (cssResetBtn) {
+    cssResetBtn.addEventListener('click', () => {
+      setTimeout(saveGalleryStyles, 100);
+    });
+  }
+
+  // Bind CSS variables to input range sliders
+  bindCssVar('custom-margin', '--painting-padding', 'px');
+  bindCssVar('custom-radius', '--painting-radius', 'px');
+  bindCssVar('custom-brightness', '--painting-brightness', '%');
+  bindCssVar('custom-contrast', '--painting-contrast', '%');
+  bindCssVar('custom-saturation', '--painting-saturate', '%');
+  bindCssVar('custom-hue', '--painting-hue-rotate', 'deg');
+  bindCssVar('custom-glow-size', '--mascot-glow-size', 'px');
+  bindCssVar('custom-frame-border', '--frame-border-width', 'px');
+  bindCssVar('custom-frame-margin', '--frame-margin', 'px');
+
+  // Bind Bucky's Glow color dropdown
+  const glowColorSelect = document.getElementById('custom-glow-color');
+  if (glowColorSelect) {
+    glowColorSelect.addEventListener('change', (e) => {
+      root.style.setProperty('--mascot-glow-color', e.target.value);
+    });
+  }
+
+  // Bind Painting Frame selector
+  const frameSelect = document.getElementById('custom-frame');
+  if (frameSelect) {
+    frameSelect.addEventListener('change', (e) => {
+      const selectedFrame = e.target.value;
+      const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+      
+      if (target === 'all') {
+        const wrappers = document.querySelectorAll('.painting-image-wrapper');
+        wrappers.forEach(wrapper => {
           wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
           if (selectedFrame !== 'none') {
             wrapper.classList.add('frame-' + selectedFrame);
           }
+        });
+      } else {
+        const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+        if (card) {
+          const wrapper = card.querySelector('.painting-image-wrapper');
+          if (wrapper) {
+            wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+            if (selectedFrame !== 'none') {
+              wrapper.classList.add('frame-' + selectedFrame);
+            }
+          }
         }
+        setCardFrameOverride(target, selectedFrame !== 'none' ? 'frame-' + selectedFrame : 'none');
       }
-      setCardFrameOverride(target, selectedFrame !== 'none' ? 'frame-' + selectedFrame : 'none');
-    }
-  });
-}
+    });
+  }
 
-// Auto-activate frame style if width is adjusted when currently set to none
-const frameBorderSlider = document.getElementById('custom-frame-border');
-if (frameBorderSlider) {
-  frameBorderSlider.addEventListener('input', (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (val > 0 && frameSelect && frameSelect.value === 'none') {
-      frameSelect.value = 'silver';
-      frameSelect.dispatchEvent(new Event('change'));
-    }
-  });
-}
+  // Auto-activate frame style if width is adjusted when currently set to none
+  const frameBorderSlider = document.getElementById('custom-frame-border');
+  if (frameBorderSlider) {
+    frameBorderSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      const fs = document.getElementById('custom-frame');
+      if (val > 0 && fs && fs.value === 'none') {
+        fs.value = 'silver';
+        fs.dispatchEvent(new Event('change'));
+      }
+    });
+  }
 
-// Bind Painting Matting Background Color selector
-const bgColorSelect = document.getElementById('custom-bg-color');
-if (bgColorSelect) {
-  bgColorSelect.addEventListener('change', (e) => {
-    root.style.setProperty('--painting-bg-color', e.target.value);
-  });
-}
+  // Bind Painting Matting Background Color selector
+  const bgColorSelect = document.getElementById('custom-bg-color');
+  if (bgColorSelect) {
+    bgColorSelect.addEventListener('change', (e) => {
+      root.style.setProperty('--painting-bg-color', e.target.value);
+    });
+  }
 
-// Bind Painting Card (Cell) Background Color selector
-const cardBgSelect = document.getElementById('custom-card-bg');
-if (cardBgSelect) {
-  cardBgSelect.addEventListener('change', (e) => {
-    const selectedVal = e.target.value;
-    const target = filterTargetSelect ? filterTargetSelect.value : 'all';
-    const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc'].includes(selectedVal);
-    
-    if (target === 'all') {
-      root.style.setProperty('--card-bg-color', selectedVal);
+  // Bind Painting Card (Cell) Background Color selector
+  const cardBgSelect = document.getElementById('custom-card-bg');
+  if (cardBgSelect) {
+    cardBgSelect.addEventListener('change', (e) => {
+      const selectedVal = e.target.value;
+      const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+      const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc'].includes(selectedVal);
+      
+      if (target === 'all') {
+        root.style.setProperty('--card-bg-color', selectedVal);
+        const cards = document.querySelectorAll('.painting-card');
+        cards.forEach(card => {
+          if (isLight) {
+            card.classList.add('theme-light');
+          } else {
+            card.classList.remove('theme-light');
+          }
+        });
+      } else {
+        const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+        if (card) {
+          card.style.setProperty('--card-bg-color', selectedVal);
+          if (isLight) {
+            card.classList.add('theme-light');
+          } else {
+            card.classList.remove('theme-light');
+          }
+        }
+        setCardStyleOverride(target, '--card-bg-color', selectedVal);
+        setCardLightOverride(target, isLight);
+      }
+    });
+  }
+
+  // Bind Reset customizer button
+  if (cssResetBtn) {
+    cssResetBtn.addEventListener('click', () => {
+      // Reset ranges in DOM
+      document.getElementById('custom-margin').value = 16;
+      document.getElementById('custom-radius').value = 4;
+      document.getElementById('custom-brightness').value = 100;
+      document.getElementById('custom-contrast').value = 100;
+      document.getElementById('custom-saturation').value = 100;
+      document.getElementById('custom-hue').value = 0;
+      document.getElementById('custom-glow-size').value = 25;
+      document.getElementById('custom-frame-border').value = 4;
+      document.getElementById('custom-frame-margin').value = 12;
+      
+      // Clear all card-level filter overrides
+      currentCardStyles = [];
+      document.querySelectorAll('.painting-card').forEach(card => {
+        slidersToSync.forEach(item => {
+          card.style.removeProperty(item.varName);
+        });
+        card.classList.remove('customizer-active-target');
+      });
+      if (filterTargetSelect) {
+        filterTargetSelect.value = 'all';
+      }
+      const resetTargetBtn = document.getElementById('css-reset-target-btn');
+      if (resetTargetBtn) {
+        resetTargetBtn.style.display = 'none';
+      }
+      
+      // Reset select inputs
+      const fs = document.getElementById('custom-frame');
+      const gcs = document.getElementById('custom-glow-color');
+      const bgcs = document.getElementById('custom-bg-color');
+      const cbcs = document.getElementById('custom-card-bg');
+      if (fs) fs.value = 'wood';
+      if (gcs) gcs.value = 'rgba(138, 43, 226, 0.65)';
+      if (bgcs) bgcs.value = '#001f54';
+      if (cbcs) cbcs.value = '#eddcd2';
+      
+      // Reset values in span elements
+      document.getElementById('val-margin').textContent = '16px';
+      document.getElementById('val-radius').textContent = '4px';
+      document.getElementById('val-brightness').textContent = '100%';
+      document.getElementById('val-contrast').textContent = '100%';
+      document.getElementById('val-saturation').textContent = '100%';
+      document.getElementById('val-hue').textContent = '0°';
+      document.getElementById('val-glow-size').textContent = '25px';
+      document.getElementById('val-frame-border').textContent = '4px';
+      document.getElementById('val-frame-margin').textContent = '12px';
+      
+      // Reset CSS variables
+      root.style.setProperty('--painting-padding', '16px');
+      root.style.setProperty('--painting-radius', '4px');
+      root.style.setProperty('--painting-bg-color', '#001f54');
+      root.style.setProperty('--card-bg-color', '#eddcd2');
+      root.style.setProperty('--frame-border-width', '4px');
+      root.style.setProperty('--frame-margin', '12px');
+      root.style.setProperty('--painting-brightness', '100%');
+      root.style.setProperty('--painting-contrast', '100%');
+      root.style.setProperty('--painting-saturate', '100%');
+      root.style.setProperty('--painting-hue-rotate', '0deg');
+      root.style.setProperty('--mascot-glow-size', '25px');
+      root.style.setProperty('--mascot-glow-color', 'rgba(138, 43, 226, 0.65)');
+      
+      // Reset wrapper frame classes and card light theme classes
+      const wrappers = document.querySelectorAll('.painting-image-wrapper');
+      wrappers.forEach(wrapper => {
+        wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
+        wrapper.classList.add('frame-wood');
+      });
+      
       const cards = document.querySelectorAll('.painting-card');
       cards.forEach(card => {
-        if (isLight) {
-          card.classList.add('theme-light');
-        } else {
-          card.classList.remove('theme-light');
-        }
+        card.classList.remove('theme-light');
+        card.classList.add('theme-light');
       });
-    } else {
-      const card = document.querySelector(`.painting-card[data-id="${target}"]`);
-      if (card) {
-        card.style.setProperty('--card-bg-color', selectedVal);
-        if (isLight) {
-          card.classList.add('theme-light');
-        } else {
-          card.classList.remove('theme-light');
-        }
-      }
-      setCardStyleOverride(target, '--card-bg-color', selectedVal);
-      setCardLightOverride(target, isLight);
-    }
-  });
-}
-
-// Bind Reset customizer button
-if (cssResetBtn) {
-  cssResetBtn.addEventListener('click', () => {
-    // Reset ranges in DOM
-    document.getElementById('custom-margin').value = 16;
-    document.getElementById('custom-radius').value = 4;
-    document.getElementById('custom-brightness').value = 100;
-    document.getElementById('custom-contrast').value = 100;
-    document.getElementById('custom-saturation').value = 100;
-    document.getElementById('custom-hue').value = 0;
-    document.getElementById('custom-glow-size').value = 25;
-    document.getElementById('custom-frame-border').value = 4;
-    document.getElementById('custom-frame-margin').value = 12;
-    
-    // Clear all card-level filter overrides
-    currentCardStyles = [];
-    document.querySelectorAll('.painting-card').forEach(card => {
-      slidersToSync.forEach(item => {
-        card.style.removeProperty(item.varName);
-      });
-      card.classList.remove('customizer-active-target');
-    });
-    if (filterTargetSelect) {
-      filterTargetSelect.value = 'all';
-    }
-    if (resetTargetBtn) {
-      resetTargetBtn.style.display = 'none';
-    }
-    
-    // Reset select inputs
-    if (frameSelect) frameSelect.value = 'wood';
-    if (glowColorSelect) glowColorSelect.value = 'rgba(138, 43, 226, 0.65)';
-    if (bgColorSelect) bgColorSelect.value = '#001f54';
-    if (cardBgSelect) cardBgSelect.value = '#eddcd2';
-    
-    // Reset values in span elements
-    document.getElementById('val-margin').textContent = '16px';
-    document.getElementById('val-radius').textContent = '4px';
-    document.getElementById('val-brightness').textContent = '100%';
-    document.getElementById('val-contrast').textContent = '100%';
-    document.getElementById('val-saturation').textContent = '100%';
-    document.getElementById('val-hue').textContent = '0°';
-    document.getElementById('val-glow-size').textContent = '25px';
-    document.getElementById('val-frame-border').textContent = '4px';
-    document.getElementById('val-frame-margin').textContent = '12px';
-    
-    // Reset CSS variables
-    root.style.setProperty('--painting-padding', '16px');
-    root.style.setProperty('--painting-radius', '4px');
-    root.style.setProperty('--painting-bg-color', '#001f54');
-    root.style.setProperty('--card-bg-color', '#eddcd2');
-    root.style.setProperty('--frame-border-width', '4px');
-    root.style.setProperty('--frame-margin', '12px');
-    root.style.setProperty('--painting-brightness', '100%');
-    root.style.setProperty('--painting-contrast', '100%');
-    root.style.setProperty('--painting-saturate', '100%');
-    root.style.setProperty('--painting-hue-rotate', '0deg');
-    root.style.setProperty('--mascot-glow-size', '25px');
-    root.style.setProperty('--mascot-glow-color', 'rgba(138, 43, 226, 0.65)');
-    
-    // Reset wrapper frame classes and card light theme classes
-    const wrappers = document.querySelectorAll('.painting-image-wrapper');
-    wrappers.forEach(wrapper => {
-      wrapper.classList.remove('frame-silver', 'frame-gold', 'frame-wood');
-      wrapper.classList.add('frame-wood');
-    });
-    
-    const cards = document.querySelectorAll('.painting-card');
-    cards.forEach(card => {
-      card.classList.remove('theme-light');
-      card.classList.add('theme-light');
-    });
-    
-    // Show feedback toast
-    const container = document.getElementById('toast-container-el');
-    if (container) {
-      const toast = document.createElement('div');
-      toast.className = 'toast';
-      toast.style.borderColor = '#10b981';
-      toast.innerHTML = `
-        <i class="fa-solid fa-rotate-left" style="color: #10b981;"></i>
-        <span>Customizer parameters reset successfully!</span>
-      `;
-      container.appendChild(toast);
-      setTimeout(() => {
-        toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+      
+      // Show feedback toast
+      const container = document.getElementById('toast-container-el');
+      if (container) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.style.borderColor = '#10b981';
+        toast.innerHTML = `
+          <i class="fa-solid fa-rotate-left" style="color: #10b981;"></i>
+          <span>Customizer parameters reset successfully!</span>
+        `;
+        container.appendChild(toast);
         setTimeout(() => {
-          toast.remove();
-        }, 400);
-      }, 2500);
-    }
-  });
+          toast.style.animation = 'toastFadeOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+          setTimeout(() => {
+            toast.remove();
+          }, 400);
+        }, 2500);
+      }
+    });
+  }
+
+  // Bind Admin Login modal event listeners
+  const adminModal = document.getElementById('admin-login-modal');
+  const adminModalCloseBtn = document.getElementById('admin-login-close-btn-el');
+  if (adminModalCloseBtn) {
+    adminModalCloseBtn.addEventListener('click', closeAdminLogin);
+  }
+  if (adminModal) {
+    adminModal.addEventListener('click', (e) => {
+      if (e.target === adminModal) {
+        closeAdminLogin();
+      }
+    });
+  }
 }
 
 // Interactive Bucky Mascot Switcher
@@ -1508,12 +1537,12 @@ let artistDatabase = {
   }
 };
 
-const artistModal = document.getElementById('artist-modal');
-const artistModalCloseBtn = document.getElementById('artist-modal-close-btn-el');
 let artistLastActiveElement = null;
 
 window.openArtistModal = function(name) {
   const artist = artistDatabase[name];
+  const artistModal = document.getElementById('artist-modal');
+  const artistModalCloseBtn = document.getElementById('artist-modal-close-btn-el');
   if (!artist || !artistModal) return;
   
   artistLastActiveElement = document.activeElement;
@@ -1540,6 +1569,7 @@ window.openArtistModal = function(name) {
 };
 
 window.closeArtistModal = function() {
+  const artistModal = document.getElementById('artist-modal');
   if (!artistModal) return;
   artistModal.classList.remove('open');
   artistModal.setAttribute('aria-hidden', 'true');
@@ -1570,8 +1600,6 @@ if (artistModal) {
 }
 
 // 11. Admin Access & Password Lock Controller
-const adminModal = document.getElementById('admin-login-modal');
-const adminModalCloseBtn = document.getElementById('admin-login-close-btn-el');
 let adminLastActiveElement = null;
 
 // Initialize Admin Status from LocalStorage on load
@@ -1583,6 +1611,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function openAdminLogin() {
+  const adminModal = document.getElementById('admin-login-modal');
   if (!adminModal) return;
   adminLastActiveElement = document.activeElement;
   
@@ -1619,6 +1648,7 @@ function openAdminLogin() {
 window.openAdminLogin = openAdminLogin;
 
 function closeAdminLogin() {
+  const adminModal = document.getElementById('admin-login-modal');
   if (!adminModal) return;
   adminModal.classList.remove('open');
   adminModal.setAttribute('aria-hidden', 'true');
@@ -1634,17 +1664,6 @@ function handleAdminEscClose(e) {
   if (e.key === 'Escape') {
     closeAdminLogin();
   }
-}
-
-if (adminModalCloseBtn) {
-  adminModalCloseBtn.addEventListener('click', closeAdminLogin);
-}
-if (adminModal) {
-  adminModal.addEventListener('click', (e) => {
-    if (e.target === adminModal) {
-      closeAdminLogin();
-    }
-  });
 }
 
 function handleAdminLogin(event) {
