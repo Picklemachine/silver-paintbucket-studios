@@ -2009,7 +2009,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Magnifying Glass Logic
-  const zoomLevel = 2.5;
+  const zoomLevel = 4.0;
 
   const moveMagnifier = (e) => {
     const rect = lightboxImg.getBoundingClientRect();
@@ -2039,9 +2039,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeFilters = getComputedStyle(lightboxImg).filter;
     magnifierLens.style.filter = activeFilters;
 
-    // Calculate background position
-    const bgX = (x * zoomLevel) - 90; // 90 is half of 180px width
-    const bgY = (y * zoomLevel) - 90; // 90 is half of 180px height
+    // Calculate background position dynamically based on current lens width/height
+    const lensWidth = magnifierLens.offsetWidth || 260;
+    const lensHeight = magnifierLens.offsetHeight || 260;
+    const bgX = (x * zoomLevel) - (lensWidth / 2);
+    const bgY = (y * zoomLevel) - (lensHeight / 2);
     magnifierLens.style.backgroundPosition = `-${bgX}px -${bgY}px`;
   };
 
