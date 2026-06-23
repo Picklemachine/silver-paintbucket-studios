@@ -1455,7 +1455,7 @@ window.changeBuckyPose = function(imgSrc, description) {
     // Add smooth transition fade out
     avatarImg.style.opacity = '0.3';
     setTimeout(() => {
-      avatarImg.src = imgSrc + '?v=108';
+      avatarImg.src = imgSrc + '?v=109';
       avatarImg.style.opacity = '1';
       
       // Dynamic scaling for sports poses to sit in the card window better
@@ -1546,6 +1546,7 @@ let artistDatabase = {
     name: "Marcus Vance",
     style: "Grand Landscape Oil Painter",
     origin: "Denver, Colorado, USA",
+    image: "assets/artists/marcus_vance.png",
     philosophy: "The mountains are monuments of time. I paint to preserve the silent, golden moment of dawn breaking over stone.",
     ideas: "Marcus is a master of grand scale alpine oil painting. Using classical glazing methods and light layers, he captures the depth of misty pine valleys, sunrise-colored peaks, and vast atmospheric distances.",
     statPaintings: "1 Painting",
