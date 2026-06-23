@@ -454,7 +454,8 @@ function applyLoadedConfig(data) {
 
   if (!data.rootStyles) return;
 
-  if (safeStorage.getItem('bucky_admin_unlocked') === 'true' && document.getElementById('css-control-panel-el').classList.contains('open')) {
+  const cssPanelEl = document.getElementById('css-control-panel-el');
+  if (safeStorage.getItem('bucky_admin_unlocked') === 'true' && cssPanelEl && cssPanelEl.classList.contains('open')) {
     return;
   }
 
