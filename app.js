@@ -6,102 +6,91 @@
 let paintingDatabase = {
   1: {
     id: 1,
-    title: "Sunshine Valley",
-    artist: "Elena Valerius",
-    desc: "This stunning impasto piece captures the dynamic contrast of wild yellow buttercups and electric blue lupines in a sun-drenched valley. Created with a heavy palette knife technique, the thick oil layers create a textured surface that catches and plays with ambient light.",
-    price: 245,
-    image: "assets/paintings/painting_1.png",
-    medium: "Oil on Stretched Canvas",
-    dimensions: "24\" x 24\"",
-    category: "Landscape"
+    title: "Stretch's Magic Alignment Mat",
+    artist: "Guru Elena",
+    desc: "Our flagship yoga mat designed in collaboration with Guru Elena. Featuring beautiful, laser-engraved alignment guides to keep your pose perfectly centered. Custom monogramming available! Natural tree rubber base.",
+    price: 95,
+    image: "assets/products/yoga_mat.png",
+    medium: "Eco-Friendly Tree Rubber & Suede",
+    dimensions: "72\" x 26\" x 6mm",
+    category: "Mats"
   },
   2: {
     id: 2,
-    title: "Dancing Blooms",
-    artist: "Julian S. Thorne",
-    desc: "A lighthearted, fluid watercolor painting showcasing cosmos and poppies swaying gently in a summer breeze. The artist uses custom-made high-texture paper and translucent layers of pigments to evoke a sense of weightless motion.",
-    price: 190,
-    image: "assets/paintings/painting_2.png",
-    medium: "Watercolor on Arches Paper",
-    dimensions: "18\" x 24\"",
-    category: "Floral"
+    title: "Zen Paws Cork Balance Block",
+    artist: "Coach Julian",
+    desc: "Sturdy, sustainable, and naturally antimicrobial cork yoga block. Rounded corners provide an ergonomic grip, helping you reach deeper stretches safely without strain.",
+    price: 28,
+    image: "assets/products/cork_block.png",
+    medium: "100% Organic Mediterranean Cork",
+    dimensions: "9\" x 6\" x 4\"",
+    category: "Blocks"
   },
   3: {
     id: 3,
-    title: "Ocean Whisper",
-    artist: "Mikaela Wu",
-    desc: "A striking minimalist landscape that explores the quiet threshold between sky and water. Mikaela Wu blends dark charcoal acrylics with real silver dust to form a metallic horizon that reflects changing light conditions in the room.",
-    price: 220,
-    image: "assets/paintings/painting_3.png",
-    medium: "Acrylic and Silver Dust on Wood Block",
-    dimensions: "20\" x 20\"",
-    category: "Minimalist"
+    title: "Stretch-n-Fetch Canvas Belt",
+    artist: "Yin Master Mikaela",
+    desc: "Playful dual-ring alignment strap designed to safely extend your reach. Extra durable organic cotton weave with a cute dog print to bring a smile to your vinyasa.",
+    price: 18,
+    image: "assets/products/canvas_belt.png",
+    medium: "Organic Unbleached Canvas Cotton",
+    dimensions: "8ft Length / 1.5\" Width",
+    category: "Belts"
   },
   4: {
     id: 4,
-    title: "Colorful Abstract",
-    artist: "Sarah J.",
-    desc: "An explosive abstract expressionist piece filled with high-energy splatters of deep cobalt, brilliant magenta, and liquid gold leaf. The heavy, layered canvas celebrates the beauty of spontaneous creation and Bucky's favorite concept: messy genius.",
-    price: 280,
-    image: "assets/paintings/painting_4.png",
-    medium: "Mixed Media on Canvas",
-    dimensions: "30\" x 30\"",
-    category: "Abstract"
+    title: "Downward Dog & Other Asanas",
+    artist: "Designer Sarah",
+    desc: "Stretch's official guide to yoga for pups and humans alike. Filled with cute illustrations, breathing prompts, and lighthearted advice on how to find zen in your daily routine.",
+    price: 22,
+    image: "assets/products/yoga_book.png",
+    medium: "Hardcover Recycled Paper Book",
+    dimensions: "160 Pages / Full Color",
+    category: "Books"
   },
   5: {
     id: 5,
-    title: "Midnight Jazz",
-    artist: "Alex M.",
-    desc: "An atmospheric cityscape that captures a saxophonist playing under a gaslamp in a rain-slicked alleyway. The reflection of glowing neon signs on wet cobblestones creates a rich tapestry of colors and shadows.",
-    price: 310,
-    image: "assets/paintings/painting_5.png",
-    medium: "Oil on Linen Board",
-    dimensions: "24\" x 30\"",
-    category: "Urban / Moody"
+    title: "Calm Bark Meditation Cushion",
+    artist: "Yin Master Mikaela",
+    desc: "An organic buckwheat-filled cushion designed to support your posture during prolonged meditation. Features a removable cover embroidered with playful dog prints.",
+    price: 48,
+    image: "assets/products/meditation_cushion.png",
+    medium: "Organic Linen & Buckwheat Hulls",
+    dimensions: "13\" Diameter / 5.5\" Height",
+    category: "Books"
   },
   6: {
     id: 6,
-    title: "Serene Heights",
-    artist: "Marcus Vance",
-    desc: "A grand oil painting capturing a dramatic alpine sunrise. The first rays of morning light illuminate snow-capped peaks in golden hues, while a sea of clouds rolls gently through the pine valley below.",
-    price: 350,
-    image: "assets/paintings/painting_6.png",
-    medium: "Oil on Stretched Canvas",
-    dimensions: "36\" x 24\"",
-    category: "Landscape"
+    title: "Happy Puppy TPE Foam Block",
+    artist: "Coach Julian",
+    desc: "Lightweight, high-density yoga block made from non-toxic TPE foam. Ideal for beginners, featuring a soft pastel gradient design that looks gorgeous in any studio.",
+    price: 20,
+    image: "assets/products/foam_block.png",
+    medium: "Premium Non-Toxic TPE Foam",
+    dimensions: "9\" x 6\" x 3\"",
+    category: "Blocks"
   },
   7: {
     id: 7,
-    title: "Golden Field",
-    artist: "Elena Valerius",
-    desc: "A companion piece to Sunshine Valley, this warm-toned study captures a golden wheat field at the peak of summer, with heavy impasto textures expressing the dense, sun-ripened stalks.",
-    price: 260,
-    image: "assets/paintings/painting_7.png",
-    medium: "Oil on Canvas",
-    dimensions: "20\" x 20\"",
-    category: "Landscape"
+    title: "Tail-Wag Pro Yoga Wheel",
+    artist: "Guru Elena",
+    desc: "Open up your back, chest, and shoulders with our extra strong yoga wheel. Padded with high-comfort sweat-resistant foam and featuring a cute dog alignment grip print.",
+    price: 55,
+    image: "assets/products/yoga_wheel.png",
+    medium: "Durable ABS Core & Eco-TPE Padding",
+    dimensions: "12\" Diameter / 5\" Width",
+    category: "Mats"
   },
   8: {
     id: 8,
-    title: "Spring Whispers",
-    artist: "Julian S. Thorne",
-    desc: "A delicate watercolor painting featuring soft pastel cherry blossoms and primroses. Thorne's precise brushwork captures the fragile, fleeting beauty of spring in an elegant, airy composition.",
-    price: 180,
-    image: "assets/paintings/painting_8.png",
-    medium: "Watercolor on Paper",
-    dimensions: "16\" x 20\"",
-    category: "Floral"
-  },
-  9: {
-    id: 9,
-    title: "Midnight Tide",
-    artist: "Mikaela Wu",
-    desc: "A deep, contemplative sister piece to Ocean Whisper. This work emphasizes the deep indigo tones of the night ocean against a subtle, shimmering silver foil line that defines the coastal horizon.",
-    price: 230,
-    image: "assets/paintings/painting_9.png",
-    medium: "Acrylic and Silver Foil on Wood",
-    dimensions: "20\" x 20\"",
-    category: "Minimalist"
+    title: "Eco-Grip Hemp Strap",
+    artist: "Coach Julian",
+    desc: "Extra durable, biodegradable yoga strap made from premium raw hemp. Naturally textured grip keeps your hands from slipping during advanced asanas.",
+    price: 24,
+    image: "assets/products/hemp_strap.png",
+    medium: "100% Organic Himalayan Hemp",
+    dimensions: "10ft Length / 1.5\" Width",
+    category: "Belts"
   }
 };
 
@@ -145,7 +134,7 @@ const cssResetBtn = document.getElementById('css-reset-btn-el');
 let currentPage = 1;
 const itemsPerPage = 9;
 let currentCardStyles = []; // Cache layout customizer styles from kvdb.io
-let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let paintingOrder = [1, 2, 3, 4, 5, 6, 7, 8];
 
 
 
@@ -234,12 +223,17 @@ window.renderPaintings = function() {
     card.setAttribute('data-category', painting.category.toLowerCase());
     card.setAttribute('data-id', painting.id);
     
+    const userMonogram = localStorage.getItem(`yoga_mat_monogram_${painting.id}`) || localStorage.getItem('yoga_mat_monogram_all') || '';
+    const userPrint = localStorage.getItem(`yoga_mat_print_${painting.id}`) || localStorage.getItem('yoga_mat_print_all') || 'none';
+    
     card.innerHTML = `
       <div class="card-header">
         <h3 class="painting-title">${painting.title}</h3>
       </div>
       <div class="painting-image-wrapper frame-wood">
+        <div class="mat-alignment-lines print-${userPrint}"></div>
         <img src="${painting.image}" alt="${painting.title} - ${painting.medium}" class="painting-img" loading="lazy">
+        <div class="mat-monogram-overlay">${userMonogram}</div>
         <div class="card-overlay">
           <button class="btn-view-overlay" onclick="openPaintingModal(${painting.id})"><i class="fa-solid fa-expand"></i> View Details</button>
         </div>
@@ -247,11 +241,19 @@ window.renderPaintings = function() {
       <div class="card-body">
         <p class="artist-name"><a href="javascript:void(0)" class="artist-link" onclick="openArtistModal('${painting.artist.replace(/'/g, "\\'")}')">${painting.artist}</a></p>
         <p class="painting-desc">${painting.medium}</p>
+        <div class="product-rating" style="margin: 8px 0; color: #fbbf24; font-size: 0.85rem;">
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <i class="fa-solid fa-star"></i>
+          <span style="color: #6b7280; margin-left: 4px;">(4.9)</span>
+        </div>
         <div class="card-footer">
-          <span class="price">$${painting.price}</span>
+          <span class="price" style="font-weight: 600; color: #2d2d2d;">$${painting.price}</span>
           <div class="card-actions">
-            <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(${painting.id})">View Painting</a>
-            <button class="btn-add-cart" onclick="addToCart(${painting.id}, '${painting.title.replace(/'/g, "\\'")}', ${painting.price})"><i class="fa-solid fa-plus"></i></button>
+            <a href="javascript:void(0)" class="link-view" onclick="openPaintingModal(${painting.id})">View Details</a>
+            <button class="btn-add-cart" onclick="addToCart(${painting.id}, '${painting.title.replace(/'/g, "\\'")}', ${painting.price})"><i class="fa-solid fa-shopping-basket"></i> Add</button>
           </div>
         </div>
       </div>
@@ -329,7 +331,7 @@ window.populateSelectors = function() {
   const filterTargetSel = document.getElementById('custom-filter-target');
   if (filterTargetSel) {
     const currentValue = filterTargetSel.value;
-    filterTargetSel.innerHTML = '<option value="all">All Paintings (Default)</option>';
+    filterTargetSel.innerHTML = '<option value="all">All Gear (Default)</option>';
     
     // Populate ordered paintings in the selector
     paintingOrder.forEach(id => {
@@ -349,7 +351,7 @@ window.populateSelectors = function() {
     }
   }
 
-  const cmsArtistSel = document.getElementById('cms-painting-artist');
+  const cmsArtistSel = document.getElementById('cms-product-artist');
   if (cmsArtistSel) {
     cmsArtistSel.innerHTML = '';
     Object.values(artistDatabase).forEach(a => {
@@ -384,7 +386,7 @@ window.renderCmsLists = function() {
         <button class="cms-btn-sort" onclick="movePaintingDown(${p.id})" title="Move Down" ${index === paintingOrder.length - 1 ? 'disabled style="opacity: 0.3; cursor: default;"' : ''}>
           <i class="fa-solid fa-arrow-down"></i>
         </button>
-        <button class="cms-btn-delete" onclick="handleCmsDeletePainting(${p.id})" title="Delete Painting">
+        <button class="cms-btn-delete" onclick="handleCmsDeletePainting(${p.id})" title="Delete Gear">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </div>
@@ -396,7 +398,7 @@ window.renderCmsLists = function() {
     const li = document.createElement('li');
     li.innerHTML = `
       <span>${a.name}</span>
-      <button class="cms-btn-delete" onclick="handleCmsDeleteArtist('${a.name.replace(/'/g, "\\'")}')" title="Delete Artist">
+      <button class="cms-btn-delete" onclick="handleCmsDeleteArtist('${a.name.replace(/'/g, "\\'")}')" title="Delete Guru">
         <i class="fa-solid fa-trash-can"></i>
       </button>
     `;
@@ -587,9 +589,9 @@ window.saveGalleryStyles = function() {
 
   const inputValues = {};
   const inputsToSave = [
-    'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
-    'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
-    'custom-filter-target', 'custom-brightness', 'custom-contrast',
+    'custom-padding', 'custom-roundness', 'custom-trim', 'custom-mat-color',
+    'custom-texture', 'custom-trim-border', 'custom-trim-margin',
+    'custom-filter-target', 'custom-glow', 'custom-contrast',
     'custom-saturation', 'custom-hue', 'custom-glow-color', 'custom-glow-size'
   ];
   inputsToSave.forEach(id => {
@@ -664,9 +666,9 @@ window.loadGalleryStyles = function() {
 
 // Hook into Customizer changes to auto-save
 const inputControls = [
-  'custom-margin', 'custom-radius', 'custom-frame', 'custom-bg-color',
-  'custom-card-bg', 'custom-frame-border', 'custom-frame-margin',
-  'custom-brightness', 'custom-contrast', 'custom-saturation',
+  'custom-padding', 'custom-roundness', 'custom-trim', 'custom-mat-color',
+  'custom-texture', 'custom-trim-border', 'custom-trim-margin',
+  'custom-glow', 'custom-contrast', 'custom-saturation',
   'custom-hue', 'custom-glow-color', 'custom-glow-size'
 ];
 inputControls.forEach(id => {
@@ -779,7 +781,7 @@ window.openPaintingModal = function(id) {
   const card = document.querySelector(`.painting-card[data-id="${id}"]`);
   if (card && modalImg) {
     const filtersToSync = [
-      { varName: '--painting-brightness' },
+      { varName: '--mat-glow' },
       { varName: '--painting-contrast' },
       { varName: '--painting-saturate' },
       { varName: '--painting-hue-rotate' }
@@ -1021,14 +1023,14 @@ const filterTargetSelect = document.getElementById('custom-filter-target');
 const resetTargetBtn = document.getElementById('css-reset-target-btn');
 
 const slidersToSync = [
-  { id: 'custom-margin', varName: '--painting-padding', suffix: 'px' },
-  { id: 'custom-radius', varName: '--painting-radius', suffix: 'px' },
-  { id: 'custom-brightness', varName: '--painting-brightness', suffix: '%' },
+  { id: 'custom-padding', varName: '--mat-padding', suffix: 'px' },
+  { id: 'custom-roundness', varName: '--mat-radius', suffix: 'px' },
+  { id: 'custom-glow', varName: '--mat-glow', suffix: '%' },
   { id: 'custom-contrast', varName: '--painting-contrast', suffix: '%' },
   { id: 'custom-saturation', varName: '--painting-saturate', suffix: '%' },
   { id: 'custom-hue', varName: '--painting-hue-rotate', suffix: 'deg' },
-  { id: 'custom-frame-border', varName: '--frame-border-width', suffix: 'px' },
-  { id: 'custom-frame-margin', varName: '--frame-margin', suffix: 'px' }
+  { id: 'custom-trim-border', varName: '--mat-trim-width', suffix: 'px' },
+  { id: 'custom-trim-margin', varName: '--mat-alignment-margin', suffix: 'px' }
 ];
 
 function syncSlidersToTarget() {
@@ -1049,6 +1051,33 @@ function syncSlidersToTarget() {
     if (resetTargetBtn) resetTargetBtn.style.display = 'none';
   }
   
+  // Alignment design picker change listener
+  const alignSelect = document.getElementById('custom-glow-color');
+  if (alignSelect) {
+    alignSelect.onchange = () => {
+      const alignVal = alignSelect.value;
+      const target = filterTargetSelect ? filterTargetSelect.value : 'all';
+      if (target === 'all') {
+        document.querySelectorAll('.painting-image-wrapper').forEach(w => {
+          const lines = w.querySelector('.mat-alignment-lines');
+          if (lines) {
+            lines.className = 'mat-alignment-lines print-' + alignVal;
+          }
+        });
+        localStorage.setItem('yoga_mat_print_all', alignVal);
+      } else {
+        const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+        if (card) {
+          const lines = card.querySelector('.mat-alignment-lines');
+          if (lines) {
+            lines.className = 'mat-alignment-lines print-' + alignVal;
+          }
+          localStorage.setItem(`yoga_mat_print_${target}`, alignVal);
+        }
+      }
+    };
+  }
+
   slidersToSync.forEach(item => {
     const slider = document.getElementById(item.id);
     const valSpan = document.getElementById('val-' + item.id.replace('custom-', ''));
@@ -1080,17 +1109,17 @@ function syncSlidersToTarget() {
 
 function syncDropdownsToTarget() {
   const target = filterTargetSelect ? filterTargetSelect.value : 'all';
-  const frameSelect = document.getElementById('custom-frame');
-  const bgColorSelect = document.getElementById('custom-bg-color');
-  const cardBgSelect = document.getElementById('custom-card-bg');
+  const frameSelect = document.getElementById('custom-trim');
+  const bgColorSelect = document.getElementById('custom-mat-color');
+  const cardBgSelect = document.getElementById('custom-texture');
   
   if (target === 'all') {
     if (bgColorSelect) {
-      const globalBg = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+      const globalBg = root.style.getPropertyValue('--mat-bg-color') || '#001f54';
       bgColorSelect.value = globalBg.trim();
     }
     if (cardBgSelect) {
-      const globalCardBg = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+      const globalCardBg = root.style.getPropertyValue('--mat-backing-color') || '#eddcd2';
       cardBgSelect.value = globalCardBg.trim();
     }
   } else {
@@ -1102,25 +1131,25 @@ function syncDropdownsToTarget() {
         frameSelect.value = 'none';
       }
       
-      if (bgColorSelect && c.overrides && c.overrides['--painting-bg-color']) {
-        bgColorSelect.value = c.overrides['--painting-bg-color'];
+      if (bgColorSelect && c.overrides && c.overrides['--mat-bg-color']) {
+        bgColorSelect.value = c.overrides['--mat-bg-color'];
       } else if (bgColorSelect) {
-        bgColorSelect.value = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+        bgColorSelect.value = root.style.getPropertyValue('--mat-bg-color') || '#001f54';
       }
       
-      if (cardBgSelect && c.overrides && c.overrides['--card-bg-color']) {
-        cardBgSelect.value = c.overrides['--card-bg-color'];
+      if (cardBgSelect && c.overrides && c.overrides['--mat-backing-color']) {
+        cardBgSelect.value = c.overrides['--mat-backing-color'];
       } else if (cardBgSelect) {
-        cardBgSelect.value = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+        cardBgSelect.value = root.style.getPropertyValue('--mat-backing-color') || '#eddcd2';
       }
     } else {
       if (frameSelect) frameSelect.value = 'none';
       if (bgColorSelect) {
-        const val = root.style.getPropertyValue('--painting-bg-color') || '#001f54';
+        const val = root.style.getPropertyValue('--mat-bg-color') || '#001f54';
         bgColorSelect.value = val.trim();
       }
       if (cardBgSelect) {
-        const val = root.style.getPropertyValue('--card-bg-color') || '#eddcd2';
+        const val = root.style.getPropertyValue('--mat-backing-color') || '#eddcd2';
         cardBgSelect.value = val.trim();
       }
     }
@@ -1261,15 +1290,15 @@ function bindCssVar(sliderId, cssVarName, suffix = '') {
 }
 
 // Bind range sliders
-bindCssVar('custom-margin', '--painting-padding', 'px');
-bindCssVar('custom-radius', '--painting-radius', 'px');
-bindCssVar('custom-brightness', '--painting-brightness', '%');
+bindCssVar('custom-padding', '--mat-padding', 'px');
+bindCssVar('custom-roundness', '--mat-radius', 'px');
+bindCssVar('custom-glow', '--mat-glow', '%');
 bindCssVar('custom-contrast', '--painting-contrast', '%');
 bindCssVar('custom-saturation', '--painting-saturate', '%');
 bindCssVar('custom-hue', '--painting-hue-rotate', 'deg');
 bindCssVar('custom-glow-size', '--mascot-glow-size', 'px');
-bindCssVar('custom-frame-border', '--frame-border-width', 'px');
-bindCssVar('custom-frame-margin', '--frame-margin', 'px');
+bindCssVar('custom-trim-border', '--mat-trim-width', 'px');
+bindCssVar('custom-trim-margin', '--mat-alignment-margin', 'px');
 
 // Bind Bucky's Glow color dropdown
 const glowColorSelect = document.getElementById('custom-glow-color');
@@ -1280,7 +1309,7 @@ if (glowColorSelect) {
 }
 
 // Bind Painting Frame selector
-const frameSelect = document.getElementById('custom-frame');
+const frameSelect = document.getElementById('custom-trim');
 if (frameSelect) {
   frameSelect.addEventListener('change', (e) => {
     const selectedFrame = e.target.value;
@@ -1311,7 +1340,7 @@ if (frameSelect) {
 }
 
 // Auto-activate frame style if width is adjusted when currently set to none
-const frameBorderSlider = document.getElementById('custom-frame-border');
+const frameBorderSlider = document.getElementById('custom-trim-border');
 if (frameBorderSlider) {
   frameBorderSlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value, 10);
@@ -1323,30 +1352,30 @@ if (frameBorderSlider) {
 }
 
 // Bind Painting Matting Background Color selector
-const bgColorSelect = document.getElementById('custom-bg-color');
+const bgColorSelect = document.getElementById('custom-mat-color');
 if (bgColorSelect) {
   bgColorSelect.addEventListener('change', (e) => {
     const selectedVal = e.target.value;
     const target = filterTargetSelect ? filterTargetSelect.value : 'all';
     
     if (target === 'all') {
-      root.style.setProperty('--painting-bg-color', selectedVal);
+      root.style.setProperty('--mat-bg-color', selectedVal);
       document.querySelectorAll('.painting-card').forEach(card => {
-        card.style.removeProperty('--painting-bg-color');
-        setCardStyleOverride(card.getAttribute('data-id'), '--painting-bg-color', null);
+        card.style.removeProperty('--mat-bg-color');
+        setCardStyleOverride(card.getAttribute('data-id'), '--mat-bg-color', null);
       });
     } else {
       const card = document.querySelector(`.painting-card[data-id="${target}"]`);
       if (card) {
-        card.style.setProperty('--painting-bg-color', selectedVal);
+        card.style.setProperty('--mat-bg-color', selectedVal);
       }
-      setCardStyleOverride(target, '--painting-bg-color', selectedVal);
+      setCardStyleOverride(target, '--mat-bg-color', selectedVal);
     }
   });
 }
 
 // Bind Painting Card (Cell) Background Color selector
-const cardBgSelect = document.getElementById('custom-card-bg');
+const cardBgSelect = document.getElementById('custom-texture');
 if (cardBgSelect) {
   cardBgSelect.addEventListener('change', (e) => {
     const selectedVal = e.target.value;
@@ -1354,7 +1383,7 @@ if (cardBgSelect) {
     const isLight = ['#dbeafe', '#eddcd2', '#d8f3dc', '#e2e2fc', '#ffe5ec', '#ffffff'].includes(selectedVal);
     
     if (target === 'all') {
-      root.style.setProperty('--card-bg-color', selectedVal);
+      root.style.setProperty('--mat-backing-color', selectedVal);
       const cards = document.querySelectorAll('.painting-card');
       cards.forEach(card => {
         if (isLight) {
@@ -1366,14 +1395,14 @@ if (cardBgSelect) {
     } else {
       const card = document.querySelector(`.painting-card[data-id="${target}"]`);
       if (card) {
-        card.style.setProperty('--card-bg-color', selectedVal);
+        card.style.setProperty('--mat-backing-color', selectedVal);
         if (isLight) {
           card.classList.add('theme-light');
         } else {
           card.classList.remove('theme-light');
         }
       }
-      setCardStyleOverride(target, '--card-bg-color', selectedVal);
+      setCardStyleOverride(target, '--mat-backing-color', selectedVal);
       setCardLightOverride(target, isLight);
     }
   });
@@ -1383,15 +1412,15 @@ if (cardBgSelect) {
 if (cssResetBtn) {
   cssResetBtn.addEventListener('click', () => {
     // Reset ranges in DOM
-    document.getElementById('custom-margin').value = 16;
-    document.getElementById('custom-radius').value = 4;
-    document.getElementById('custom-brightness').value = 100;
+    document.getElementById('custom-padding').value = 16;
+    document.getElementById('custom-roundness').value = 4;
+    document.getElementById('custom-glow').value = 100;
     document.getElementById('custom-contrast').value = 100;
     document.getElementById('custom-saturation').value = 100;
     document.getElementById('custom-hue').value = 0;
     document.getElementById('custom-glow-size').value = 25;
-    document.getElementById('custom-frame-border').value = 4;
-    document.getElementById('custom-frame-margin').value = 12;
+    document.getElementById('custom-trim-border').value = 4;
+    document.getElementById('custom-trim-margin').value = 12;
     
     // Clear all card-level filter overrides
     currentCardStyles = [];
@@ -1426,13 +1455,13 @@ if (cssResetBtn) {
     document.getElementById('val-frame-margin').textContent = '12px';
     
     // Reset CSS variables
-    root.style.setProperty('--painting-padding', '16px');
-    root.style.setProperty('--painting-radius', '4px');
-    root.style.setProperty('--painting-bg-color', '#001f54');
-    root.style.setProperty('--card-bg-color', '#eddcd2');
-    root.style.setProperty('--frame-border-width', '4px');
-    root.style.setProperty('--frame-margin', '12px');
-    root.style.setProperty('--painting-brightness', '100%');
+    root.style.setProperty('--mat-padding', '16px');
+    root.style.setProperty('--mat-radius', '4px');
+    root.style.setProperty('--mat-bg-color', '#001f54');
+    root.style.setProperty('--mat-backing-color', '#eddcd2');
+    root.style.setProperty('--mat-trim-width', '4px');
+    root.style.setProperty('--mat-alignment-margin', '12px');
+    root.style.setProperty('--mat-glow', '100%');
     root.style.setProperty('--painting-contrast', '100%');
     root.style.setProperty('--painting-saturate', '100%');
     root.style.setProperty('--painting-hue-rotate', '0deg');
@@ -1823,17 +1852,17 @@ window.handleAdminLogout = function() {
 // CMS Content Management Form & Event Handlers
 // ==========================================================================
 
-// Add Artist Form Handler
+// Add Yoga Guru Form Handler
 window.handleCmsAddArtist = async function(event) {
   event.preventDefault();
-  const name = document.getElementById('cms-artist-name').value.trim();
-  const style = document.getElementById('cms-artist-medium').value.trim();
-  const origin = document.getElementById('cms-artist-origin').value.trim() || 'Unknown';
-  const avatarFile = document.getElementById('cms-artist-avatar').files[0];
-  const philosophy = document.getElementById('cms-artist-philosophy').value.trim() || 'Art is life.';
-  const bio = document.getElementById('cms-artist-bio').value.trim();
-  const years = document.getElementById('cms-artist-years').value.trim() || '1';
-  const messiness = document.getElementById('cms-artist-messiness').value.trim() || '5/10 splatters';
+  const name = document.getElementById('cms-guru-name').value.trim();
+  const style = document.getElementById('cms-guru-medium').value.trim();
+  const origin = document.getElementById('cms-guru-origin').value.trim() || 'Unknown';
+  const avatarFile = document.getElementById('cms-guru-avatar').files[0];
+  const philosophy = document.getElementById('cms-guru-philosophy').value.trim() || 'Art is life.';
+  const bio = document.getElementById('cms-guru-bio').value.trim();
+  const years = document.getElementById('cms-guru-years').value.trim() || '1';
+  const messiness = document.getElementById('cms-guru-messiness').value.trim() || '5/10 splatters';
 
   if (artistDatabase[name]) {
     alert('Artist already exists!');
@@ -1869,22 +1898,22 @@ window.handleCmsAddArtist = async function(event) {
   saveGalleryStyles();
   
   // Reset form
-  document.getElementById('cms-artist-form').reset();
+  document.getElementById('cms-guru-form').reset();
   
   showCmsToast('Artist added successfully!');
 };
 
-// Add Painting Form Handler
+// Add Yoga Gear Form Handler
 window.handleCmsAddPainting = async function(event) {
   event.preventDefault();
-  const title = document.getElementById('cms-painting-title').value.trim();
-  const artistName = document.getElementById('cms-painting-artist').value;
-  const category = document.getElementById('cms-painting-category').value;
-  const price = parseInt(document.getElementById('cms-painting-price').value.trim()) || 0;
-  const imageFile = document.getElementById('cms-painting-image').files[0];
-  const medium = document.getElementById('cms-painting-medium').value.trim();
-  const dimensions = document.getElementById('cms-painting-dimensions').value.trim();
-  const desc = document.getElementById('cms-painting-desc').value.trim() || '';
+  const title = document.getElementById('cms-product-title').value.trim();
+  const artistName = document.getElementById('cms-product-artist').value;
+  const category = document.getElementById('cms-product-category').value;
+  const price = parseInt(document.getElementById('cms-product-price').value.trim()) || 0;
+  const imageFile = document.getElementById('cms-product-image').files[0];
+  const medium = document.getElementById('cms-product-medium').value.trim();
+  const dimensions = document.getElementById('cms-product-dimensions').value.trim();
+  const desc = document.getElementById('cms-product-desc').value.trim() || '';
 
   if (!imageFile) {
     alert('Please upload a painting photo.');
@@ -1928,7 +1957,7 @@ window.handleCmsAddPainting = async function(event) {
   saveGalleryStyles();
 
   // Reset form
-  document.getElementById('cms-painting-form').reset();
+  document.getElementById('cms-product-form').reset();
 
   showCmsToast('Painting added successfully!');
 };
@@ -2019,7 +2048,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Apply customizer variables to lightbox image
     const filtersToSync = [
-      '--painting-brightness',
+      '--mat-glow',
       '--painting-contrast',
       '--painting-saturate',
       '--painting-hue-rotate'
@@ -2391,3 +2420,36 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+window.updateMonogramText = function(text) {
+  const target = document.getElementById('custom-filter-target').value;
+  const overlayText = text.toUpperCase();
+  
+  // Save monogram text to global or target card data
+  if (target === 'all') {
+    document.querySelectorAll('.painting-card').forEach(card => {
+      let monogram = card.querySelector('.mat-monogram-overlay');
+      if (!monogram) {
+        monogram = document.createElement('div');
+        monogram.className = 'mat-monogram-overlay';
+        const imgWrapper = card.querySelector('.painting-image-wrapper');
+        if (imgWrapper) imgWrapper.appendChild(monogram);
+      }
+      monogram.textContent = overlayText;
+    });
+    localStorage.setItem('yoga_mat_monogram_all', overlayText);
+  } else {
+    const card = document.querySelector(`.painting-card[data-id="${target}"]`);
+    if (card) {
+      let monogram = card.querySelector('.mat-monogram-overlay');
+      if (!monogram) {
+        monogram = document.createElement('div');
+        monogram.className = 'mat-monogram-overlay';
+        const imgWrapper = card.querySelector('.painting-image-wrapper');
+        if (imgWrapper) imgWrapper.appendChild(monogram);
+      }
+      monogram.textContent = overlayText;
+      localStorage.setItem(`yoga_mat_monogram_${target}`, overlayText);
+    }
+  }
+};

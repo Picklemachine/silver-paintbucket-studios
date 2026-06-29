@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zen Paws Cork Balance Block - Skinny Dog Yoga Gear</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="/index.html" class="logo" style="display: block; padding: 4px 0;">
+        <img src="/assets/logo.png" alt="Skinny Dog Yoga Logo" class="logo-icon" style="height: 70px; width: auto; max-height: 70px; display: block;">
+      </a>
+      <nav class="nav-links">
+        <a href="/index.html" class="nav-item">Shop All</a>
+        <a href="/index.html?filter=mats" class="nav-item">Mats</a>
+        <a href="/index.html?filter=blocks" class="nav-item">Blocks</a>
+        <a href="/index.html?filter=belts" class="nav-item">Belts & Straps</a>
+        <a href="/index.html?filter=books" class="nav-item">Books & Zen</a>
+      </nav>
+      <div class="header-right">
+        <a href="javascript:void(0)" onclick="openCartDrawer()" class="cart-btn" id="cart-badge-container">
+          <i class="fa-solid fa-shopping-basket"></i> Cart (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+    
+
+  <main style="max-width:1100px; margin:120px auto 40px auto; padding:0 24px;">
+    <div class="breadcrumbs" style="font-size:0.85rem; color:#888; margin-bottom:30px;">
+      <a href="/index.html">Home</a> / <a href="/index.html?filter=blocks">Blocks</a> / <span style="color:#2d2d2d;">Zen Paws Cork Balance Block</span>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:50px; align-items:start;">
+      <!-- Product Images Grid (Left Column) -->
+      <div style="position:relative; background:#f9f9f9; padding:40px; text-align:center; border: 1px solid #e7e7e7;">
+        <div id="mat-overlay-wrapper" style="position:relative; display:inline-block;">
+          <div class="mat-alignment-lines print-none" id="alignment-lines-layer" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:2; opacity:0.8;"></div>
+          <img src="/assets/products/cork_block.png" alt="Zen Paws Cork Balance Block" id="main-product-img" style="max-height: 450px; width:auto; margin:0 auto; transition: background 0.3s ease;">
+          <div class="mat-monogram-overlay" id="monogram-text-layer" style="position:absolute; bottom:20px; right:20px; font-weight:700; color:#fff; background:rgba(0,0,0,0.5); padding:2px 8px; font-size:0.8rem; z-index:3; display:none;"></div>
+        </div>
+      </div>
+
+      <!-- Product Info Details (Right Column) -->
+      <div>
+        <h1 style="font-size:2rem; font-weight:400; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.05em;">Zen Paws Cork Balance Block</h1>
+        
+        <div style="color:#fbbf24; font-size:0.9rem; margin-bottom:15px;">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span style="color:#888; font-size:0.85rem; margin-left:5px;">(4.9 stars)</span>
+        </div>
+
+        <div style="font-size:1.5rem; font-weight:500; color:#2d2d2d; margin-bottom:20px;">
+          $28.00
+        </div>
+
+        <p style="color:#5c5c5c; line-height:1.6; margin-bottom:20px; font-size:0.95rem;">
+          Sturdy, sustainable, and naturally antimicrobial cork yoga block. Rounded corners provide an ergonomic grip, helping you reach deeper stretches safely without strain.
+        </p>
+
+        
+
+        <div style="margin-top:20px; display:flex; gap:15px; align-items:center;">
+          <div style="display:flex; border:1px solid #ccc; align-items:center;">
+            <button onclick="changeQty(-1)" style="border:none; background:#f7f7f7; padding:8px 12px; cursor:pointer;">-</button>
+            <input type="text" id="qty-input" value="1" style="border:none; text-align:center; width:40px; font-weight:500;">
+            <button onclick="changeQty(1)" style="border:none; background:#f7f7f7; padding:8px 12px; cursor:pointer;">+</button>
+          </div>
+          <button class="btn" onclick="triggerAddToCart()" style="flex:1; background:#2d2d2d; color:#fff; border:none; padding:12px; font-weight:500; text-transform:uppercase; cursor:pointer;">Add To Cart</button>
+        </div>
+
+        <!-- Details tabs collapsible -->
+        <div style="margin-top:45px; border-top:1px solid #e7e7e7;">
+          <details open style="border-bottom:1px solid #e7e7e7; padding:15px 0;">
+            <summary style="font-size:0.85rem; text-transform:uppercase; font-weight:600; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+              Specifications <i class="fa-solid fa-chevron-down"></i>
+            </summary>
+            <p style="color:#5c5c5c; font-size:0.9rem; margin-top:10px; line-height:1.6;">
+              Measurements: 9"W x 6"H x 4"D.<br>Weight: 1.2 lbs.<br>Materials: 100% Sustainable Cork.
+            </p>
+          </details>
+          <details style="border-bottom:1px solid #e7e7e7; padding:15px 0;">
+            <summary style="font-size:0.85rem; text-transform:uppercase; font-weight:600; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center;">
+              Care Instructions <i class="fa-solid fa-chevron-down"></i>
+            </summary>
+            <p style="color:#5c5c5c; font-size:0.9rem; margin-top:10px; line-height:1.6;">
+              Wipe clean with damp cloth. Air dry.
+            </p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer-el" role="dialog" aria-hidden="true">
+    <div class="cart-drawer-header">
+      <h3>Shopping Cart</h3>
+      <button class="cart-drawer-close" onclick="closeCartDrawer()" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-drawer-body" id="cart-drawer-items-list">
+      <!-- Items dynamically populated -->
+    </div>
+    <div class="cart-drawer-footer">
+      <div class="cart-total-row">
+        <span>Total:</span>
+        <span id="cart-total-value">$0.00</span>
+      </div>
+      <button class="btn btn-checkout" onclick="openCheckoutModal()">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()" aria-label="Close modal">&times;</button>
+      <div class="checkout-content">
+        <h3>Secure Checkout</h3>
+        <p class="checkout-subtitle">Enter payment details to complete your order.</p>
+        
+        <div class="checkout-summary-box" style="background:#f7f7f7; padding:15px; margin-bottom:20px;">
+          <h4 style="margin-bottom:10px;">Order Summary</h4>
+          <div id="checkout-summary-items"></div>
+          <div style="border-top:1px solid #e7e7e7; padding-top:10px; margin-top:10px; display:flex; justify-content:space-between; font-weight:700;">
+            <span>Total:</span>
+            <span id="checkout-summary-total-val">$0</span>
+          </div>
+        </div>
+
+        <form id="checkout-payment-form" onsubmit="handleCheckoutSubmit(event)">
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Email Address</label>
+            <input type="email" required placeholder="email@example.com" style="width:100%; padding:8px; border:1px solid #ccc;">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Cardholder Name</label>
+            <input type="text" required placeholder="John Doe" style="width:100%; padding:8px; border:1px solid #ccc;">
+          </div>
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Card Number</label>
+            <input type="text" required placeholder="xxxx xxxx xxxx xxxx" style="width:100%; padding:8px; border:1px solid #ccc;">
+          </div>
+          <div class="form-row" style="display:flex; gap:10px; margin-bottom:12px;">
+            <div class="form-group" style="flex:1;">
+              <label>Expiry</label>
+              <input type="text" required placeholder="MM/YY" style="width:100%; padding:8px; border:1px solid #ccc;">
+            </div>
+            <div class="form-group" style="flex:1;">
+              <label>CVV</label>
+              <input type="password" required placeholder="•••" style="width:100%; padding:8px; border:1px solid #ccc;">
+            </div>
+          </div>
+          <button type="submit" class="btn btn-checkout" style="width:100%; margin-top:10px;">Pay & Finalize Purchase</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Success Modal -->
+  <div class="modal-overlay" id="checkout-success-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card" style="text-align:center; padding:30px;">
+      <div style="margin-bottom:20px;">
+        <img src="/assets/yogi_dog_success.png" alt="Success Stretch" style="max-height: 150px; margin:0 auto;">
+      </div>
+      <h3>Order Placed Successfully!</h3>
+      <p style="margin:12px 0; color:#5c5c5c;">Thank you for shopping at Skinny Dog Yoga Gear. Your zen package will ship shortly!</p>
+      <button class="btn" onclick="closeCheckoutSuccess()" style="background:#2d2d2d; color:#fff; width:100%;">Return to Shop</button>
+    </div>
+  </div>
+    
+
+  <script>
+            let cart = [];
+    try {
+      const rawCart = JSON.parse(localStorage.getItem('yoga_cart')) || [];
+      const grouped = [];
+      if (Array.isArray(rawCart)) {
+        rawCart.forEach(rawItem => {
+          if (rawItem && rawItem.id) {
+            const existing = grouped.find(item => item && item.id === rawItem.id && item.customization === (rawItem.customization || ''));
+            if (existing) {
+              existing.qty = (existing.qty || 1) + (rawItem.qty || 1);
+            } else {
+              grouped.push({
+                id: rawItem.id,
+                title: rawItem.title || 'Product',
+                price: parseFloat(rawItem.price) || 0,
+                customization: rawItem.customization || '',
+                qty: parseInt(rawItem.qty) || 1
+              });
+            }
+          }
+        });
+      }
+      cart = grouped;
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+    } catch(e) {
+      cart = [];
+      localStorage.setItem('yoga_cart', JSON.stringify([]));
+    }
+
+            function updateCartCount() {
+      const el = document.getElementById('cart-count');
+      if (el) {
+        const count = cart.reduce((acc, item) => acc + ((item && item.qty) || 0), 0);
+        el.textContent = count;
+      }
+    }
+
+    window.openCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.add('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.add('open');
+      renderCartDrawerItems();
+    };
+
+    window.closeCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.remove('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.remove('open');
+    };
+
+            window.changeCartItemQty = function(idx, newQty) {
+      newQty = parseInt(newQty);
+      if (newQty <= 0) {
+        removeFromCart(idx);
+      } else {
+        if (cart[idx]) {
+          cart[idx].qty = newQty;
+          localStorage.setItem('yoga_cart', JSON.stringify(cart));
+          updateCartCount();
+          renderCartDrawerItems();
+        }
+      }
+    };
+
+    function renderCartDrawerItems() {
+      const container = document.getElementById('cart-drawer-items-list');
+      container.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, idx) => {
+        if (!item) return;
+        const itemQty = item.qty || 1;
+        total += item.price * itemQty;
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; margin-bottom:15px; align-items:center; border-bottom:1px solid #e7e7e7; padding-bottom:10px;';
+        
+        let qtyOptions = '';
+        const maxQty = Math.max(10, itemQty);
+        for (let i = 1; i <= maxQty; i++) {
+          qtyOptions += `<option value="${i}" ${i === itemQty ? 'selected' : ''}>${i}</option>`;
+        }
+
+        div.innerHTML = `
+          <div style="flex:1; padding-right:10px;">
+            <span style="font-weight:500; font-size:0.9rem; display:block;">${item.title}</span>
+            <span style="font-size:0.8rem; color:#888; display:block; margin:2px 0;">${item.customization || ''}</span>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:5px;">
+              <select onchange="changeCartItemQty(${idx}, this.value)" style="padding:2px 4px; font-size:0.8rem; border:1px solid #ccc; border-radius:4px; background:#fff; color:#2d2d2d;">
+                ${qtyOptions}
+              </select>
+              <span style="font-weight:600; font-size:0.9rem;">$${(item.price * itemQty).toFixed(2)}</span>
+            </div>
+          </div>
+          <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:#dc2626; cursor:pointer;" aria-label="Remove item"><i class="fa-solid fa-trash"></i></button>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('cart-total-value').textContent = '$' + total.toFixed(2);
+    }
+
+    window.removeFromCart = function(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+      renderCartDrawerItems();
+    };
+
+            window.openCheckoutModal = function() {
+      closeCartDrawer();
+      document.getElementById('checkout-modal').classList.add('open');
+      const list = document.getElementById('checkout-summary-items');
+      list.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        if (!item) return;
+        const itemQty = item.qty || 1;
+        total += item.price * itemQty;
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:8px;';
+        div.innerHTML = `<span>${item.title} (x${itemQty})</span><span>$${(item.price * itemQty).toFixed(2)}</span>`;
+        list.appendChild(div);
+      });
+      document.getElementById('checkout-summary-total-val').textContent = '$' + total.toFixed(2);
+    };
+
+    window.closeCheckoutModal = function() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    };
+
+    window.handleCheckoutSubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('checkout-modal').classList.remove('open');
+      document.getElementById('checkout-success-modal').classList.add('open');
+      cart = [];
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+    };
+
+    window.closeCheckoutSuccess = function() {
+      document.getElementById('checkout-success-modal').classList.remove('open');
+    };
+
+    // Qty selector
+    window.changeQty = function(val) {
+      const el = document.getElementById('qty-input');
+      let current = parseInt(el.value) || 1;
+      current = Math.max(1, current + val);
+      el.value = current;
+    };
+
+    // Customizer variables for mats
+    let selectedColor = '#a78bfa';
+    let selectedAlignment = 'none';
+    let monogramText = '';
+
+    window.changeMatColor = function(color, btn) {
+      selectedColor = color;
+      document.getElementById('main-product-img').style.backgroundColor = color;
+      
+      // Update active swatch style
+      document.querySelectorAll('.color-swatch').forEach(b => {
+        b.style.borderColor = 'transparent';
+      });
+      btn.style.borderColor = '#2d2d2d';
+    };
+
+    window.changeAlignmentPrint = function(val) {
+      selectedAlignment = val;
+      const layer = document.getElementById('alignment-lines-layer');
+      layer.className = 'mat-alignment-lines print-' + val;
+    };
+
+    window.changeMonogramText = function(text) {
+      monogramText = text.toUpperCase();
+      const el = document.getElementById('monogram-text-layer');
+      if (monogramText.trim() !== '') {
+        el.textContent = monogramText;
+        el.style.display = 'block';
+      } else {
+        el.style.display = 'none';
+      }
+    };
+
+    window.triggerAddToCart = function() {
+      const qty = parseInt(document.getElementById('qty-input').value) || 1;
+      let customization = '';
+      if ('blocks' === 'mats') {
+        customization = `Color: ${selectedColor}, Pattern: ${selectedAlignment}, Monogram: ${monogramText}`;
+      }
+      
+      const existingIdx = cart.findIndex(item => item.id === '2' && item.customization === customization);
+      if (existingIdx > -1) {
+        cart[existingIdx].qty = (cart[existingIdx].qty || 1) + qty;
+      } else {
+        cart.push({
+          id: '2',
+          title: 'Zen Paws Cork Balance Block',
+          price: 28.0,
+          customization: customization,
+          qty: qty
+        });
+      }
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+      openCartDrawer();
+    }
+
+    // Set initial mat color if Mat
+    if ('blocks' === 'mats') {
+      document.getElementById('main-product-img').style.backgroundColor = selectedColor;
+      document.getElementById('main-product-img').style.padding = '20px';
+    }
+
+    updateCartCount();
+  </script>
+</body>
+</html>
+        

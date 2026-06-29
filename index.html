@@ -3,698 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Silver Paint Bucket Studios | Premium Hand-Painted Artwork</title>
-  <meta name="description" content="Discover unique, hand-painted artwork curated by Bucky, our mustache-sporting, paint-splotched mascot with an eye for color and a soft spot for messy genius.">
-  
-  <!-- Premium Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome for Icons -->
+  <title>Yoga Accessories: Props & Gear - Skinny Dog Yoga Gear</title>
+  <meta name="description" content="Premium personalized yoga mats, cork blocks, belts, and zen guides featuring Stretch, our flexible greyhound mascot.">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=124">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/logo_palette.png?v=124">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  
+  <!-- Header -->
   <header class="main-header">
-    <a href="javascript:void(0)" onclick="openAdminLogin()" class="header-admin-trigger" aria-label="Admin Portal">
-      <img src="assets/paintbrush.png?v=124" alt="Admin Portal Trigger" class="header-paintbrush-icon">
-    </a>
     <div class="header-container">
-      <a href="#" class="logo">
-        <img src="assets/logo_palette.png?v=124" alt="Silver Paintbucket Studios Logo" class="logo-icon">
-        <span>Silver Paintbucket Studios</span>
+      <a href="/index.html" class="logo" style="display: block; padding: 4px 0;">
+        <img src="/assets/logo.png" alt="Skinny Dog Yoga Logo" class="logo-icon" style="height: 70px; width: auto; max-height: 70px; display: block;">
       </a>
-      
-      <!-- Hamburger Menu for Mobile -->
-      <button class="mobile-nav-toggle" aria-label="Toggle navigation" id="mobile-nav-btn">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-      
-      <nav class="nav-links" id="main-nav">
-        <a href="#home" class="nav-item active">Home</a>
-        <a href="#gallery" class="nav-item">Gallery</a>
-        <a href="#artists" class="nav-item">Artists</a>
-        <a href="#about" class="nav-item">About</a>
-        <a href="#contact" class="nav-item">Contact</a>
-        <a href="javascript:void(0)" onclick="openCartDrawer()" class="nav-item cart-btn" id="cart-badge-container">
-          <i class="fa-solid fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)
-        </a>
+      <nav class="nav-links">
+        <a href="/index.html" class="nav-item">Shop All</a>
+        <a href="/index.html?filter=mats" class="nav-item">Mats</a>
+        <a href="/index.html?filter=blocks" class="nav-item">Blocks</a>
+        <a href="/index.html?filter=belts" class="nav-item">Belts & Straps</a>
+        <a href="/index.html?filter=books" class="nav-item">Books & Zen</a>
       </nav>
+      <div class="header-right">
+        <a href="javascript:void(0)" onclick="openCartDrawer()" class="cart-btn" id="cart-badge-container">
+          <i class="fa-solid fa-shopping-basket"></i> Cart (<span id="cart-count">0</span>)
+        </a>
+      </div>
     </div>
   </header>
-  
-  <!-- Hero Section -->
-  <section id="home" class="hero-section">
-    <div class="hero-container">
-      <div class="hero-content">
-        <h1 class="hero-title">Welcome to Silver<br><span class="highlight-text">Paintbucket Studios</span></h1>
-        <p class="hero-tagline">Where Every Brushstroke Tells A Story</p>
-        <p class="hero-description">
-          Discover unique, hand-painted artwork curated by Bucky — our mustache-sporting, paint-splotched mascot with an eye for color and a soft spot for messy genius.
-        </p>
-        <div class="hero-cta">
-          <a href="#gallery" class="btn btn-primary">Explore Gallery <i class="fa-solid fa-arrow-right"></i></a>
-          <a href="#about" class="btn btn-secondary">Meet Bucky</a>
-        </div>
-      </div>
-      <div class="hero-image-container">
-        <div class="hero-image-wrapper">
-          <img src="assets/bucky_hero_purple.png" alt="Bucky - The purple-bereted, paint-splotched mascot of Silver Paint Bucket Studios" class="hero-mascot">
-          <div class="hero-image-glow"></div>
-        </div>
-      </div>
-    </div>
-  </section>
+    
 
-  <!-- Gallery Section -->
-  <section id="gallery-section" class="gallery-section">
-    <div class="section-container">
-      <!-- Gallery Header Wrapper (Bucky next to the left of Curated Collection title) -->
-      <div class="gallery-header-wrapper">
-        <div class="gallery-header-mascot">
-          <img src="assets/bucky_gallery_view.png?v=124" alt="Bucky viewing the gallery" class="gallery-header-mascot-img">
-        </div>
-        <div class="section-header" id="gallery">
-          <h2 class="section-title">The Curated Collection</h2>
-          <div class="section-underline"></div>
-          <p class="section-subtitle">A handpicked selection of original art pieces curated by Bucky</p>
-        </div>
-      </div>
-
-      <!-- Gallery Filters -->
-      <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">All Paintings</button>
-        <button class="filter-btn" data-filter="landscape">Landscapes</button>
-        <button class="filter-btn" data-filter="floral">Florals</button>
-        <button class="filter-btn" data-filter="minimalist">Minimalist</button>
-        <button class="filter-btn" data-filter="abstract">Abstract</button>
-        <button class="filter-btn" data-filter="urban">Urban / Moody</button>
-      </div>
-
-      <!-- 3x3 Painting Grid -->
-      <div class="paintings-grid" id="paintings-grid-el"></div>
-
-      <!-- Gallery Pagination -->
-      <div class="gallery-pagination">
-        <button class="pag-btn active">1</button>
-        <button class="pag-btn">2</button>
-        <button class="pag-btn">3</button>
-        <button class="pag-btn">4</button>
-        <button class="pag-btn">5</button>
-        <button class="pag-btn">6</button>
-        <button class="pag-btn next-btn">Next <i class="fa-solid fa-angle-right"></i></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Featured Artists Section -->
-  <section id="artists" class="artists-section">
-    <div class="section-container">
-      <div class="section-header">
-        <h2 class="section-title">Spotlight Artists</h2>
-        <div class="section-underline"></div>
-        <p class="section-subtitle">Meet the visionary minds behind the gallery's centerpiece works</p>
+  <main class="collection-page">
+    <div class="collection-container" style="max-width:1200px; margin:0 auto; padding:40px 24px;">
+      <div class="breadcrumbs" style="font-size:0.85rem; color:#888; margin-bottom:20px;">
+        <a href="/index.html">Home</a> / <span style="color:#2d2d2d;">Yoga</span>
       </div>
       
-      <div class="artists-slider-container">
-        <button class="slider-btn prev-btn" id="artists-prev-btn" onclick="scrollArtists('left')" aria-label="Previous artists">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <div class="artists-grid" id="artists-grid-el"></div>
-        <button class="slider-btn next-btn" id="artists-next-btn" onclick="scrollArtists('right')" aria-label="Next artists">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- About Section -->
-  <section id="about" class="about-section">
-    <div class="about-container">
-      <div class="about-image-side">
-        <div class="card-3d-effect">
-          <img src="assets/bucky_color_green.png?v=124" alt="Bucky - Mascot" class="about-bucky-img" id="about-bucky-img-el">
-        </div>
-        
-        <!-- Bucky Pose & Profile Selector -->
-        <div class="bucky-selector-container">
-          <div class="bucky-selector-tabs">
-            <button class="bucky-tab-btn active" onclick="switchBuckyCategory('personalities')">Mood Colors</button>
-            <button class="bucky-tab-btn" onclick="switchBuckyCategory('gymnastics')">Sports</button>
-            <button class="bucky-tab-btn" onclick="switchBuckyCategory('classics')">Silvers</button>
-          </div>
-          
-          <div class="bucky-pose-list" id="personalities-list">
-            <button class="pose-btn color-dot green" onclick="changeBuckyPose('assets/bucky_color_green.png', 'Easygoing Nature Bucky')" title="Easygoing Nature Bucky"></button>
-            <button class="pose-btn color-dot blue" onclick="changeBuckyPose('assets/bucky_color_blue.png', 'True Blue Bucky (Classic)')" title="True Blue Bucky (Classic)"></button>
-            <button class="pose-btn color-dot purple" onclick="changeBuckyPose('assets/bucky_color_purple.png', 'Royal Confidence Bucky')" title="Royal Confidence Bucky"></button>
-            <button class="pose-btn color-dot red" onclick="changeBuckyPose('assets/bucky_color_red.png', 'Intense Focus Bucky')" title="Intense Focus Bucky"></button>
-            <button class="pose-btn color-dot yellow" onclick="changeBuckyPose('assets/bucky_color_yellow.png', 'High Spirits Bucky')" title="High Spirits Bucky"></button>
-          </div>
-          
-          <div class="bucky-pose-list hidden" id="gymnastics-list">
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_pose_gym_1.png', 'Archery Bucky')" title="Archery">Archery</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_pose_gym_2.png', 'Tennis Bucky')" title="Tennis">Tennis</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_pose_gym_3.png', 'Gymnastics Rings Bucky')" title="Gymnastics Rings">Rings</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_pose_gym_4.png', 'Weightlifting Bucky')" title="Weightlifting">Weightlifting</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_pose_gym_5.png', 'Swimming Bucky')" title="Swimming">Swimming</button>
-          </div>
-          
-          <div class="bucky-pose-list hidden" id="classics-list">
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_silver_1.png', 'Classic Winking Silver')" title="Classic Winking Silver">Pose 1</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_silver_2.png', 'Excited Classic Silver')" title="Excited Classic Silver">Pose 2</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_silver_3.png', 'Friendly Classic Silver')" title="Friendly Classic Silver">Pose 3</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_silver_4.png', 'Pensive Classic Silver')" title="Pensive Classic Silver">Pose 4</button>
-            <button class="pose-btn text-pose" onclick="changeBuckyPose('assets/bucky_silver_5.png', 'Saluting Classic Silver')" title="Saluting Classic Silver">Pose 5</button>
-          </div>
-          
-          <div class="bucky-pose-description" id="bucky-pose-desc-el">Easygoing Nature Bucky</div>
-        </div>
-      </div>
-      <div class="about-content-side">
-        <h2 class="section-title">The Legend of Bucky</h2>
-        <div class="section-underline"></div>
-        <p class="about-text-lead">
-          Curator. Creator. Connoisseur. Mascot.
+      <div class="collection-header" style="margin-bottom:40px;">
+        <h1 style="font-size:2rem; font-weight:400; margin-bottom:12px;">Yoga Accessories</h1>
+        <p style="color:#5c5c5c; max-width:800px; font-size:0.95rem; line-height:1.6;">
+          Take your practice to the next level with Skinny Dog's range of premium yoga mats, blocks, belts, and zen guides. Formulated for durability, alignment, and playfulness, featuring our flexible greyhound mascot <strong>Stretch</strong>.
         </p>
-        <p class="about-text">
-          Silver Paintbucket Studios was born from a simple idea: that art shouldn't be locked away in stiff, silent museums. It should be messy, alive, and filled with character. That's where <strong>Bucky</strong> comes in.
-        </p>
-        <p class="about-text">
-          Our stylish, mustache-wearing, silver-plated guide has traveled the globe searching for independent painters who bring raw canvas to life. With a paintbrush in his hand and a wooden palette in his paw, Bucky represents the playful, unpretentious spirit of our creative community. 
-        </p>
-        <div class="about-stats">
-          <div class="stat-item">
-            <span class="stat-number">9+</span>
-            <span class="stat-label">Original Paintings</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">3</span>
-            <span class="stat-label">Resident Artists</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-number">100%</span>
-            <span class="stat-label">Messy Genius</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="contact-section">
-    <div class="section-container">
-      <div class="section-header">
-        <h2 class="section-title">Connect with Bucky</h2>
-        <div class="section-underline"></div>
-        <p class="section-subtitle">Interested in a custom commission or just want to chat about art?</p>
       </div>
 
-      <div class="contact-form-container">
-        <form class="contact-form" id="contact-form-el" onsubmit="handleContactSubmit(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="contact-name">Your Name</label>
-              <input type="text" id="contact-name" name="name" required placeholder="Claude Monet">
-            </div>
-            <div class="form-group">
-              <label for="contact-email">Email Address</label>
-              <input type="email" id="contact-email" name="email" required placeholder="monet@giverny.com">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="contact-subject">Subject</label>
-            <input type="text" id="contact-subject" name="subject" required placeholder="Custom Canvas Inquiry">
-          </div>
-          <div class="form-group">
-            <label for="contact-message">Your Message</label>
-            <textarea id="contact-message" name="message" rows="5" required placeholder="Hi Bucky, I love the texture of Sunshine Valley..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-submit">
-            Send Message <i class="fa-solid fa-paper-plane"></i>
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer Section -->
-  <footer class="main-footer">
-    <div class="footer-container">
-      <div class="footer-brand">
-        <div class="logo">
-          <svg class="logo-icon" viewBox="0 0 512 512" fill="currentColor">
-            <path d="M512 256c0 .9-5.6 20.1-56.1 20.1-50.6 0-91.6-41-91.6-91.6 0-21.1 7.1-40.5 19-56-11.2-12.8-27.5-20.9-45.7-20.9-33.8 0-61.2 27.4-61.2 61.2 0 6.9 1.1 13.5 3.2 19.7-18.7-7-39.1-10.9-60.4-10.9-93.5 0-169.2 75.8-169.2 169.2s75.8 169.2 169.2 169.2c16.3 0 32.2-2.3 47.3-6.6 6.3 2.1 13 3.2 20 3.2 33.8 0 61.2-27.4 61.2-61.2 0-18.2-8-34.5-20.8-45.7 15.5 11.9 34.9 19 56 19 50.6 0 91.6-41 91.6-91.6 0-4.9-.4-9.7-1.2-14.4zm-372.8 54.4c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm72-88c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm96 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm72 88c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"/>
-          </svg>
-          <span>Silver Paintbucket Studios</span>
-        </div>
-        <p class="footer-tagline">Curating the messy genius in every artist.</p>
-      </div>
-      <div class="footer-links">
-        <h4>Navigation</h4>
-        <a href="#home">Home</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#artists">Artists</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="javascript:void(0)" onclick="console.log('HTML: Admin Link Clicked!'); openAdminLogin()" class="admin-panel-link">Admin Panel</a>
-      </div>
-      <div class="footer-socials">
-        <h4>Follow Bucky</h4>
-        <div class="social-icons">
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
-        </div>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Silver Paintbucket Studios. Curated with love & paint splatters.</p>
-    </div>
-  </footer>
-
-  <!-- Painting Detail Modal (Glassmorphic Backdrop Overlay) -->
-  <div class="modal-overlay" id="detail-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-card">
-      <button class="modal-close-btn" id="modal-close-btn-el" aria-label="Close modal">
-        <i class="fa-solid fa-times"></i>
-      </button>
-      <div class="modal-body-content">
-        <div class="modal-image-side">
-          <img src="" alt="" id="modal-painting-image">
-          <span class="click-to-enlarge-label"><i class="fa-solid fa-magnifying-glass-plus"></i> Click Image to Enlarge</span>
-        </div>
-        <div class="modal-info-side">
-          <span class="modal-artist-label" id="modal-artist-name">Artist Name</span>
-          <h2 class="modal-painting-title" id="modal-painting-title">Painting Title</h2>
-          <p class="modal-painting-category" id="modal-painting-category">Landscape</p>
-          
-          <div class="modal-details-specs">
-            <div class="spec-box">
-              <span class="spec-title">Medium</span>
-              <span class="spec-value" id="modal-medium">Oil on Stretched Canvas</span>
-            </div>
-            <div class="spec-box">
-              <span class="spec-title">Dimensions</span>
-              <span class="spec-value" id="modal-dimensions">24" x 24"</span>
-            </div>
-          </div>
-          
-          <p class="modal-painting-description" id="modal-painting-desc">
-            Full painting description goes here.
-          </p>
-          
-          <div class="modal-purchase-footer">
-            <div class="modal-price-box">
-              <span class="price-label">Price</span>
-              <span class="price-value" id="modal-price">$245</span>
-            </div>
-            <div class="modal-quantity-box">
-              <label for="modal-quantity-select" class="quantity-label">Quantity</label>
-              <select id="modal-quantity-select" class="modal-quantity-dropdown">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-              </select>
-            </div>
-            <button class="btn btn-primary modal-buy-btn" id="modal-add-to-cart-btn">
-              Add to Cart <i class="fa-solid fa-bag-shopping"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Artist Detail Modal (Glassmorphic Backdrop Overlay) -->
-  <div class="modal-overlay" id="artist-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-card artist-modal-card">
-      <button class="modal-close-btn" id="artist-modal-close-btn-el" aria-label="Close modal">
-        <i class="fa-solid fa-times"></i>
-      </button>
-      <div class="modal-body-content">
-        <div class="modal-image-side artist-modal-image-side">
-          <img src="" alt="" id="modal-artist-image">
-          <div class="spec-box philosophy-box">
-            <span class="spec-title">Painting Philosophy</span>
-            <span class="spec-value" id="modal-artist-philosophy">Philosophy statement...</span>
-          </div>
-        </div>
-        <div class="modal-info-side">
-          <span class="modal-artist-label" id="modal-artist-origin">Origin</span>
-          <h2 class="modal-painting-title" id="modal-artist-fullname">Artist Name</h2>
-          <p class="modal-painting-category" id="modal-artist-style">Medium & Style</p>
-          
-          <div class="modal-details-specs artist-details-specs">
-            <div class="spec-box">
-              <span class="spec-title">Paintings in Studio</span>
-              <span class="spec-value" id="modal-artist-stat-paintings">2</span>
-            </div>
-            <div class="spec-box">
-              <span class="spec-title">Years Active</span>
-              <span class="spec-value" id="modal-artist-stat-experience">12 Years</span>
-            </div>
-            <div class="spec-box">
-              <span class="spec-title">Messy Factor</span>
-              <span class="spec-value" id="modal-artist-stat-messy">85%</span>
-            </div>
-          </div>
-          
-          <p class="modal-painting-description" id="modal-artist-ideas-desc">
-            Core artistic ideas and techniques description goes here.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Floating CSS Customizer Control Panel -->
-  <button class="css-panel-toggle" id="css-panel-toggle-btn" onclick="console.log('HTML: Toggle Button Clicked!')" aria-label="Open CSS Control Panel">
-    <i class="fa-solid fa-sliders"></i>
-  </button>
-
-  <div class="css-control-panel" id="css-control-panel-el">
-    <div class="css-panel-header">
-      <h3><i class="fa-solid fa-palette"></i> CSS Customizer</h3>
-      <button class="css-panel-close" id="css-panel-close-btn" aria-label="Close CSS Control Panel">
-        <i class="fa-solid fa-times"></i>
-      </button>
-    </div>
-
-    <!-- Section 4: Content Management (CMS) -->
-    <div class="css-panel-section" id="section-cms">
-      <h4 class="css-section-toggle">Manage Content <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
-      <div class="css-section-content">
-        <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 12px; font-style: italic; border-left: 2px solid var(--accent-silver-dark); padding-left: 8px;">Note: Fields marked with an asterisk (*) are required.</p>
-        
-        <!-- Add Artist Sub-section -->
-        <div class="cms-subheader">Add New Artist</div>
-        <form id="cms-artist-form" onsubmit="handleCmsAddArtist(event)">
-          <div class="css-control-group">
-            <label for="cms-artist-name">Artist Name *</label>
-            <input type="text" id="cms-artist-name" required placeholder="e.g. Elena Valerius">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-medium">Medium/Style *</label>
-            <input type="text" id="cms-artist-medium" required placeholder="e.g. Watercolor Specialist">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-origin">Origin</label>
-            <input type="text" id="cms-artist-origin" placeholder="e.g. Portland, OR">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-avatar">Avatar Photo *</label>
-            <input type="file" id="cms-artist-avatar" accept="image/*" required>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-philosophy">Philosophy</label>
-            <textarea id="cms-artist-philosophy" rows="2" placeholder="Art philosophy..."></textarea>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-bio">Biography *</label>
-            <textarea id="cms-artist-bio" rows="2" required placeholder="Artist biography..."></textarea>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-years">Years of Exp</label>
-            <input type="number" id="cms-artist-years" min="0" placeholder="10">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-artist-messiness">Messiness Index</label>
-            <input type="text" id="cms-artist-messiness" placeholder="e.g. 8/10 Splatters">
-          </div>
-          <button type="submit" class="cms-btn-submit">Add Artist</button>
-        </form>
-
-        <hr class="cms-divider">
-
-        <!-- Add Painting Sub-section -->
-        <div class="cms-subheader">Add New Painting</div>
-        <form id="cms-painting-form" onsubmit="handleCmsAddPainting(event)">
-          <div class="css-control-group">
-            <label for="cms-painting-title">Painting Title *</label>
-            <input type="text" id="cms-painting-title" required placeholder="e.g. Sunshine Valley">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-artist">Artist *</label>
-            <select id="cms-painting-artist" required>
-              <!-- Populated dynamically -->
-            </select>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-category">Category *</label>
-            <select id="cms-painting-category" required>
-              <option value="landscape">Landscape</option>
-              <option value="floral">Floral</option>
-              <option value="minimalist">Minimalist</option>
-              <option value="abstract">Abstract</option>
-              <option value="urban">Urban / Moody</option>
-            </select>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-price">Price ($) *</label>
-            <input type="number" id="cms-painting-price" required min="0" placeholder="1200">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-image">Painting Photo *</label>
-            <input type="file" id="cms-painting-image" accept="image/*" required>
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-medium">Medium *</label>
-            <input type="text" id="cms-painting-medium" required placeholder="e.g. Oil on Canvas">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-dimensions">Dimensions *</label>
-            <input type="text" id="cms-painting-dimensions" required placeholder="e.g. 24&quot; x 36&quot;">
-          </div>
-          <div class="css-control-group">
-            <label for="cms-painting-desc">Description</label>
-            <textarea id="cms-painting-desc" rows="2" placeholder="Description..."></textarea>
-          </div>
-          <button type="submit" class="cms-btn-submit">Add Painting</button>
-        </form>
-
-        <hr class="cms-divider">
-
-        <!-- Manage List Sub-section -->
-        <div class="cms-subheader">Manage Items</div>
-        <div class="cms-manage-lists">
-          <div class="cms-list-section">
-            <h5 style="font-size: 0.8rem; margin-bottom: 6px; color: var(--accent-silver);">Paintings</h5>
-            <ul id="cms-paintings-list" class="cms-item-list">
-              <!-- Populated dynamically -->
-            </ul>
-          </div>
-          <div class="cms-list-section" style="margin-top: 12px;">
-            <h5 style="font-size: 0.8rem; margin-bottom: 6px; color: var(--accent-silver);">Artists</h5>
-            <ul id="cms-artists-list" class="cms-item-list">
-              <!-- Populated dynamically -->
-            </ul>
-          </div>
-          <button type="button" class="cms-btn-reset-db" onclick="handleResetDatabaseToDefaults()" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; margin-top: 16px; width: 100%; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease;">
-            <i class="fa-solid fa-rotate-left" style="margin-right: 4px;"></i> Reset Database to Defaults
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 1: Painting Gaps & Borders -->
-    <div class="css-panel-section" id="section-layout">
-      <h4 class="css-section-toggle">Layout & Margins <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
-      <div class="css-section-content">
-        <div class="css-control-group">
-          <label for="custom-filter-target">Target Painting</label>
-          <select id="custom-filter-target">
-            <option value="all">All Paintings (Default)</option>
-            <option value="1">Sunshine Valley</option>
-            <option value="2">Dancing Blooms</option>
-            <option value="3">Ocean Whisper</option>
-            <option value="4">Colorful Abstract</option>
-            <option value="5">Midnight Jazz</option>
-            <option value="6">Serene Heights</option>
-            <option value="7">Golden Field</option>
-            <option value="8">Spring Whispers</option>
-            <option value="9">Midnight Tide</option>
-          </select>
-          <a href="javascript:void(0)" class="css-reset-target-link" id="css-reset-target-btn" style="font-size: 0.75rem; color: var(--accent-silver-dark); text-align: right; text-decoration: underline; margin-top: 4px; display: none;">
-            Reset Selected Overrides
-          </a>
-        </div>
-        <div class="css-control-group">
-          <label for="custom-margin">Matte Border Size: <span id="val-margin">16px</span></label>
-          <input type="range" id="custom-margin" min="10" max="60" value="16">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-radius">Corner Rounding: <span id="val-radius">4px</span></label>
-          <input type="range" id="custom-radius" min="0" max="30" value="4">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-frame">Painting Frame</label>
-          <select id="custom-frame">
-            <option value="none">None</option>
-            <option value="silver">Sleek Silver</option>
-            <option value="gold">Luxury Gold</option>
-            <option value="wood" selected>Classic Wood (Default)</option>
-            <option value="rose-gold">Rose Gold</option>
-            <option value="ebony">Ebony Wood</option>
-            <option value="neon-crimson">Neon Crimson</option>
-            <option value="bronze">Royal Bronze</option>
+      <div class="collection-filter-bar" style="border-bottom:1px solid #e7e7e7; padding-bottom:15px; margin-bottom:30px; display:flex; justify-content:space-between; align-items:center;">
+        <div class="filter-controls">
+          <span style="font-size:0.9rem; color:#5c5c5c; margin-right:15px;"><i class="fa-solid fa-sliders"></i> Filter</span>
+          <select id="grid-category-filter" style="padding:5px 10px; border:1px solid #ccc; font-size:0.85rem;" onchange="filterCategory(this.value)">
+            <option value="all">All Categories</option>
+            <option value="mats">Yoga Mats</option>
+            <option value="blocks">Blocks</option>
+            <option value="belts">Belts & Straps</option>
+            <option value="books">Books & Zen</option>
           </select>
         </div>
-        <div class="css-control-group">
-          <label for="custom-bg-color">Matting Color</label>
-          <select id="custom-bg-color">
-            <option value="#050a18">Dark Charcoal</option>
-            <option value="#f4f1ea">Warm Linen (Cream)</option>
-            <option value="#ffffff">Crisp White</option>
-            <option value="#001f54" selected>Royal Velvet (Default)</option>
-            <option value="#ef233c">Crimson Velvet</option>
-            <option value="#1b4332">Forest Moss</option>
-            <option value="#3c096c">Deep Plum</option>
-            <option value="#005f73">Midnight Teal</option>
-            <option value="#ca6702">Warm Terracotta</option>
+        <div class="sort-controls">
+          <span style="font-size:0.9rem; color:#5c5c5c; margin-right:10px;">Sort by</span>
+          <select style="padding:5px 10px; border:1px solid #ccc; font-size:0.85rem;">
+            <option>Featured</option>
+            <option>Price: Low to High</option>
+            <option>Price: High to Low</option>
           </select>
         </div>
-        <div class="css-control-group">
-          <label for="custom-card-bg">Cell Background</label>
-          <select id="custom-card-bg">
-            <option value="rgba(255, 255, 255, 0.03)">Glassmorphic</option>
-            <option value="rgba(255, 255, 255, 0.12)">Glassy Reflective</option>
-            <option value="transparent">Transparent</option>
-            <option value="#050a18">Dark Charcoal</option>
-            <option value="#001f54">Royal Velvet</option>
-            <option value="#dbeafe">Light Blue (Light)</option>
-            <option value="#eddcd2" selected>Warm Tan (Light) (Default)</option>
-            <option value="#d8f3dc">Sage Green (Light)</option>
-            <option value="#e2e2fc">Soft Lavender (Light)</option>
-            <option value="#ffe5ec">Blush Pink (Light)</option>
-            <option value="#1e293b">Deep Slate</option>
-            <option value="#0f172a">Obsidian Black</option>
-            <option value="#064e3b">Emerald Velvet</option>
-          </select>
-        </div>
-        <div class="css-control-group">
-          <label for="custom-frame-border">Frame Border: <span id="val-frame-border">4px</span></label>
-          <input type="range" id="custom-frame-border" min="0" max="24" value="4">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-frame-margin">Frame Inset: <span id="val-frame-margin">12px</span></label>
-          <input type="range" id="custom-frame-margin" min="0" max="24" value="12">
-        </div>
+      </div>
+
+      <!-- Grid of products -->
+      <div class="paintings-grid" id="paintings-grid-el" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:30px;">
+        <!-- Products populated by JavaScript -->
       </div>
     </div>
+  </main>
 
-    <!-- Section 2: Painting CSS Filters -->
-    <div class="css-panel-section" id="section-filters">
-      <h4 class="css-section-toggle">Art CSS Filters <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
-      <div class="css-section-content">
-
-        <div class="css-control-group">
-          <label for="custom-brightness">Brightness: <span id="val-brightness">100%</span></label>
-          <input type="range" id="custom-brightness" min="50" max="150" value="100">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-contrast">Contrast: <span id="val-contrast">100%</span></label>
-          <input type="range" id="custom-contrast" min="50" max="150" value="100">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-saturation">Saturation: <span id="val-saturation">100%</span></label>
-          <input type="range" id="custom-saturation" min="0" max="200" value="100">
-        </div>
-        <div class="css-control-group">
-          <label for="custom-hue">Hue Rotation: <span id="val-hue">0°</span></label>
-          <input type="range" id="custom-hue" min="0" max="360" value="0">
-        </div>
-      </div>
-    </div>
-
-    <!-- Section 3: Mascot Glow -->
-    <div class="css-panel-section" id="section-glow">
-      <h4 class="css-section-toggle">Mascot Silver Glow <i class="fa-solid fa-chevron-down toggle-icon"></i></h4>
-      <div class="css-section-content">
-        <div class="css-control-group">
-          <label for="custom-glow-color">Glow Color</label>
-          <select id="custom-glow-color">
-            <option value="rgba(138, 43, 226, 0.65)" selected>Royal Purple (Default)</option>
-            <option value="rgba(229, 235, 245, 0.65)">Silver</option>
-            <option value="rgba(212, 175, 55, 0.7)">Luxury Gold</option>
-            <option value="rgba(239, 35, 60, 0.7)">Beret Red</option>
-            <option value="rgba(0, 245, 255, 0.7)">Neon Cyan</option>
-          </select>
-        </div>
-        <div class="css-control-group">
-          <label for="custom-glow-size">Glow Strength: <span id="val-glow-size">25px</span></label>
-          <input type="range" id="custom-glow-size" min="0" max="60" value="25">
-      </div>
-    </div>
-  </div>
-    <div class="css-panel-actions">
-      <button class="css-reset-btn" id="css-reset-btn-el">
-        <i class="fa-solid fa-rotate-left"></i> Reset
-      </button>
-      <button class="css-logout-btn" id="css-logout-btn-el" onclick="handleAdminLogout()">
-        <i class="fa-solid fa-right-from-bracket"></i> Log Out
-      </button>
-    </div>
-  </div>
-
-  <!-- Admin Login Modal (Glassmorphic Backdrop Overlay) -->
-  <div class="modal-overlay" id="admin-login-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-card admin-login-card">
-      <button class="modal-close-btn" id="admin-login-close-btn-el" aria-label="Close modal">
-        <i class="fa-solid fa-times"></i>
-      </button>
-      <div class="admin-login-content">
-        <h3><i class="fa-solid fa-shield-halved"></i> Admin Portal</h3>
-        <p class="admin-login-subtitle">Enter administrator credentials to unlock layout customizer tools.</p>
-        <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
-          <div class="form-group">
-            <label for="admin-password">Administrator Password</label>
-            <input type="password" id="admin-password" required placeholder="••••••••">
-            <div class="admin-error-box" id="admin-login-error"></div>
-          </div>
-          <button type="submit" class="btn btn-primary btn-admin-submit">
-            Unlock CSS Customizer <i class="fa-solid fa-unlock"></i>
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- Lightbox Zoom Modal (Double-overlay modal) -->
-  <div class="lightbox-overlay" id="lightbox-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="lightbox-content">
-      <button class="lightbox-close-btn" id="lightbox-close-btn-el" aria-label="Close zoom view">&times;</button>
-      <div class="lightbox-body">
-        <div class="magnifier-container" id="magnifier-container-el">
-          <img src="" alt="Enlarged Painting" class="lightbox-image" id="lightbox-image-el">
-          <div class="magnifier-lens" id="magnifier-lens-el"></div>
-        </div>
-        <p class="lightbox-instructions" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 10px;">Hover over the image to magnify details</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Shopping Cart Drawer (Slide-Over Panel) -->
-  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el"></div>
+  
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el" onclick="closeCartDrawer()"></div>
   <div class="cart-drawer" id="cart-drawer-el" role="dialog" aria-hidden="true">
     <div class="cart-drawer-header">
-      <h3><i class="fa-solid fa-shopping-cart"></i> Shopping Cart</h3>
-      <button class="cart-drawer-close" id="cart-drawer-close-btn-el" aria-label="Close cart">&times;</button>
+      <h3>Shopping Cart</h3>
+      <button class="cart-drawer-close" onclick="closeCartDrawer()" aria-label="Close cart">&times;</button>
     </div>
     <div class="cart-drawer-body" id="cart-drawer-items-list">
       <!-- Items dynamically populated -->
@@ -704,214 +91,53 @@
         <span>Total:</span>
         <span id="cart-total-value">$0.00</span>
       </div>
-      <button class="btn btn-primary cart-checkout-btn" id="cart-checkout-btn-el">
-        Proceed to Checkout <i class="fa-solid fa-credit-card"></i>
+      <button class="btn btn-checkout" onclick="openCheckoutModal()">
+        Proceed to Checkout
       </button>
     </div>
   </div>
 
-  <!-- Checkout Payment Modal -->
+  <!-- Checkout Modal -->
   <div class="modal-overlay" id="checkout-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-card checkout-card">
-      <button class="modal-close-btn" id="checkout-close-btn-el" aria-label="Close modal">&times;</button>
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()" aria-label="Close modal">&times;</button>
       <div class="checkout-content">
-        <h3><i class="fa-solid fa-shield-halved"></i> Secure Checkout</h3>
-        <p class="checkout-subtitle">Enter payment details to purchase your selections.</p>
+        <h3>Secure Checkout</h3>
+        <p class="checkout-subtitle">Enter payment details to complete your order.</p>
         
-        <!-- Summary block containing thumbs -->
-        <div class="checkout-summary-box">
-          <h4>Order Summary</h4>
-          <div class="checkout-summary-list" id="checkout-summary-items">
-            <!-- Thumbs and titles populated by JS -->
-          </div>
-          <div class="checkout-summary-total">
+        <div class="checkout-summary-box" style="background:#f7f7f7; padding:15px; margin-bottom:20px;">
+          <h4 style="margin-bottom:10px;">Order Summary</h4>
+          <div id="checkout-summary-items"></div>
+          <div style="border-top:1px solid #e7e7e7; padding-top:10px; margin-top:10px; display:flex; justify-content:space-between; font-weight:700;">
             <span>Total:</span>
             <span id="checkout-summary-total-val">$0</span>
           </div>
         </div>
 
         <form id="checkout-payment-form" onsubmit="handleCheckoutSubmit(event)">
-          <div class="form-group">
-            <label for="checkout-email">Email Address</label>
-            <input type="email" id="checkout-email" required placeholder="email@example.com">
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Email Address</label>
+            <input type="email" required placeholder="email@example.com" style="width:100%; padding:8px; border:1px solid #ccc;">
           </div>
-          <div class="form-group">
-            <label for="checkout-name">Cardholder Name</label>
-            <input type="text" id="checkout-name" required placeholder="John Doe">
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Cardholder Name</label>
+            <input type="text" required placeholder="John Doe" style="width:100%; padding:8px; border:1px solid #ccc;">
           </div>
-          <div class="form-group">
-            <label for="checkout-card-number">Card Number</label>
-            <input type="text" id="checkout-card-number" required placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+          <div class="form-group" style="margin-bottom:12px;">
+            <label>Card Number</label>
+            <input type="text" required placeholder="xxxx xxxx xxxx xxxx" style="width:100%; padding:8px; border:1px solid #ccc;">
           </div>
-          <div class="form-row-2">
-            <div class="form-group">
-              <label for="checkout-expiry">Expiry Date</label>
-              <input type="text" id="checkout-expiry" required placeholder="MM/YY" maxlength="5">
+          <div class="form-row" style="display:flex; gap:10px; margin-bottom:12px;">
+            <div class="form-group" style="flex:1;">
+              <label>Expiry</label>
+              <input type="text" required placeholder="MM/YY" style="width:100%; padding:8px; border:1px solid #ccc;">
             </div>
-            <div class="form-group">
-              <label for="checkout-cvv">CVV</label>
-              <input type="password" id="checkout-cvv" required placeholder="•••" maxlength="4">
-            </div>
-          </div>
-          <!-- Shipping / Sending Address -->
-          <div class="checkout-address-section">
-            <h4 class="checkout-section-sub">Shipping Address</h4>
-            <div class="form-group">
-              <label for="checkout-shipping-street">Street Address</label>
-              <input type="text" id="checkout-shipping-street" required placeholder="123 Art Street">
-            </div>
-            <div class="form-row-3">
-              <div class="form-group">
-                <label for="checkout-shipping-city">City</label>
-                <input type="text" id="checkout-shipping-city" required placeholder="Seattle">
-              </div>
-              <div class="form-group">
-                <label for="checkout-shipping-state">State</label>
-                <select id="checkout-shipping-state" required>
-                  <option value="" disabled selected>Select...</option>
-                  <option value="AL">AL</option>
-                  <option value="AK">AK</option>
-                  <option value="AZ">AZ</option>
-                  <option value="AR">AR</option>
-                  <option value="CA">CA</option>
-                  <option value="CO">CO</option>
-                  <option value="CT">CT</option>
-                  <option value="DE">DE</option>
-                  <option value="FL">FL</option>
-                  <option value="GA">GA</option>
-                  <option value="HI">HI</option>
-                  <option value="ID">ID</option>
-                  <option value="IL">IL</option>
-                  <option value="IN">IN</option>
-                  <option value="IA">IA</option>
-                  <option value="KS">KS</option>
-                  <option value="KY">KY</option>
-                  <option value="LA">LA</option>
-                  <option value="ME">ME</option>
-                  <option value="MD">MD</option>
-                  <option value="MA">MA</option>
-                  <option value="MI">MI</option>
-                  <option value="MN">MN</option>
-                  <option value="MS">MS</option>
-                  <option value="MO">MO</option>
-                  <option value="MT">MT</option>
-                  <option value="NE">NE</option>
-                  <option value="NV">NV</option>
-                  <option value="NH">NH</option>
-                  <option value="NJ">NJ</option>
-                  <option value="NM">NM</option>
-                  <option value="NY">NY</option>
-                  <option value="NC">NC</option>
-                  <option value="ND">ND</option>
-                  <option value="OH">OH</option>
-                  <option value="OK">OK</option>
-                  <option value="OR">OR</option>
-                  <option value="PA">PA</option>
-                  <option value="RI">RI</option>
-                  <option value="SC">SC</option>
-                  <option value="SD">SD</option>
-                  <option value="TN">TN</option>
-                  <option value="TX">TX</option>
-                  <option value="UT">UT</option>
-                  <option value="VT">VT</option>
-                  <option value="VA">VA</option>
-                  <option value="WA">WA</option>
-                  <option value="WV">WV</option>
-                  <option value="WI">WI</option>
-                  <option value="WY">WY</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="checkout-shipping-zip">ZIP Code</label>
-                <input type="text" id="checkout-shipping-zip" required placeholder="98101" maxlength="10">
-              </div>
+            <div class="form-group" style="flex:1;">
+              <label>CVV</label>
+              <input type="password" required placeholder="•••" style="width:100%; padding:8px; border:1px solid #ccc;">
             </div>
           </div>
-
-          <!-- Same Address Checkbox -->
-          <div class="form-checkbox-group">
-            <input type="checkbox" id="checkout-same-address">
-            <label for="checkout-same-address">Billing address is same as shipping</label>
-          </div>
-
-          <!-- Billing Address -->
-          <div class="checkout-address-section" id="billing-address-section">
-            <h4 class="checkout-section-sub">Billing Address</h4>
-            <div class="form-group">
-              <label for="checkout-billing-street">Street Address</label>
-              <input type="text" id="checkout-billing-street" required placeholder="123 Art Street">
-            </div>
-            <div class="form-row-3">
-              <div class="form-group">
-                <label for="checkout-billing-city">City</label>
-                <input type="text" id="checkout-billing-city" required placeholder="Seattle">
-              </div>
-              <div class="form-group">
-                <label for="checkout-billing-state">State</label>
-                <select id="checkout-billing-state" required>
-                  <option value="" disabled selected>Select...</option>
-                  <option value="AL">AL</option>
-                  <option value="AK">AK</option>
-                  <option value="AZ">AZ</option>
-                  <option value="AR">AR</option>
-                  <option value="CA">CA</option>
-                  <option value="CO">CO</option>
-                  <option value="CT">CT</option>
-                  <option value="DE">DE</option>
-                  <option value="FL">FL</option>
-                  <option value="GA">GA</option>
-                  <option value="HI">HI</option>
-                  <option value="ID">ID</option>
-                  <option value="IL">IL</option>
-                  <option value="IN">IN</option>
-                  <option value="IA">IA</option>
-                  <option value="KS">KS</option>
-                  <option value="KY">KY</option>
-                  <option value="LA">LA</option>
-                  <option value="ME">ME</option>
-                  <option value="MD">MD</option>
-                  <option value="MA">MA</option>
-                  <option value="MI">MI</option>
-                  <option value="MN">MN</option>
-                  <option value="MS">MS</option>
-                  <option value="MO">MO</option>
-                  <option value="MT">MT</option>
-                  <option value="NE">NE</option>
-                  <option value="NV">NV</option>
-                  <option value="NH">NH</option>
-                  <option value="NJ">NJ</option>
-                  <option value="NM">NM</option>
-                  <option value="NY">NY</option>
-                  <option value="NC">NC</option>
-                  <option value="ND">ND</option>
-                  <option value="OH">OH</option>
-                  <option value="OK">OK</option>
-                  <option value="OR">OR</option>
-                  <option value="PA">PA</option>
-                  <option value="RI">RI</option>
-                  <option value="SC">SC</option>
-                  <option value="SD">SD</option>
-                  <option value="TN">TN</option>
-                  <option value="TX">TX</option>
-                  <option value="UT">UT</option>
-                  <option value="VT">VT</option>
-                  <option value="VA">VA</option>
-                  <option value="WA">WA</option>
-                  <option value="WV">WV</option>
-                  <option value="WI">WI</option>
-                  <option value="WY">WY</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="checkout-billing-zip">ZIP Code</label>
-                <input type="text" id="checkout-billing-zip" required placeholder="98101" maxlength="10">
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary btn-checkout-submit" id="btn-checkout-submit-el">
-            <span id="checkout-btn-text">Pay & Finalize Purchase</span>
-            <div class="spinner" id="checkout-spinner-el" style="display: none;"></div>
-          </button>
+          <button type="submit" class="btn btn-checkout" style="width:100%; margin-top:10px;">Pay & Finalize Purchase</button>
         </form>
       </div>
     </div>
@@ -919,37 +145,213 @@
 
   <!-- Checkout Success Modal -->
   <div class="modal-overlay" id="checkout-success-modal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-card checkout-success-card">
-      <div class="success-icon-wrapper">
-        <img src="assets/bucky_success.png?v=124" alt="Success Bucky" class="success-bucky-img">
+    <div class="modal-card" style="text-align:center; padding:30px;">
+      <div style="margin-bottom:20px;">
+        <img src="/assets/yogi_dog_success.png" alt="Success Stretch" style="max-height: 150px; margin:0 auto;">
       </div>
       <h3>Order Placed Successfully!</h3>
-      <p class="success-subtitle" id="receipt-success-subtitle">Thank you for supporting our local artists. Your transaction has been finalized.</p>
-      
-      <div class="receipt-box">
-        <div class="receipt-header">Transaction Receipt</div>
-        <div class="receipt-row">
-          <span>Order ID:</span>
-          <span id="receipt-order-id" style="font-weight: 600;">#SPB-2026-8942</span>
-        </div>
-        <div class="receipt-row">
-          <span>Amount Paid:</span>
-          <span id="receipt-total-paid" style="font-weight: 600; color: var(--accent-red);">$0</span>
-        </div>
-        <div class="receipt-divider"></div>
-        <div class="receipt-notice" id="receipt-email-notice">A copy of the invoice details has been sent to your email.</div>
-      </div>
-      
-      <button class="btn btn-primary btn-success-close" onclick="closeCheckoutSuccess()">
-        Return to Gallery
-      </button>
+      <p style="margin:12px 0; color:#5c5c5c;">Thank you for shopping at Skinny Dog Yoga Gear. Your zen package will ship shortly!</p>
+      <button class="btn" onclick="closeCheckoutSuccess()" style="background:#2d2d2d; color:#fff; width:100%;">Return to Shop</button>
     </div>
   </div>
+    
 
-  <!-- Toast Notification for Add to Cart -->
-  <div class="toast-container" id="toast-container-el"></div>
+  <footer class="main-footer" style="background:#1a1a1a; padding:60px 24px; color:#a3a3a3; font-size:0.9rem; border-top:1px solid #e7e7e7;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:40px;">
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Skinny Dog</h4>
+        <p style="line-height:1.6;">Premium, playful yoga equipment for happy stretches. Stretched with love & wagging tails.</p>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Shop Links</h4>
+        <a href="/index.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">All Gear</a>
+        <a href="/index.html?filter=mats" style="display:block; margin-bottom:8px; color:#a3a3a3;">Mats</a>
+        <a href="/index.html?filter=blocks" style="display:block; margin-bottom:8px; color:#a3a3a3;">Blocks</a>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Company</h4>
+        <a href="#" style="display:block; margin-bottom:8px; color:#a3a3a3;">About Stretch</a>
+        <a href="#" style="display:block; margin-bottom:8px; color:#a3a3a3;">Contact Us</a>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0 auto; padding-top:20px; border-top:1px solid #333; text-align:center; font-size:0.8rem;">
+      &copy; 2026 Skinny Dog Yoga Gear. All rights reserved.
+    </div>
+  </footer>
 
-  <!-- JavaScript -->
-  <script src="app.js?v=124"></script>
+  <script>
+    // Shared Cart Logic
+            let cart = [];
+    try {
+      const rawCart = JSON.parse(localStorage.getItem('yoga_cart')) || [];
+      const grouped = [];
+      if (Array.isArray(rawCart)) {
+        rawCart.forEach(rawItem => {
+          if (rawItem && rawItem.id) {
+            const existing = grouped.find(item => item && item.id === rawItem.id && item.customization === (rawItem.customization || ''));
+            if (existing) {
+              existing.qty = (existing.qty || 1) + (rawItem.qty || 1);
+            } else {
+              grouped.push({
+                id: rawItem.id,
+                title: rawItem.title || 'Product',
+                price: parseFloat(rawItem.price) || 0,
+                customization: rawItem.customization || '',
+                qty: parseInt(rawItem.qty) || 1
+              });
+            }
+          }
+        });
+      }
+      cart = grouped;
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+    } catch(e) {
+      cart = [];
+      localStorage.setItem('yoga_cart', JSON.stringify([]));
+    }
+
+    const products = {'1': {'id': '1', 'url_slug': '05-61028_2', 'title': "Stretch's Magic Alignment Mat", 'price': 95.0, 'image': 'assets/products/yoga_mat.png', 'medium': 'Eco-Friendly Tree Rubber & Suede', 'dimensions': '72"W x 26"H x 6mm D', 'category': 'mats', 'desc': 'Our flagship yoga mat designed in collaboration with Guru Elena. Featuring beautiful, laser-engraved alignment guides to keep your pose perfectly centered. Custom monogramming available! Natural tree rubber base.', 'specs': 'Measurements: 72"W x 26"H x 6mm D.<br>Weight: 6.0 lbs.<br>Materials: Natural rubber base with microfiber suede top.', 'care': 'Wipe with a damp cloth and mild soap. Hang dry. Avoid prolonged sun exposure.'}, '2': {'id': '2', 'url_slug': '95-1407', 'title': 'Zen Paws Cork Balance Block', 'price': 28.0, 'image': 'assets/products/cork_block.png', 'medium': '100% Organic Mediterranean Cork', 'dimensions': '9"W x 6"H x 4"D', 'category': 'blocks', 'desc': 'Sturdy, sustainable, and naturally antimicrobial cork yoga block. Rounded corners provide an ergonomic grip, helping you reach deeper stretches safely without strain.', 'specs': 'Measurements: 9"W x 6"H x 4"D.<br>Weight: 1.2 lbs.<br>Materials: 100% Sustainable Cork.', 'care': 'Wipe clean with damp cloth. Air dry.'}, '3': {'id': '3', 'url_slug': '05-51980_2', 'title': 'Stretch-n-Fetch Canvas Belt', 'price': 18.0, 'image': 'assets/products/canvas_belt.png', 'medium': 'Organic Unbleached Canvas Cotton', 'dimensions': '8ft Length / 1.5" Width', 'category': 'belts', 'desc': 'Playful dual-ring alignment strap designed to safely extend your reach. Extra durable organic cotton weave with a cute dog print to bring a smile to your vinyasa.', 'specs': 'Measurements: 8ft L x 1.5"W.<br>Weight: 3.5 oz.<br>Materials: Organic Cotton Canvas & Metal Rings.', 'care': 'Hand wash cold. Lay flat to dry.'}, '4': {'id': '4', 'url_slug': '05-53724_2', 'title': 'Downward Dog & Other Asanas', 'price': 22.0, 'image': 'assets/products/yoga_book.png', 'medium': 'Hardcover Recycled Paper Book', 'dimensions': '160 Pages / Full Color', 'category': 'books', 'desc': "Stretch's official guide to yoga for pups and humans alike. Filled with cute illustrations, breathing prompts, and lighthearted advice on how to find zen in your daily routine.", 'specs': 'Format: Hardcover Book.<br>Pages: 160 Pages.<br>Publisher: Bloom Press.', 'care': 'Keep in dry bookshelves. Handle with clean hands.'}, '5': {'id': '5', 'url_slug': '05-62333_2', 'title': 'Calm Bark Meditation Cushion', 'price': 48.0, 'image': 'assets/products/meditation_cushion.png', 'medium': 'Organic Linen & Buckwheat Hulls', 'dimensions': '13" Diameter / 5.5" Height', 'category': 'books', 'desc': 'An organic buckwheat-filled cushion designed to support your posture during prolonged meditation. Features a removable cover embroidered with playful dog prints.', 'specs': 'Measurements: 13"D x 5.5"H.<br>Weight: 4.0 lbs.<br>Filling: Organic Buckwheat Hulls.', 'care': 'Unzip cover to wash in cold water. Spot clean inner cushion.'}, '6': {'id': '6', 'url_slug': '05-59141_2', 'title': 'Happy Puppy TPE Foam Block', 'price': 20.0, 'image': 'assets/products/foam_block.png', 'medium': 'Premium Non-Toxic TPE Foam', 'dimensions': '9"W x 6"H x 3"D', 'category': 'blocks', 'desc': 'Lightweight, high-density yoga block made from non-toxic TPE foam. Ideal for beginners, featuring a soft pastel gradient design that looks gorgeous in any studio.', 'specs': 'Measurements: 9"W x 6"H x 3"D.<br>Weight: 6.0 oz.<br>Materials: Recyclable TPE Foam.', 'care': 'Spot clean with warm water and soap. Dry with a towel.'}, '7': {'id': '7', 'url_slug': '05-59197_2', 'title': 'Tail-Wag Pro Yoga Wheel', 'price': 55.0, 'image': 'assets/products/yoga_wheel.png', 'medium': 'Durable ABS Core & Eco-TPE Padding', 'dimensions': '12" Diameter / 5" Width', 'category': 'mats', 'desc': 'Open up your back, chest, and shoulders with our extra strong yoga wheel. Padded with high-comfort sweat-resistant foam and featuring a cute dog alignment grip print.', 'specs': 'Measurements: 12"D x 5"W.<br>Weight: 2.8 lbs.<br>Core: Premium ABS.', 'care': 'Wipe dry with clean cloth after use.'}, '8': {'id': '8', 'url_slug': '05-52181', 'title': 'Eco-Grip Hemp Strap', 'price': 24.0, 'image': 'assets/products/hemp_strap.png', 'medium': '100% Organic Himalayan Hemp', 'dimensions': '10ft Length / 1.5" Width', 'category': 'belts', 'desc': 'Extra durable, biodegradable yoga strap made from premium raw hemp. Naturally textured grip keeps your hands from slipping during advanced asanas.', 'specs': 'Measurements: 10ft L x 1.5"W.<br>Weight: 4.2 oz.<br>Materials: 100% Organic Hemp.', 'care': 'Machine wash cold on delicate cycle. Hang dry.'}};
+
+            function updateCartCount() {
+      const el = document.getElementById('cart-count');
+      if (el) {
+        const count = cart.reduce((acc, item) => acc + ((item && item.qty) || 0), 0);
+        el.textContent = count;
+      }
+    }
+
+    function filterCategory(cat) {
+      const grid = document.getElementById('paintings-grid-el');
+      grid.innerHTML = '';
+      Object.values(products).forEach(p => {
+        if (cat === 'all' || p.category === cat) {
+          const item = document.createElement('div');
+          item.className = 'painting-card';
+          item.innerHTML = `
+            <a href="/products/${p.url_slug}.html" style="display:block; overflow:hidden; background:#f9f9f9; padding:20px;">
+              <img src="/${p.image}" alt="${p.title}" style="width:100%; height:auto; transition: transform 0.3s ease;">
+            </a>
+            <div style="padding:15px; text-align:center;">
+              <a href="/products/${p.url_slug}.html" style="font-weight:500; color:#2d2d2d; font-size:0.95rem; display:block; margin-bottom:6px;">${p.title}</a>
+              <div style="color:#fbbf24; font-size:0.8rem; margin-bottom:8px;">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i> <span style="color:#888;">(4.9)</span>
+              </div>
+              <span style="font-weight:600; color:#2d2d2d; font-size:0.95rem;">$${p.price.toFixed(2)}</span>
+            </div>
+          `;
+          grid.appendChild(item);
+        }
+      });
+    }
+
+    window.openCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.add('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.add('open');
+      renderCartDrawerItems();
+    };
+
+    window.closeCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.remove('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.remove('open');
+    };
+
+            window.changeCartItemQty = function(idx, newQty) {
+      newQty = parseInt(newQty);
+      if (newQty <= 0) {
+        removeFromCart(idx);
+      } else {
+        if (cart[idx]) {
+          cart[idx].qty = newQty;
+          localStorage.setItem('yoga_cart', JSON.stringify(cart));
+          updateCartCount();
+          renderCartDrawerItems();
+        }
+      }
+    };
+
+    function renderCartDrawerItems() {
+      const container = document.getElementById('cart-drawer-items-list');
+      container.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, idx) => {
+        if (!item) return;
+        const itemQty = item.qty || 1;
+        total += item.price * itemQty;
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; margin-bottom:15px; align-items:center; border-bottom:1px solid #e7e7e7; padding-bottom:10px;';
+        
+        let qtyOptions = '';
+        const maxQty = Math.max(10, itemQty);
+        for (let i = 1; i <= maxQty; i++) {
+          qtyOptions += `<option value="${i}" ${i === itemQty ? 'selected' : ''}>${i}</option>`;
+        }
+
+        div.innerHTML = `
+          <div style="flex:1; padding-right:10px;">
+            <span style="font-weight:500; font-size:0.9rem; display:block;">${item.title}</span>
+            <span style="font-size:0.8rem; color:#888; display:block; margin:2px 0;">${item.customization || ''}</span>
+            <div style="display:flex; align-items:center; gap:8px; margin-top:5px;">
+              <select onchange="changeCartItemQty(${idx}, this.value)" style="padding:2px 4px; font-size:0.8rem; border:1px solid #ccc; border-radius:4px; background:#fff; color:#2d2d2d;">
+                ${qtyOptions}
+              </select>
+              <span style="font-weight:600; font-size:0.9rem;">$${(item.price * itemQty).toFixed(2)}</span>
+            </div>
+          </div>
+          <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:#dc2626; cursor:pointer;" aria-label="Remove item"><i class="fa-solid fa-trash"></i></button>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('cart-total-value').textContent = '$' + total.toFixed(2);
+    }
+
+    window.removeFromCart = function(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+      renderCartDrawerItems();
+    };
+
+            window.openCheckoutModal = function() {
+      closeCartDrawer();
+      document.getElementById('checkout-modal').classList.add('open');
+      const list = document.getElementById('checkout-summary-items');
+      list.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        if (!item) return;
+        const itemQty = item.qty || 1;
+        total += item.price * itemQty;
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:8px;';
+        div.innerHTML = `<span>${item.title} (x${itemQty})</span><span>$${(item.price * itemQty).toFixed(2)}</span>`;
+        list.appendChild(div);
+      });
+      document.getElementById('checkout-summary-total-val').textContent = '$' + total.toFixed(2);
+    };
+
+    window.closeCheckoutModal = function() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    };
+
+    window.handleCheckoutSubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('checkout-modal').classList.remove('open');
+      document.getElementById('checkout-success-modal').classList.add('open');
+      cart = [];
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+    };
+
+    window.closeCheckoutSuccess = function() {
+      document.getElementById('checkout-success-modal').classList.remove('open');
+    };
+
+    // Parse URL params for filter
+    const params = new URLSearchParams(window.location.search);
+    const catFilter = params.get('filter') || 'all';
+    document.getElementById('grid-category-filter').value = catFilter;
+    filterCategory(catFilter);
+    updateCartCount();
+  </script>
 </body>
 </html>
