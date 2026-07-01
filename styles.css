@@ -3327,6 +3327,54 @@ main {
   padding-top: 20px !important;
 }
 
+/* Catalog Grid Image Zoom Button */
+.painting-card:hover .zoom-btn {
+  opacity: 1 !important;
+}
+
+.zoom-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e7e7e7;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.25s ease;
+  z-index: 10;
+  opacity: 0;
+}
+
+.zoom-btn:hover {
+  background: #2d2d2d;
+  border-color: #2d2d2d;
+  transform: scale(1.1);
+}
+
+.zoom-btn:hover i {
+  color: #fff;
+}
+
+.zoom-btn i {
+  font-size: 0.95rem;
+  color: #2d2d2d;
+}
+
+/* Lightbox Close Button Accessibility Override */
+.lightbox-close-btn {
+  color: #ffffff !important;
+}
+
+.lightbox-close-btn:hover {
+  color: #fbbf24 !important;
+}
+
 /* Custom Graphic Logo Alignment */
 .logo {
   display: block !important;

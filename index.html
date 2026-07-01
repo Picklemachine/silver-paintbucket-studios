@@ -228,9 +228,14 @@
           const item = document.createElement('div');
           item.className = 'painting-card';
           item.innerHTML = `
-            <a href="/products/${p.url_slug}.html" style="display:block; overflow:hidden; background:#f9f9f9; padding:20px;">
-              <img src="/${p.image}" alt="${p.title}" style="width:100%; height:auto; transition: transform 0.3s ease;">
-            </a>
+            <div style="position:relative; overflow:hidden; background:#f9f9f9; padding:20px; display:block;">
+              <a href="/products/${p.url_slug}.html" style="display:block;">
+                <img src="/${p.image}" alt="${p.title}" style="width:100%; height:auto; transition: transform 0.3s ease;">
+              </a>
+              <button class="zoom-btn" onclick="event.preventDefault(); openZoomLightbox('/${p.image}', '${p.title.replace(/'/g, "\\'")}')" aria-label="Zoom Image">
+                <i class="fa-solid fa-search-plus"></i>
+              </button>
+            </div>
             <div style="padding:15px; text-align:center;">
               <a href="/products/${p.url_slug}.html" style="font-weight:500; color:#2d2d2d; font-size:0.95rem; display:block; margin-bottom:6px;">${p.title}</a>
               <div style="color:#fbbf24; font-size:0.8rem; margin-bottom:8px;">
@@ -353,5 +358,6 @@
     filterCategory(catFilter);
     updateCartCount();
   </script>
+  <script src="zoom.js"></script>
 </body>
 </html>
