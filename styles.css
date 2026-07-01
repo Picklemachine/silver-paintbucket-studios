@@ -3396,3 +3396,87 @@ main {
 .collection-page {
   padding-top: 15px !important;
 }
+
+/* Posture Page Grid & Card Styles */
+.postures-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}
+
+.posture-card {
+  background-color: var(--mat-backing-color);
+  border: 1px solid var(--glass-border);
+  border-radius: 0px;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+
+.posture-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--glass-border);
+}
+
+.posture-card:hover .posture-img {
+  transform: scale(1.06);
+}
+
+.posture-card:hover .zoom-btn {
+  opacity: 1 !important;
+}
+
+.posture-level-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  z-index: 5;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.badge-beginner {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0;
+}
+
+.badge-intermediate {
+  background-color: #fef9c3 !important;
+  color: #854d0e !important;
+  border: 1px solid #fef08a;
+}
+
+.badge-advanced {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+  border: 1px solid #fecaca;
+}
+
+/* Responsive adjustment for 4x4 grid */
+@media (max-width: 1024px) {
+  .postures-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .postures-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .postures-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

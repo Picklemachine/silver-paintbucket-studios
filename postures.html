@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yoga Postures Library - Skinny Dog Yoga Gear</title>
+  <meta name="description" content="Explore the 16 primary yoga poses featuring Stretch, our flexible greyhound mascot. Learn alignment cues, benefits, and difficulties.">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="/index.html" class="logo" style="display: block; padding: 4px 0;">
+        <img src="/assets/logo.png" alt="Skinny Dog Yoga Logo" class="logo-icon" style="height: 70px; width: auto; max-height: 70px; display: block;">
+      </a>
+      <nav class="nav-links">
+        <a href="/index.html" class="nav-item">Shop All</a>
+        <a href="/index.html?filter=mats" class="nav-item">Mats</a>
+        <a href="/index.html?filter=blocks" class="nav-item">Blocks</a>
+        <a href="/index.html?filter=belts" class="nav-item">Belts & Straps</a>
+        <a href="/index.html?filter=books" class="nav-item">Books & Zen</a>
+        <a href="/postures.html" class="nav-item active">Postures</a>
+      </nav>
+      <div class="header-right">
+        <a href="javascript:void(0)" onclick="openCartDrawer()" class="cart-btn" id="cart-badge-container">
+          <i class="fa-solid fa-shopping-basket"></i> Cart (<span id="cart-count">0</span>)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="collection-page">
+    <div class="collection-container" style="max-width:1200px; margin:0 auto; padding:40px 24px;">
+      <div class="breadcrumbs" style="font-size:0.85rem; color:#888; margin-bottom:20px;">
+        <a href="/index.html">Home</a> / <span style="color:#2d2d2d;">Yoga Postures</span>
+      </div>
+      
+      <div class="collection-header" style="margin-bottom:40px;">
+        <h1 style="font-size:2.2rem; font-weight:400; margin-bottom:12px;">Mascot Postures Library</h1>
+        <p style="color:#5c5c5c; max-width:800px; font-size:0.95rem; line-height:1.6;">
+          Browse the 16 fundamental poses of dog-yoga (doga) demonstrated by our flexible greyhound mascot <strong>Stretch</strong>. Learn the Sanskrit names, alignment cues, and specific benefits to deepen your practice.
+        </p>
+      </div>
+
+      <!-- 4x4 Grid of Postures -->
+      <div class="postures-grid" id="postures-grid-el" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:30px;">
+        <!-- Postures populated by JavaScript -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer-el">
+    <div style="padding:20px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e7e7e7; padding-bottom:15px; margin-bottom:20px;">
+          <h3 style="margin:0; font-weight:500;">Shopping Cart</h3>
+          <button onclick="closeCartDrawer()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#5c5c5c;">&times;</button>
+        </div>
+        <div id="cart-drawer-items-list" style="flex-grow:1; overflow-y:auto; max-height:calc(100vh - 250px);">
+          <!-- Cart items list -->
+        </div>
+      </div>
+      <div style="border-top:1px solid #e7e7e7; padding-top:20px; margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.05rem; margin-bottom:15px;">
+          <span>Subtotal</span>
+          <span id="cart-total-value">$0.00</span>
+        </div>
+        <button onclick="openCheckoutModal()" class="btn btn-checkout" style="width:100%;">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div class="modal-overlay" id="checkout-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #e7e7e7; padding-bottom:15px;">
+        <h3 style="margin:0; font-weight:500;">Secure Checkout</h3>
+        <button onclick="closeCheckoutModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#5c5c5c;">&times;</button>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px; margin-bottom:20px;">
+        <div>
+          <h4 style="margin:0 0 15px 0; font-weight:500;">Order Summary</h4>
+          <div id="checkout-summary-items" style="border-bottom:1px solid #e7e7e7; padding-bottom:15px; margin-bottom:15px;">
+            <!-- Checkout list -->
+          </div>
+          <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.05rem;">
+            <span>Total</span>
+            <span id="checkout-summary-total-val">$0.00</span>
+          </div>
+        </div>
+        <div>
+          <h4 style="margin:0 0 15px 0; font-weight:500;">Payment & Shipping</h4>
+          <form onsubmit="handleCheckoutSubmit(event)">
+            <label style="display:block; margin-bottom:5px; font-size:0.8rem; font-weight:500; color:#5c5c5c;">Email Address</label>
+            <input type="email" id="checkout-email-field" placeholder="stretch@skinnydogyoga.com" style="width:100%; padding:8px; margin-bottom:12px; border:1px solid #ccc; font-size:0.85rem;" required>
+            
+            <label style="display:block; margin-bottom:5px; font-size:0.8rem; font-weight:500; color:#5c5c5c;">Cardholder Name</label>
+            <input type="text" placeholder="Stretch Greyhound" style="width:100%; padding:8px; margin-bottom:12px; border:1px solid #ccc; font-size:0.85rem;" required>
+            
+            <label style="display:block; margin-bottom:5px; font-size:0.8rem; font-weight:500; color:#5c5c5c;">Card Details</label>
+            <input type="text" placeholder="1234 5678 1234 5678" style="width:100%; padding:8px; margin-bottom:12px; border:1px solid #ccc; font-size:0.85rem;" required>
+            
+            <button type="submit" class="btn btn-checkout" style="width:100%; margin-top:10px;">Pay & Finalize Purchase</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Success Modal -->
+  <div class="modal-overlay" id="checkout-success-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-card" style="text-align:center; padding:30px;">
+      <div style="margin-bottom:20px;">
+        <img src="/assets/yogi_dog_success.png" alt="Success Stretch" style="max-height: 150px; margin:0 auto;">
+      </div>
+      <h3>Order Placed Successfully!</h3>
+      <p style="margin:12px 0; color:#5c5c5c;">Thank you for shopping at Skinny Dog Yoga Gear. Your zen package will ship shortly!</p>
+      <button class="btn" onclick="closeCheckoutSuccess()" style="background:#2d2d2d; color:#fff; width:100%;">Return to Shop</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer" style="background:#1a1a1a; padding:60px 24px; color:#a3a3a3; font-size:0.9rem; border-top:1px solid #e7e7e7;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:40px;">
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Skinny Dog</h4>
+        <p style="line-height:1.6;">Premium, playful yoga equipment for happy stretches. Stretched with love & wagging tails.</p>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Shop Links</h4>
+        <a href="/index.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">All Gear</a>
+        <a href="/index.html?filter=mats" style="display:block; margin-bottom:8px; color:#a3a3a3;">Mats</a>
+        <a href="/index.html?filter=blocks" style="display:block; margin-bottom:8px; color:#a3a3a3;">Blocks</a>
+        <a href="/postures.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">Yoga Postures</a>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Company</h4>
+        <a href="#" style="display:block; margin-bottom:8px; color:#a3a3a3;">About Stretch</a>
+        <a href="#" style="display:block; margin-bottom:8px; color:#a3a3a3;">Contact Us</a>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:40px auto 0 auto; padding-top:20px; border-top:1px solid #333; text-align:center; font-size:0.8rem;">
+      &copy; 2026 Skinny Dog Yoga Gear. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Postures Database
+    const postures = [
+      {
+        name: "Downward-Facing Dog",
+        sanskrit: "Adho Mukha Svanasana",
+        image: "assets/yogi_dog_downdog.png",
+        level: "Beginner",
+        benefits: "Stretches hamstrings, shoulders, and spine. Relieves stress.",
+        cues: "Form an inverted 'V' shape. Spread fingers wide, press heels toward floor, and stack tailbone high."
+      },
+      {
+        name: "Tree Pose",
+        sanskrit: "Vrkshasana",
+        image: "assets/yogi_dog_tree.png",
+        level: "Beginner",
+        benefits: "Improves balance, focus, and vertical alignment. Strengthens ankles.",
+        cues: "Shift weight to left foot. Place right sole on inner thigh or calf. Extend spine upwards."
+      },
+      {
+        name: "Lotus Pose",
+        sanskrit: "Padmasana",
+        image: "assets/yogi_dog_lotus.png",
+        level: "Advanced",
+        benefits: "Traditional posture for deep meditation. Opens hip joints.",
+        cues: "Sit cross-legged. Lift feet to rest on opposite hip crease with heels facing sky."
+      },
+      {
+        name: "Warrior I Pose",
+        sanskrit: "Virabhadrasana I",
+        image: "assets/yogi_dog_warrior.png",
+        level: "Beginner",
+        benefits: "Builds leg strength, opens hips, chest and shoulders.",
+        cues: "Lunge forward with back foot angled 45 degrees. Reach arms high, lengthening torso."
+      },
+      {
+        name: "Warrior II Pose",
+        sanskrit: "Virabhadrasana II",
+        image: "assets/yogi_dog_warrior_mat.png",
+        level: "Beginner",
+        benefits: "Strengthens legs and ankles. Improves stamina and lung capacity.",
+        cues: "Open hips and shoulders to side. Extend arms horizontally and gaze over front fingers."
+      },
+      {
+        name: "Puppy Pose",
+        sanskrit: "Uttana Shishosana",
+        image: "assets/yogi_dog_downdog.png",
+        level: "Beginner",
+        benefits: "Calms mind, stretches spine, deeply opens upper back and shoulders.",
+        cues: "Keep hips directly above knees. Reach arms forward and rest chin or forehead to earth."
+      },
+      {
+        name: "Half Lotus Pose",
+        sanskrit: "Ardha Padmasana",
+        image: "assets/yogi_dog_lotus.png",
+        level: "Intermediate",
+        benefits: "Prepares lower body for full lotus. Grounds breathing and posture.",
+        cues: "Cross legs, placing only one foot up onto the opposite thigh while keeping knees grounded."
+      },
+      {
+        name: "Extended Tree Pose",
+        sanskrit: "Utthita Vrkshasana",
+        image: "assets/yogi_dog_tree.png",
+        level: "Intermediate",
+        benefits: "Deepens core stabilizers, opens shoulder blades and ribs.",
+        cues: "From tree pose, interlace fingers overhead, invert palms, and stretch skyward."
+      },
+      {
+        name: "Crescent Lunge Pose",
+        sanskrit: "Anjaneyasana",
+        image: "assets/yogi_dog_warrior.png",
+        level: "Beginner",
+        benefits: "Stretches groin muscles, coordinates balance across the hips.",
+        cues: "Lunge forward, keeping back heel lifted high off the floor. Sink hips toward mat."
+      },
+      {
+        name: "Revolved Warrior Pose",
+        sanskrit: "Parivrtta Virabhadrasana",
+        image: "assets/yogi_dog_warrior_mat.png",
+        level: "Intermediate",
+        benefits: "Cleanses abdominal tract via compression. Enhances spinal twist mobility.",
+        cues: "In a high lunge, twist upper body toward front knee, sweeping opposite arm back."
+      },
+      {
+        name: "Dolphin Pose",
+        sanskrit: "Ardha Pincha Mayurasana",
+        image: "assets/yogi_dog_downdog.png",
+        level: "Intermediate",
+        benefits: "Strengthens upper torso, arms, and core. Prepares body for inversions.",
+        cues: "Set forearms parallel on mat. Walk feet forward while lifting sit bones upward."
+      },
+      {
+        name: "Easy Seated Pose",
+        sanskrit: "Sukhasana",
+        image: "assets/yogi_dog_lotus.png",
+        level: "Beginner",
+        benefits: "Calms mind, aligns spine, helps ground meditative focus.",
+        cues: "Cross ankles comfortably, sit tall, and roll shoulders back. Rest hands on knees."
+      },
+      {
+        name: "Eagle Pose",
+        sanskrit: "Garudasana",
+        image: "assets/yogi_dog_tree.png",
+        level: "Intermediate",
+        benefits: "Deep shoulder and calf muscle stretch. Boosts focus and coordination.",
+        cues: "Wrap right leg over left and hook foot. Cross arms, bind forearms, and lift elbows."
+      },
+      {
+        name: "Warrior III Pose",
+        sanskrit: "Virabhadrasana III",
+        image: "assets/yogi_dog_warrior.png",
+        level: "Intermediate",
+        benefits: "Improves overall posture balance. Strengthens core and ankles.",
+        cues: "Hinge forward on one leg, extending arms and back leg to form a straight horizontal line."
+      },
+      {
+        name: "Humble Warrior Pose",
+        sanskrit: "Baddha Virabhadrasana",
+        image: "assets/yogi_dog_warrior_mat.png",
+        level: "Intermediate",
+        benefits: "Stretches chest, opens shoulders, deepens hip flexion.",
+        cues: "Clasp hands behind back. Fold torso inside front knee, letting head release towards earth."
+      },
+      {
+        name: "Success Stretch",
+        sanskrit: "Kritajnata Asana",
+        image: "assets/yogi_dog_success.png",
+        level: "Beginner",
+        benefits: "Improves mood, celebrates completed practice, promotes heart opening.",
+        cues: "Stand tall, extend arms wide with happy thumbs up. Breathe deeply, smile, and release."
+      }
+    ];
+
+    // Render Grid
+    function renderPostures() {
+      const grid = document.getElementById('postures-grid-el');
+      grid.innerHTML = '';
+      postures.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'posture-card';
+        
+        // Define difficulty badge color classes
+        let levelClass = 'badge-beginner';
+        if (p.level === 'Intermediate') levelClass = 'badge-intermediate';
+        if (p.level === 'Advanced') levelClass = 'badge-advanced';
+
+        card.innerHTML = `
+          <div class="posture-img-wrapper" style="position:relative; overflow:hidden; background:#f9f9f9; padding:20px; display:flex; justify-content:center; align-items:center; height:240px;">
+            <img src="/${p.image}" alt="${p.name}" class="posture-img" style="max-height:100%; max-width:100%; transition: transform 0.3s ease; cursor:zoom-in;" onclick="openZoomLightbox('/${p.image}', '${p.name}')">
+            <button class="zoom-btn" onclick="event.preventDefault(); openZoomLightbox('/${p.image}', '${p.name.replace(/'/g, "\\'")}')" aria-label="Zoom Image">
+              <i class="fa-solid fa-search-plus"></i>
+            </button>
+            <span class="posture-level-badge ${levelClass}">${p.level}</span>
+          </div>
+          <div class="posture-info" style="padding:20px; border-top:1px solid #e7e7e7;">
+            <h3 style="margin:0 0 4px 0; font-size:1.15rem; font-weight:500; color:#2d2d2d;">${p.name}</h3>
+            <span style="font-size:0.85rem; color:#888; font-style:italic; display:block; margin-bottom:12px;">${p.sanskrit}</span>
+            <div style="font-size:0.85rem; line-height:1.5; color:#5c5c5c; margin-bottom:10px;">
+              <strong>Alignment Cues:</strong> ${p.cues}
+            </div>
+            <div style="font-size:0.85rem; line-height:1.5; color:#5c5c5c; padding-top:8px; border-top:1px dashed #eee;">
+              <strong>Benefits:</strong> ${p.benefits}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Shared Cart Functions
+    let cart = [];
+    try {
+      const rawCart = JSON.parse(localStorage.getItem('yoga_cart')) || [];
+      if (Array.isArray(rawCart)) {
+        rawCart.forEach(rawItem => {
+          if (rawItem && rawItem.id) {
+            cart.push(rawItem);
+          }
+        });
+      }
+    } catch(e) {
+      cart = [];
+    }
+
+    function updateCartCount() {
+      const el = document.getElementById('cart-count');
+      if (el) el.textContent = cart.length;
+    }
+
+    window.openCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.add('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.add('open');
+      renderCartDrawerItems();
+    };
+
+    window.closeCartDrawer = function() {
+      document.getElementById('cart-drawer-el').classList.remove('open');
+      document.getElementById('cart-drawer-backdrop-el').classList.remove('open');
+    };
+
+    function renderCartDrawerItems() {
+      const container = document.getElementById('cart-drawer-items-list');
+      container.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, idx) => {
+        total += item.price * (item.qty || 1);
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; margin-bottom:15px; align-items:center; border-bottom:1px solid #e7e7e7; padding-bottom:10px;';
+        div.innerHTML = `
+          <div>
+            <span style="font-weight:500; font-size:0.9rem; display:block;">${item.title}</span>
+            <span style="font-size:0.8rem; color:#888;">${item.customization || ''}</span>
+            <span style="font-weight:600; font-size:0.9rem;">$${item.price.toFixed(2)} x ${item.qty || 1}</span>
+          </div>
+          <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:#dc2626; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('cart-total-value').textContent = '$' + total.toFixed(2);
+    }
+
+    window.removeFromCart = function(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+      renderCartDrawerItems();
+    };
+
+    window.openCheckoutModal = function() {
+      closeCartDrawer();
+      document.getElementById('checkout-modal').classList.add('open');
+      const list = document.getElementById('checkout-summary-items');
+      list.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        total += item.price * (item.qty || 1);
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; font-size:0.9rem; margin-bottom:8px;';
+        div.innerHTML = `<span>${item.title} x ${item.qty || 1}</span><span>$${(item.price * (item.qty || 1)).toFixed(2)}</span>`;
+        list.appendChild(div);
+      });
+      document.getElementById('checkout-summary-total-val').textContent = '$' + total.toFixed(2);
+    };
+
+    window.closeCheckoutModal = function() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    };
+
+    window.handleCheckoutSubmit = function(e) {
+      e.preventDefault();
+      document.getElementById('checkout-modal').classList.remove('open');
+      document.getElementById('checkout-success-modal').classList.add('open');
+      cart = [];
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+    };
+
+    window.closeCheckoutSuccess = function() {
+      document.getElementById('checkout-success-modal').classList.remove('open');
+    };
+
+    // Initialize Page
+    renderPostures();
+    updateCartCount();
+  </script>
+  <script src="zoom.js"></script>
+</body>
+</html>
