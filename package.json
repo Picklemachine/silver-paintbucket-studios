@@ -1,0 +1,32 @@
+{
+  "name": "silver-paintbucket-studios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "clean": "rm -rf www",
+    "copy-assets": "mkdir -p www && cp index.html styles.css app.js www/ && cp -R assets www/assets",
+    "build": "npm run clean && npm run copy-assets",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Picklemachine/silver-paintbucket-studios.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Picklemachine/silver-paintbucket-studios/issues"
+  },
+  "homepage": "https://github.com/Picklemachine/silver-paintbucket-studios#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.4.1",
+    "@capacitor/core": "^8.4.1",
+    "@capacitor/ios": "^8.4.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.4.1"
+  }
+}

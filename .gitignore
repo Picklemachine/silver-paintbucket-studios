@@ -1,0 +1,13 @@
+# Node dependencies
+node_modules/
+
+# Local build output
+www/
+dist/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
