@@ -1370,19 +1370,79 @@ img {
 
 @media (max-width: 992px) {
   .hero-container {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 15px;
+    text-align: left;
+    padding: 30px 16px;
+    align-items: center;
   }
   .hero-content {
     max-width: 100%;
-    margin: 0 auto;
+  }
+  .hero-title {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .hero-tagline {
+    font-size: 1.0rem;
+    margin-bottom: 12px;
+  }
+  .hero-description {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
   }
   .hero-cta {
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  .hero-cta .btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+  .hero-image-container {
+    display: flex;
+    justify-content: flex-end;
   }
   .hero-image-wrapper {
-    max-width: 320px;
+    max-width: 100px;
+  }
+  .hero-mascot {
+    max-width: 100px;
+    animation: float-mobile 4s ease-in-out infinite;
+  }
+  .section-title {
+    font-size: 1.4rem;
+  }
+  
+  /* Diminish body and description text size considerably */
+  p, .hero-description, .about-text, .about-text-lead, .artist-bio, .section-subtitle, .footer-tagline, .footer-bottom p {
+    font-size: 0.82rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Curated Collection Header Mobile Side-by-side Overrides */
+  .gallery-header-wrapper {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    text-align: left;
+    max-width: 100%;
+    padding: 0 12px;
+  }
+  .gallery-header-mascot {
+    flex: 0 0 65px;
+    max-width: 65px;
+  }
+  .gallery-header-wrapper .section-header {
+    text-align: left;
+  }
+  .gallery-header-wrapper .section-underline {
+    margin: 0 0 12px 0;
   }
   .paintings-grid {
     grid-template-columns: repeat(2, 1fr);
