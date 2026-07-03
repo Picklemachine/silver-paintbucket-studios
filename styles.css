@@ -1369,13 +1369,16 @@ img {
    ========================================================================== */
 
 @media (max-width: 992px) {
+  .hero-section {
+    padding-top: 3px !important;
+  }
   .hero-container {
     display: grid;
     grid-template-columns: 1fr 100px;
     gap: 15px;
     text-align: left;
-    padding: 3px 16px 15px 16px !important;
-    margin-top: -25px !important;
+    padding: 0 16px 15px 16px !important;
+    margin-top: 0 !important;
     align-items: start;
   }
   .hero-content {
