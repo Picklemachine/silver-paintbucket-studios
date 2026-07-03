@@ -1374,15 +1374,17 @@ img {
     grid-template-columns: 1fr 100px;
     gap: 15px;
     text-align: left;
-    padding: 30px 16px;
-    align-items: center;
+    padding: 10px 16px 20px 16px;
+    align-items: start;
   }
   .hero-content {
     max-width: 100%;
+    margin-top: 0;
   }
   .hero-title {
     font-size: 1.6rem;
     line-height: 1.2;
+    margin-top: 0;
     margin-bottom: 8px;
   }
   .hero-tagline {
@@ -1392,7 +1394,7 @@ img {
   .hero-description {
     font-size: 0.82rem;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
   }
   .hero-cta {
     justify-content: flex-start;
@@ -1405,6 +1407,7 @@ img {
   .hero-image-container {
     display: flex;
     justify-content: flex-end;
+    margin-top: 5px;
   }
   .hero-image-wrapper {
     max-width: 100px;
@@ -1423,13 +1426,21 @@ img {
     line-height: 1.5 !important;
   }
   
+  /* Move sections and text to the top, tighten margins/paddings */
+  .section-container {
+    padding: 30px 16px !important;
+  }
+  .section-header {
+    margin-bottom: 25px !important;
+  }
+  
   /* Curated Collection Header Mobile Side-by-side Overrides */
   .gallery-header-wrapper {
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: left;
     max-width: 100%;
     padding: 0 12px;
@@ -1440,9 +1451,13 @@ img {
   }
   .gallery-header-wrapper .section-header {
     text-align: left;
+    margin-bottom: 0 !important;
   }
   .gallery-header-wrapper .section-underline {
-    margin: 0 0 12px 0;
+    margin: 0 0 10px 0;
+  }
+  .gallery-filters {
+    margin-bottom: 25px;
   }
   .paintings-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -1454,7 +1469,7 @@ img {
   }
   .about-container {
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 25px;
     text-align: center;
   }
   .about-content-side {
@@ -1493,81 +1508,6 @@ img {
 @media (max-width: 768px) {
   :root {
     --header-height: calc(70px + var(--safe-top));
-  }
-  .hero-container {
-    display: grid;
-    grid-template-columns: 1fr 100px;
-    gap: 15px;
-    text-align: left;
-    padding: 30px 16px;
-    align-items: center;
-  }
-  .hero-content {
-    max-width: 100%;
-  }
-  .hero-title {
-    font-size: 1.6rem;
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-  .hero-tagline {
-    font-size: 1.0rem;
-    margin-bottom: 12px;
-  }
-  .hero-description {
-    font-size: 0.82rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-  .hero-cta {
-    justify-content: flex-start;
-    gap: 10px;
-  }
-  .hero-cta .btn {
-    padding: 8px 12px;
-    font-size: 0.8rem;
-  }
-  .hero-image-container {
-    display: flex;
-    justify-content: flex-end;
-  }
-  .hero-image-wrapper {
-    max-width: 100px;
-  }
-  .hero-mascot {
-    max-width: 100px;
-    animation: float-mobile 4s ease-in-out infinite;
-  }
-  .section-title {
-    font-size: 1.4rem;
-  }
-  
-  /* Diminish body and description text size considerably */
-  p, .hero-description, .about-text, .about-text-lead, .artist-bio, .section-subtitle, .footer-tagline, .footer-bottom p {
-    font-size: 0.82rem !important;
-    line-height: 1.5 !important;
-  }
-  
-  /* Curated Collection Header Mobile Side-by-side Overrides */
-  .gallery-header-wrapper {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 30px;
-    text-align: left;
-    max-width: 100%;
-    padding: 0 12px;
-  }
-  .gallery-header-mascot {
-    flex: 0 0 65px;
-    max-width: 65px;
-  }
-  .gallery-header-wrapper .section-header {
-    text-align: left;
-  }
-  .gallery-header-wrapper .section-underline {
-    margin: 0 0 12px 0;
   }
   
   /* Mobile Nav */
