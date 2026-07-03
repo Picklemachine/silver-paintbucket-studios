@@ -1375,6 +1375,7 @@ img {
     gap: 15px;
     text-align: left;
     padding: 3px 16px 15px 16px !important;
+    margin-top: -25px !important;
     align-items: start;
   }
   .hero-content {
