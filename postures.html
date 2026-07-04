@@ -47,6 +47,37 @@
         </p>
       </div>
 
+      <!-- Filters Bar -->
+      <div class="filters-bar" style="display:flex; gap:20px; margin-bottom:30px; flex-wrap:wrap; background:#f9f9f9; padding:15px 20px; border-radius:8px; border:1px solid #eaeaea; align-items:center;">
+        <div style="display:flex; flex-direction:column; gap:6px; min-width:180px; flex-grow:1;">
+          <label for="filter-level" style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Difficulty Level</label>
+          <select id="filter-level" onchange="filterPostures()" style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:'Jost',sans-serif; font-size:0.9rem; background:#fff; cursor:pointer; width:100%;">
+            <option value="all">All Levels</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+        </div>
+        
+        <div style="display:flex; flex-direction:column; gap:6px; min-width:240px; flex-grow:2;">
+          <label for="filter-category" style="font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Pose Category</label>
+          <select id="filter-category" onchange="filterPostures()" style="padding:10px; border:1px solid #ccc; border-radius:4px; font-family:'Jost',sans-serif; font-size:0.9rem; background:#fff; cursor:pointer; width:100%;">
+            <option value="all">All Categories</option>
+            <option value="Standing Yoga Poses">Standing Yoga Poses</option>
+            <option value="Twisting Yoga Poses">Twisting Yoga Poses</option>
+            <option value="Forward Bend Yoga Poses">Forward Bend Yoga Poses</option>
+            <option value="Backbend Yoga Poses">Backbend Yoga Poses</option>
+            <option value="Inversion Yoga Poses">Inversion Yoga Poses</option>
+            <option value="Seated Yoga Poses">Seated Yoga Poses</option>
+            <option value="Arm Balance Yoga Poses">Arm Balance Yoga Poses</option>
+          </select>
+        </div>
+
+        <div style="display:flex; align-items:flex-end; padding-top:20px;">
+          <button onclick="resetFilters()" style="background:none; border:none; color:#dc2626; cursor:pointer; font-size:0.9rem; font-weight:500; font-family:'Jost',sans-serif; text-decoration:underline;">Reset Filters</button>
+        </div>
+      </div>
+
       <!-- 4x4 Grid of Postures -->
       <div class="postures-grid" id="postures-grid-el" style="display:grid; grid-template-columns:repeat(4, 1fr); gap:30px;">
         <!-- Postures populated by JavaScript -->
@@ -159,6 +190,7 @@
         sanskrit: "Adho Mukha Svanasana",
         image: "assets/yogi_dog_downdog.png",
         level: "Beginner",
+        category: "Inversion Yoga Poses",
         benefits: "Stretches hamstrings, shoulders, and spine. Relieves stress.",
         cues: "Form an inverted 'V' shape. Spread fingers wide, press heels toward floor, and stack tailbone high."
       },
@@ -167,6 +199,7 @@
         sanskrit: "Vrkshasana",
         image: "assets/yogi_dog_tree.png",
         level: "Beginner",
+        category: "Standing Yoga Poses",
         benefits: "Improves balance, focus, and vertical alignment. Strengthens ankles.",
         cues: "Shift weight to left foot. Place right sole on inner thigh or calf. Extend spine upwards."
       },
@@ -175,6 +208,7 @@
         sanskrit: "Padmasana",
         image: "assets/yogi_dog_lotus.png",
         level: "Advanced",
+        category: "Seated Yoga Poses",
         benefits: "Traditional posture for deep meditation. Opens hip joints.",
         cues: "Sit cross-legged. Lift feet to rest on opposite hip crease with heels facing sky."
       },
@@ -183,6 +217,7 @@
         sanskrit: "Virabhadrasana I",
         image: "assets/yogi_dog_warrior.png",
         level: "Beginner",
+        category: "Standing Yoga Poses",
         benefits: "Builds leg strength, opens hips, chest and shoulders.",
         cues: "Lunge forward with back foot angled 45 degrees. Reach arms high, lengthening torso."
       },
@@ -191,6 +226,7 @@
         sanskrit: "Virabhadrasana II",
         image: "assets/yogi_dog_warrior_mat.png",
         level: "Beginner",
+        category: "Standing Yoga Poses",
         benefits: "Strengthens legs and ankles. Improves stamina and lung capacity.",
         cues: "Open hips and shoulders to side. Extend arms horizontally and gaze over front fingers."
       },
@@ -199,6 +235,7 @@
         sanskrit: "Uttana Shishosana",
         image: "assets/yogi_dog_downdog.png",
         level: "Beginner",
+        category: "Forward Bend Yoga Poses",
         benefits: "Calms mind, stretches spine, deeply opens upper back and shoulders.",
         cues: "Keep hips directly above knees. Reach arms forward and rest chin or forehead to earth."
       },
@@ -207,6 +244,7 @@
         sanskrit: "Ardha Padmasana",
         image: "assets/yogi_dog_lotus.png",
         level: "Intermediate",
+        category: "Seated Yoga Poses",
         benefits: "Prepares lower body for full lotus. Grounds breathing and posture.",
         cues: "Cross legs, placing only one foot up onto the opposite thigh while keeping knees grounded."
       },
@@ -215,6 +253,7 @@
         sanskrit: "Utthita Vrkshasana",
         image: "assets/yogi_dog_tree.png",
         level: "Intermediate",
+        category: "Standing Yoga Poses",
         benefits: "Deepens core stabilizers, opens shoulder blades and ribs.",
         cues: "From tree pose, interlace fingers overhead, invert palms, and stretch skyward."
       },
@@ -223,6 +262,7 @@
         sanskrit: "Anjaneyasana",
         image: "assets/yogi_dog_warrior.png",
         level: "Beginner",
+        category: "Backbend Yoga Poses",
         benefits: "Stretches groin muscles, coordinates balance across the hips.",
         cues: "Lunge forward, keeping back heel lifted high off the floor. Sink hips toward mat."
       },
@@ -231,6 +271,7 @@
         sanskrit: "Parivrtta Virabhadrasana",
         image: "assets/yogi_dog_warrior_mat.png",
         level: "Intermediate",
+        category: "Twisting Yoga Poses",
         benefits: "Cleanses abdominal tract via compression. Enhances spinal twist mobility.",
         cues: "In a high lunge, twist upper body toward front knee, sweeping opposite arm back."
       },
@@ -239,6 +280,7 @@
         sanskrit: "Ardha Pincha Mayurasana",
         image: "assets/yogi_dog_downdog.png",
         level: "Intermediate",
+        category: "Arm Balance Yoga Poses",
         benefits: "Strengthens upper torso, arms, and core. Prepares body for inversions.",
         cues: "Set forearms parallel on mat. Walk feet forward while lifting sit bones upward."
       },
@@ -247,6 +289,7 @@
         sanskrit: "Sukhasana",
         image: "assets/yogi_dog_lotus.png",
         level: "Beginner",
+        category: "Seated Yoga Poses",
         benefits: "Calms mind, aligns spine, helps ground meditative focus.",
         cues: "Cross ankles comfortably, sit tall, and roll shoulders back. Rest hands on knees."
       },
@@ -255,6 +298,7 @@
         sanskrit: "Garudasana",
         image: "assets/yogi_dog_tree.png",
         level: "Intermediate",
+        category: "Standing Yoga Poses",
         benefits: "Deep shoulder and calf muscle stretch. Boosts focus and coordination.",
         cues: "Wrap right leg over left and hook foot. Cross arms, bind forearms, and lift elbows."
       },
@@ -263,6 +307,7 @@
         sanskrit: "Virabhadrasana III",
         image: "assets/yogi_dog_warrior.png",
         level: "Intermediate",
+        category: "Standing Yoga Poses",
         benefits: "Improves overall posture balance. Strengthens core and ankles.",
         cues: "Hinge forward on one leg, extending arms and back leg to form a straight horizontal line."
       },
@@ -271,6 +316,7 @@
         sanskrit: "Baddha Virabhadrasana",
         image: "assets/yogi_dog_warrior_mat.png",
         level: "Intermediate",
+        category: "Forward Bend Yoga Poses",
         benefits: "Stretches chest, opens shoulders, deepens hip flexion.",
         cues: "Clasp hands behind back. Fold torso inside front knee, letting head release towards earth."
       },
@@ -279,6 +325,7 @@
         sanskrit: "Kritajnata Asana",
         image: "assets/yogi_dog_success.png",
         level: "Beginner",
+        category: "Standing Yoga Poses",
         benefits: "Improves mood, celebrates completed practice, promotes heart opening.",
         cues: "Stand tall, extend arms wide with happy thumbs up. Breathe deeply, smile, and release."
       },
@@ -287,6 +334,7 @@
         sanskrit: "Ananda Balasana",
         image: "assets/yogi_dog_happybaby.png",
         level: "Beginner",
+        category: "Seated Yoga Poses",
         benefits: "Gently stretches the inner groins, opens the hips, and calms the brain.",
         cues: "Lie on your back. Bend knees toward armpits, grab outside edges of feet/paws, and pull gently downward."
       }
@@ -296,7 +344,28 @@
     function renderPostures() {
       const grid = document.getElementById('postures-grid-el');
       grid.innerHTML = '';
-      postures.forEach(p => {
+      
+      const levelFilter = document.getElementById('filter-level').value;
+      const categoryFilter = document.getElementById('filter-category').value;
+      
+      const filtered = postures.filter(p => {
+        const matchesLevel = (levelFilter === 'all') || (p.level === levelFilter);
+        const matchesCategory = (categoryFilter === 'all') || (p.category === categoryFilter);
+        return matchesLevel && matchesCategory;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: span 4; text-align:center; padding:50px 20px; color:#777; width:100%;">
+            <i class="fa-solid fa-face-meh" style="font-size:2.5rem; margin-bottom:15px; color:#ccc; display:block;"></i>
+            <p style="font-size:1.05rem; margin:0 0 10px 0; font-family:'Jost',sans-serif;">No postures found matching your filters.</p>
+            <button onclick="resetFilters()" style="background:none; border:none; color:#2d2d2d; font-weight:600; text-decoration:underline; cursor:pointer; font-family:'Jost',sans-serif;">Reset Filters</button>
+          </div>
+        `;
+        return;
+      }
+      
+      filtered.forEach(p => {
         const card = document.createElement('div');
         card.className = 'posture-card';
         
@@ -314,6 +383,7 @@
             <span class="posture-level-badge ${levelClass}">${p.level}</span>
           </div>
           <div class="posture-info" style="padding:20px; border-top:1px solid #e7e7e7;">
+            <span style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#a1819d; display:block; margin-bottom:6px;">${p.category}</span>
             <h3 style="margin:0 0 4px 0; font-size:1.15rem; font-weight:500; color:#2d2d2d;">${p.name}</h3>
             <span style="font-size:0.85rem; color:#888; font-style:italic; display:block; margin-bottom:12px;">${p.sanskrit}</span>
             <div style="font-size:0.85rem; line-height:1.5; color:#5c5c5c; margin-bottom:10px;">
@@ -327,6 +397,16 @@
         grid.appendChild(card);
       });
     }
+
+    window.filterPostures = function() {
+      renderPostures();
+    };
+
+    window.resetFilters = function() {
+      document.getElementById('filter-level').value = 'all';
+      document.getElementById('filter-category').value = 'all';
+      renderPostures();
+    };
 
     // Shared Cart Functions
     let cart = [];
