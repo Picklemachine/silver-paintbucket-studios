@@ -80,9 +80,20 @@
       </div>
 
       
-      <!-- Pose Finder Columns Container -->
-      <div class="pose-finder-columns" id="pose-finder-columns-el" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:25px; align-items:start; margin-bottom:50px;">
-        <!-- Category Columns populated by JavaScript -->
+      <!-- Pose Finder Table Container -->
+      <div style="background:#fff; border:1px solid #eaeaea; border-radius:8px; overflow-x:auto; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom:50px;">
+        <table style="width:100%; border-collapse:collapse; font-family:'Jost',sans-serif; text-align:left; min-width:600px;">
+          <thead>
+            <tr style="background:#f9f9f9; border-bottom:2px solid #eaeaea;">
+              <th style="padding:16px 20px; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#777; width:45%;">English Name</th>
+              <th style="padding:16px 20px; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#777; width:30%;">Sanskrit Name</th>
+              <th style="padding:16px 20px; font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:#777; width:25%;">Pose Type</th>
+            </tr>
+          </thead>
+          <tbody id="pose-finder-table-body">
+            <!-- Table rows populated by JavaScript -->
+          </tbody>
+        </table>
       </div>
     </div>
   </main>
@@ -376,91 +387,55 @@
       }
     ];
 
-    // Render Category Columns
+    // Render Tabular Pose Finder
     function renderPoseFinder() {
-      const container = document.getElementById('pose-finder-columns-el');
-      container.innerHTML = '';
+      const tbody = document.getElementById('pose-finder-table-body');
+      tbody.innerHTML = '';
 
-      // Define categories in order
-      const categories = [
-        "Standing Yoga Poses",
-        "Twisting Yoga Poses",
-        "Forward Bend Yoga Poses",
-        "Backbend Yoga Poses",
-        "Inversion Yoga Poses",
-        "Seated Yoga Poses",
-        "Arm Balance Yoga Poses"
-      ];
+      // Sort postures alphabetically by name
+      const sortedPostures = [...postures].sort((a, b) => a.name.localeCompare(b.name));
 
-      categories.forEach(cat => {
-        // Filter postures for this category
-        const catPostures = postures.filter(p => p.category === cat);
+      sortedPostures.forEach(p => {
+        const row = document.createElement('tr');
+        row.style = 'border-bottom:1px solid #eaeaea; cursor:pointer; transition: background 0.15s ease;';
         
-        // Create column element
-        const col = document.createElement('div');
-        col.style = 'background:#fff; border:1px solid #eaeaea; border-radius:8px; padding:20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display:flex; flex-direction:column; gap:15px;';
+        row.onmouseover = () => {
+          row.style.background = '#f9f9f9';
+        };
+        row.onmouseout = () => {
+          row.style.background = 'transparent';
+        };
+        row.onclick = () => openZoomLightbox('/' + p.image, p.name);
 
-        // Column Header
-        const colHeader = document.createElement('div');
-        colHeader.style = 'display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #eaeaea; padding-bottom:12px; margin-bottom:5px;';
-        colHeader.innerHTML = `
-          <h2 style="font-size:1.05rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:#2d2d2d; margin:0;">${cat.replace(' Yoga Poses', '')}</h2>
-          <span style="font-size:0.75rem; background:#eaeaea; color:#5c5c5c; padding:3px 8px; border-radius:12px; font-weight:600;">${catPostures.length}</span>
-        `;
-        col.appendChild(colHeader);
-
-        if (catPostures.length === 0) {
-          const empty = document.createElement('div');
-          empty.style = 'color:#aaa; font-size:0.85rem; font-style:italic; text-align:center; padding:15px 0;';
-          empty.textContent = 'No poses in this category.';
-          col.appendChild(empty);
-        } else {
-          // Pose list container
-          const poseList = document.createElement('div');
-          poseList.style = 'display:flex; flex-direction:column; gap:12px;';
-
-          catPostures.forEach(p => {
-            const card = document.createElement('div');
-            card.style = 'display:flex; gap:12px; align-items:center; padding:10px; background:#f9f9f9; border-radius:6px; transition: transform 0.2s ease, box-shadow 0.2s ease; cursor:pointer; border:1px solid transparent;';
-            card.onmouseover = () => {
-              card.style.transform = 'translateY(-2px)';
-              card.style.boxShadow = '0 4px 10px rgba(0,0,0,0.05)';
-              card.style.borderColor = '#ddd';
-            };
-            card.onmouseout = () => {
-              card.style.transform = 'translateY(0)';
-              card.style.boxShadow = 'none';
-              card.style.borderColor = 'transparent';
-            };
-            card.onclick = () => openZoomLightbox('/' + p.image, p.name);
-
-            // Level badge color class
-            let badgeColor = '#166534';
-            let badgeBg = '#dcfce7';
-            if (p.level === 'Intermediate') {
-              badgeColor = '#854d0e';
-              badgeBg = '#fef9c3';
-            } else if (p.level === 'Advanced') {
-              badgeColor = '#991b1b';
-              badgeBg = '#fee2e2';
-            }
-
-            card.innerHTML = `
-              <div style="width:60px; height:60px; flex-shrink:0; background:#fff; border:1px solid #eee; border-radius:4px; display:flex; justify-content:center; align-items:center; overflow:hidden;">
-                <img src="/${p.image}" alt="${p.name}" style="max-width:100%; max-height:100%; object-fit:contain;">
-              </div>
-              <div style="flex-grow:1; min-width:0;">
-                <h3 style="margin:0 0 2px 0; font-size:0.9rem; font-weight:500; color:#2d2d2d; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.name}</h3>
-                <span style="font-size:0.75rem; color:#888; font-style:italic; display:block; margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${p.sanskrit}</span>
-                <span style="font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:${badgeColor}; background:${badgeBg}; padding:2px 6px; border-radius:3px; display:inline-block;">${p.level}</span>
-              </div>
-            `;
-            poseList.appendChild(card);
-          });
-          col.appendChild(poseList);
+        // Level badge color class
+        let badgeColor = '#166534';
+        let badgeBg = '#dcfce7';
+        if (p.level === 'Intermediate') {
+          badgeColor = '#854d0e';
+          badgeBg = '#fef9c3';
+        } else if (p.level === 'Advanced') {
+          badgeColor = '#991b1b';
+          badgeBg = '#fee2e2';
         }
 
-        container.appendChild(col);
+        row.innerHTML = `
+          <td style="padding:15px 20px; display:flex; align-items:center; gap:15px;">
+            <div style="width:50px; height:50px; flex-shrink:0; background:#fff; border:1px solid #eee; border-radius:4px; display:flex; justify-content:center; align-items:center; overflow:hidden;">
+              <img src="/${p.image}" alt="${p.name}" style="max-width:100%; max-height:100%; object-fit:contain;">
+            </div>
+            <div>
+              <h3 style="margin:0 0 4px 0; font-size:0.95rem; font-weight:500; color:#2d2d2d; display:inline-block; vertical-align:middle; margin-right:8px;">${p.name}</h3>
+              <span style="font-size:0.65rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em; color:${badgeColor}; background:${badgeBg}; padding:2px 6px; border-radius:3px; display:inline-block; vertical-align:middle;">${p.level}</span>
+            </div>
+          </td>
+          <td style="padding:15px 20px; font-size:0.9rem; color:#5c5c5c; font-style:italic;">
+            ${p.sanskrit}
+          </td>
+          <td style="padding:15px 20px; font-size:0.85rem; font-weight:500; color:#a1819d; text-transform:uppercase; letter-spacing:0.04em;">
+            ${p.category.replace(' Yoga Poses', '')}
+          </td>
+        `;
+        tbody.appendChild(row);
       });
     }
 
