@@ -444,10 +444,12 @@
             <button class="zoom-btn" onclick="event.preventDefault(); openZoomLightbox('/${p.image}', '${p.name.replace(/'/g, "\\'")}')" aria-label="Zoom Image">
               <i class="fa-solid fa-search-plus"></i>
             </button>
-            <span class="posture-level-badge ${levelClass}">${p.level}</span>
           </div>
           <div class="posture-info" style="padding:20px; border-top:1px solid #e7e7e7;">
-            <span style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#a1819d; display:block; margin-bottom:6px;">${p.category}</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#a1819d;">${p.category}</span>
+              <span class="posture-level-badge ${levelClass}">${p.level}</span>
+            </div>
             <h3 style="margin:0 0 4px 0; font-size:1.15rem; font-weight:500; color:#2d2d2d;">${p.name}</h3>
             <span style="font-size:0.85rem; color:#888; font-style:italic; display:block; margin-bottom:12px;">${p.sanskrit}</span>
             <div style="font-size:0.85rem; line-height:1.5; color:#5c5c5c; margin-bottom:10px;">
