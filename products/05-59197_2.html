@@ -17,7 +17,7 @@
       <a href="/index.html" class="logo" style="display: block; padding: 4px 0;">
         <img src="/assets/logo.png" alt="Skinny Dog Yoga Logo" class="logo-icon" style="height: 70px; width: auto; max-height: 70px; display: block;">
       </a>
-      <nav class="nav-links">
+      <nav class="nav-links" id="main-nav">
         <a href="/index.html" class="nav-item">Shop All</a>
         <a href="/index.html?filter=mats" class="nav-item">Mats</a>
         <a href="/index.html?filter=blocks" class="nav-item">Blocks</a>
@@ -26,10 +26,13 @@
         <a href="/postures.html" class="nav-item">Postures</a>
         <a href="/pose-finder.html" class="nav-item">Pose Finder</a>
       </nav>
-      <div class="header-right">
+      <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
         <a href="javascript:void(0)" onclick="openCartDrawer()" class="cart-btn" id="cart-badge-container">
           <i class="fa-solid fa-shopping-basket"></i> Cart (<span id="cart-count">0</span>)
         </a>
+        <button class="mobile-nav-toggle" id="mobile-nav-btn" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </div>
   </header>
