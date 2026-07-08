@@ -1489,6 +1489,10 @@ img {
   .contact-form-container {
     padding: 30px 20px;
   }
+  #contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
 }
 
 /* ==========================================================================

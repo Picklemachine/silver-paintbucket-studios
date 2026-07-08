@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Skinny Dog Yoga Gear</title>
+  <meta name="description" content="Get in touch with Skinny Dog Yoga Gear. Send us a message about custom orders, shipping times, or pricing inquiries.">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="/index.html" class="logo" style="display: block; padding: 4px 0;">
+        <img src="/assets/logo.png" alt="Skinny Dog Yoga Logo" class="logo-icon" style="height: 70px; width: auto; max-height: 70px; display: block;">
+      </a>
+      <nav class="nav-links" id="main-nav">
+        <a href="/index.html" class="nav-item">Shop All</a>
+        <a href="/index.html?filter=mats" class="nav-item">Mats</a>
+        <a href="/index.html?filter=blocks" class="nav-item">Blocks</a>
+        <a href="/index.html?filter=belts" class="nav-item">Belts & Straps</a>
+        <a href="/index.html?filter=books" class="nav-item">Books & Zen</a>
+        <a href="/postures.html" class="nav-item">Postures</a>
+        <a href="/pose-finder.html" class="nav-item">Pose Finder</a>
+      </nav>
+      <div class="header-right" style="display: flex; align-items: center; gap: 15px;">
+        <a href="javascript:void(0)" onclick="openCartDrawer()" class="cart-btn" id="cart-badge-container">
+          <i class="fa-solid fa-shopping-basket"></i> Cart (<span id="cart-count">0</span>)
+        </a>
+        <button class="mobile-nav-toggle" id="mobile-nav-btn" aria-label="Toggle Navigation Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="collection-page" style="margin-top: 100px;">
+    <div class="collection-container" style="max-width:900px; margin:0 auto; padding:40px 24px;">
+      <div class="breadcrumbs" style="font-size:0.85rem; color:#888; margin-bottom:20px;">
+        <a href="/index.html">Home</a> / <span style="color:#2d2d2d;">Contact Us</span>
+      </div>
+      
+      <div class="collection-header" style="margin-bottom:40px; text-align: center;">
+        <h1 style="font-size:2.2rem; font-weight:400; margin-bottom:12px;">Contact Skinny Dog</h1>
+        <p style="color:#5c5c5c; max-width:600px; margin: 0 auto; font-size:0.95rem; line-height:1.6;">
+          Have questions about bulk pricing, custom orders, or shipping times? Drop us a line and we will get back to you within 24 hours.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-bottom: 50px;" id="contact-grid">
+        <!-- Form Side -->
+        <div style="background:#fff; border:1px solid #eaeaea; border-radius:8px; padding:30px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+          <form id="contact-form" onsubmit="handleContactSubmit(event)">
+            <div style="margin-bottom: 20px;">
+              <label for="contact-name" style="display:block; margin-bottom:6px; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Your Name</label>
+              <input type="text" id="contact-name" placeholder="Stretch Greyhound" style="width:100%; padding:12px; border:1px solid #eaeaea; border-radius:6px; font-family:'Jost',sans-serif; font-size:0.95rem; outline: none; transition: border-color 0.2s;" required>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="contact-email" style="display:block; margin-bottom:6px; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Email Address</label>
+              <input type="email" id="contact-email" placeholder="stretch@skinnydogyoga.com" style="width:100%; padding:12px; border:1px solid #eaeaea; border-radius:6px; font-family:'Jost',sans-serif; font-size:0.95rem; outline: none; transition: border-color 0.2s;" required>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <label for="contact-subject" style="display:block; margin-bottom:6px; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Subject</label>
+              <input type="text" id="contact-subject" placeholder="Bulk discount request / Question about shipping" style="width:100%; padding:12px; border:1px solid #eaeaea; border-radius:6px; font-family:'Jost',sans-serif; font-size:0.95rem; outline: none; transition: border-color 0.2s;" required>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+              <label for="contact-message" style="display:block; margin-bottom:6px; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:#777;">Message</label>
+              <textarea id="contact-message" rows="6" placeholder="Hi Stretch, I am looking to customize a batch of yoga mats for our local whippet yoga meet..." style="width:100%; padding:12px; border:1px solid #eaeaea; border-radius:6px; font-family:'Jost',sans-serif; font-size:0.95rem; outline: none; transition: border-color 0.2s; resize: vertical;" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-checkout" style="width:100%; padding: 12px; border: none; background: #2d2d2d; color: #fff; font-size: 0.95rem; border-radius: 6px; cursor: pointer; transition: transform 0.2s;">
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        # Info Side
+        <div style="display:flex; flex-direction:column; gap:25px;">
+          <div style="background:#f9f9f9; border:1px solid #eaeaea; border-radius:8px; padding:24px;">
+            <h4 style="margin: 0 0 12px 0; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #5c5c5c;">Direct Inquiries</h4>
+            <p style="margin: 0; font-size: 1.05rem; color: #2d2d2d; font-weight: 500;">
+              <a href="mailto:stretch@skinnydogyoga.com" style="color: #2d2d2d; text-decoration: underline;">stretch@skinnydogyoga.com</a>
+            </p>
+          </div>
+
+          <div style="background:#f9f9f9; border:1px solid #eaeaea; border-radius:8px; padding:24px;">
+            <h4 style="margin: 0 0 12px 0; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #5c5c5c;">Wholesale & Custom Orders</h4>
+            <p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #5c5c5c;">
+              We offer wholesale pricing tiers for yoga studios, retail outlets, and organized dog-yoga (doga) associations. Use the contact form to state your volume requirements.
+            </p>
+          </div>
+
+          <div style="background:#f9f9f9; border:1px solid #eaeaea; border-radius:8px; padding:24px; text-align: center;">
+            <img src="/assets/yogi_dog_success.png" alt="Happy Stretch" style="max-height: 140px; margin: 0 auto 10px auto; display: block;">
+            <span style="font-size: 0.8rem; color: #777; font-style: italic;">"Practice makes pawfect!"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Message -->
+  <div id="contact-toast" style="position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 16px 24px; border-radius: 8px; font-family: 'Jost', sans-serif; font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3); transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1002;">
+    <i class="fa-solid fa-circle-check"></i> Message sent successfully! Stretch will respond soon.
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop-el" onclick="closeCartDrawer()"></div>
+  <div class="cart-drawer" id="cart-drawer-el">
+    <div style="padding:20px; height:100%; display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #e7e7e7; padding-bottom:15px; margin-bottom:20px;">
+          <h3 style="margin:0; font-weight:500;">Shopping Cart</h3>
+          <button onclick="closeCartDrawer()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#5c5c5c;">&times;</button>
+        </div>
+        <div id="cart-drawer-items-list" style="flex-grow:1; overflow-y:auto; max-height:calc(100vh - 250px);"></div>
+      </div>
+      <div style="border-top:1px solid #e7e7e7; padding-top:20px; margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; font-weight:600; font-size:1.05rem; margin-bottom:15px;">
+          <span>Subtotal</span>
+          <span id="cart-total-value">$0.00</span>
+        </div>
+        <button onclick="openCheckoutModal()" class="btn btn-checkout" style="width:100%;">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer" style="background:#1a1a1a; padding:60px 24px; color:#a3a3a3; font-size:0.9rem; border-top:1px solid #e7e7e7;">
+    <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:40px;">
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Skinny Dog</h4>
+        <p style="line-height:1.6;">Premium, playful yoga equipment for happy stretches. Stretched with love & wagging tails.</p>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Shop Links</h4>
+        <a href="/index.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">All Gear</a>
+        <a href="/index.html?filter=mats" style="display:block; margin-bottom:8px; color:#a3a3a3;">Mats</a>
+        <a href="/index.html?filter=blocks" style="display:block; margin-bottom:8px; color:#a3a3a3;">Blocks</a>
+        <a href="/postures.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">Yoga Postures</a>
+      </div>
+      <div>
+        <h4 style="color:#fff; margin-bottom:15px;">Company</h4>
+        <a href="#" style="display:block; margin-bottom:8px; color:#a3a3a3;">About Stretch</a>
+        <a href="/contact.html" style="display:block; margin-bottom:8px; color:#a3a3a3;">Contact Us</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Cart Functionality Mock
+    let cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem('yoga_cart')) || [];
+    } catch(e) {
+      cart = [];
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+
+    window.openCartDrawer = function() {
+      document.getElementById('cart-drawer-backdrop-el').classList.add('open');
+      document.getElementById('cart-drawer-el').classList.add('open');
+      renderCartDrawerItems();
+    };
+
+    window.closeCartDrawer = function() {
+      document.getElementById('cart-drawer-backdrop-el').classList.remove('open');
+      document.getElementById('cart-drawer-el').classList.remove('open');
+    };
+
+    function renderCartDrawerItems() {
+      const container = document.getElementById('cart-drawer-items-list');
+      container.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, idx) => {
+        total += item.price * (item.qty || 1);
+        const div = document.createElement('div');
+        div.style = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; font-size:0.9rem;';
+        div.innerHTML = `
+          <div>
+            <div style="font-weight:500;">${item.title}</div>
+            <div style="color:#777; font-size:0.8rem;">$${item.price.toFixed(2)} x ${item.qty || 1}</div>
+          </div>
+          <button onclick="removeFromCart(${idx})" style="background:none; border:none; color:#dc2626; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+        `;
+        container.appendChild(div);
+      });
+      document.getElementById('cart-total-value').textContent = '$' + total.toFixed(2);
+    }
+
+    window.removeFromCart = function(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('yoga_cart', JSON.stringify(cart));
+      updateCartCount();
+      renderCartDrawerItems();
+    };
+
+    // Contact Form Handler
+    window.handleContactSubmit = function(e) {
+      e.preventDefault();
+      
+      // Animate Toast Message
+      const toast = document.getElementById('contact-toast');
+      toast.style.bottom = '30px';
+      
+      // Clear Form Fields
+      document.getElementById('contact-form').reset();
+      
+      // Hide Toast after 4 seconds
+      setTimeout(() => {
+        toast.style.bottom = '-100px';
+      }, 4000);
+    };
+
+    // Initialize Page
+    updateCartCount();
+  </script>
+  <script src="zoom.js"></script>
+</body>
+</html>
