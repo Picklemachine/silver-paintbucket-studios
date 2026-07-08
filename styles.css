@@ -3222,7 +3222,7 @@ body.admin-logged-in #section-cms {
 .mobile-nav-toggle {
   background: none;
   border: none;
-  color: white;
+  color: #2d2d2d;
   font-size: 1.5rem;
   cursor: pointer;
 }
