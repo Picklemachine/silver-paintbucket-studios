@@ -151,6 +151,46 @@ const initZoom = () => {
   };
 
   bindMainProductImage();
+
+  // 6. Mobile Menu Toggle
+  const mobileNavBtn = document.getElementById('mobile-nav-btn');
+  const mainNav = document.getElementById('main-nav');
+
+  if (mobileNavBtn && mainNav) {
+    mobileNavBtn.addEventListener('click', () => {
+      mainNav.classList.toggle('open');
+      const icon = mobileNavBtn.querySelector('i');
+      if (icon) {
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      }
+    });
+    
+    // Close menu when clicking nav item
+    const navItems = mainNav.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        mainNav.classList.remove('open');
+        const icon = mobileNavBtn.querySelector('i');
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (mainNav.classList.contains('open') && !mainNav.contains(e.target) && !mobileNavBtn.contains(e.target)) {
+        mainNav.classList.remove('open');
+        const icon = mobileNavBtn.querySelector('i');
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      }
+    });
+  }
 };
 
 if (document.readyState === 'loading') {
