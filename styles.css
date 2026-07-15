@@ -3497,3 +3497,22 @@ main {
     gap: 20px;
   }
 }
+
+/* Responsive mascot detail image */
+.hero-mascot-detail {
+  float: right;
+  max-height: 110px;
+  width: auto;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-top: -10px;
+}
+
+@media (max-width: 768px) {
+  .hero-mascot-detail {
+    float: none !important;
+    display: block !important;
+    margin: 0 0 15px 0 !important;
+    max-height: 90px !important;
+  }
+}
